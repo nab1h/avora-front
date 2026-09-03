@@ -1,14 +1,9 @@
-import { ModeToggle } from "@/components/mode-toggle";
+
 import Image from "next/image";
 
 export default function dashboard() {
   return (
-
-    <div className="flex flex-col flex-1 items-center justify-center bg-zinc-50 font-sans dark:bg-black">
-      <div className="absolute right-4 top-4">
-          <ModeToggle />
-        </div>
-      <main className="flex flex-1 w-full max-w-3xl flex-col items-center justify-between py-32 px-16 bg-white dark:bg-black sm:items-start">
+          <main className="flex flex-1 w-full max-w-3xl flex-col items-center justify-between py-32 px-16 bg-white dark:bg-black sm:items-start">
         <Image
           className="dark:invert h-5 w-[100px]"
           src="/next.svg"
@@ -69,6 +64,7 @@ export default function dashboard() {
           </a>
         </div>
       </main>
-    </div>
+
+
   );
 }

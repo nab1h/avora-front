@@ -1,16 +1,16 @@
 import type { ReactNode } from "react";
-import { Command } from "lucide-react";
-import { Separator } from "@/components/ui/separator";
-import { APP_CONFIG } from "@/config/app-config";
-import { RootState } from "@/lib/store";
-import { useSelector } from "react-redux";
-import { DashboardHeader } from "./_components/dashboard-header";
+import { SidebarProvider } from "@/components/ui/sidebar";
+import { AppSidebar } from "@/components/app-sidebar";
+import Header from "@/components/layout/header";
 
 export default function Layout({ children }: Readonly<{ children: ReactNode }>) {
   return (
-    <main>
-      <DashboardHeader />
-        <div className="relative order-1 flex h-full">{children}</div>
-    </main>
+   <SidebarProvider>
+      <AppSidebar />
+      <main className="flex min-w-0 flex-1 flex-col">
+        <Header />
+        {children}
+      </main>
+    </SidebarProvider>
   );
 }
