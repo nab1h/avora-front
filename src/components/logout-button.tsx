@@ -15,6 +15,7 @@ export function LogoutButton() {
     dispatch(logout());
     console.log(token);
     localStorage.removeItem("token");
+    localStorage.removeItem("user");
     router.push("/auth/login");
   };
 

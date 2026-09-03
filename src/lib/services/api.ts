@@ -1,5 +1,4 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
-import type { RootState } from '@/lib/store';
 
 export const api = createApi({
   reducerPath: 'api',
@@ -8,13 +7,14 @@ export const api = createApi({
     baseUrl: process.env.NEXT_PUBLIC_API_URL,
 
     prepareHeaders: (headers, { getState }) => {
-      const token = (getState() as RootState).auth.token;
+      const token = localStorage.getItem("token");
 
       headers.set('Accept', 'application/json');
-
       if (token) {
         headers.set('Authorization', `Bearer ${token}`);
       }
+      console.log(token);
+
 
       return headers;
     },

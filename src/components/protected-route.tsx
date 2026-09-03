@@ -2,39 +2,83 @@
 
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
-import { useAppSelector } from "@/lib/hooks";
+
+import { useAppDispatch, useAppSelector } from "@/lib/hooks";
+import { setUser, type User } from "@/lib/features/auth/auth-slice";
+import { useGetMeQuery } from "@/lib/services/auth-api";
+
+
 
 export function ProtectedRoute({
   children,
 }: {
   children: React.ReactNode;
 }) {
+
   const router = useRouter();
+  const dispatch = useAppDispatch();
 
-  const reduxToken = useAppSelector((state) => state.auth.token);
+  const reduxUser = useAppSelector(
+    (state) => state.auth.user
+  );
 
-  const [token, setToken] = useState<string | null>(null);
-  const [checking, setChecking] = useState(true);
+  const [token] = useState<string | null>(() =>
+    typeof window === "undefined" ? null : localStorage.getItem("token")
+  );
+
 
   useEffect(() => {
-    const storedToken = localStorage.getItem("token");
+    if (!token) {
+      router.replace("/auth/login");
+      return;
+    }
 
-    if (storedToken) {
-      setToken(storedToken);
-    } else {
+    if (!reduxUser) {
+      const storedUser = localStorage.getItem("user");
+
+      if (storedUser) {
+        dispatch(setUser(JSON.parse(storedUser) as User));
+      }
+    }
+
+  }, [dispatch, reduxUser, router, token]);
+
+
+  const {
+    data,
+    isLoading,
+    isError,
+  } = useGetMeQuery(undefined, {
+    skip: !token || !!reduxUser,
+  });
+
+
+  useEffect(() => {
+
+    if (data) {
+      const user = "user" in data ? data.user : data;
+      dispatch(setUser(user));
+      localStorage.setItem("user", JSON.stringify(user));
+    }
+
+  }, [data, dispatch]);
+
+
+  useEffect(() => {
+
+    if (isError) {
+      localStorage.removeItem("token");
+      localStorage.removeItem("user");
       router.replace("/auth/login");
     }
 
-    setChecking(false);
-  }, [router]);
+  }, [isError, router]);
 
-  if (checking) {
+
+  if (!token || isLoading) {
     return null;
   }
 
-  if (!token && !reduxToken) {
-    return null;
-  }
 
   return children;
 }
