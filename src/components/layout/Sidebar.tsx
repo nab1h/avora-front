@@ -11,7 +11,7 @@ import { usePathname, useSearchParams } from 'next/navigation'
 
 // Third-party Imports
 import * as Icon from 'lucide-react'
-import { ChevronRightIcon, SquareArrowOutUpRightIcon } from 'lucide-react'
+import { ChevronRightIcon } from 'lucide-react'
 
 // Type Imports
 import type { MenuGroupSubItem, MenuItem, MenuLeafSubItem, MenuSubItem, NavItem } from '@/config/navConfig'
@@ -53,11 +53,14 @@ import { navItems } from '@/config/navConfig'
 // Util Imports
 import { cn } from '@/lib/utils'
 
-import { getNavApps } from '@/lib/nav-apps'
+
 
 const isSubGroup = (item: MenuSubItem): item is MenuGroupSubItem => 'childItems' in item
 
 const isExternalLink = (href: string) => href.startsWith('http://') || href.startsWith('https://')
+
+const getLinkTarget = (href: string, target?: MenuLeafSubItem['target']) =>
+  isExternalLink(href) ? target : undefined
 
 // Key used to track the open state of a nested sub-group, namespaced by its parent
 // so two sub-groups sharing a label in different parents never collide.
@@ -122,7 +125,7 @@ function getActiveBranchKeys(
 const FlyoutMenuLink = ({ item, isActive }: { item: MenuLeafSubItem; isActive: boolean }) => (
   <DropdownMenuItem
     className={cn('justify-between gap-2', isActive && 'bg-primary/10 text-accent-foreground font-medium')}
-    render={<Link href={item.href} target={item.target} />}
+    render={<Link href={item.href} target={getLinkTarget(item.href, item.target)} />}
   >
     <span className='truncate'>{item.label}</span>
     <div className='flex items-center gap-2'>
@@ -131,7 +134,7 @@ const FlyoutMenuLink = ({ item, isActive }: { item: MenuLeafSubItem; isActive: b
           {item.badge}
         </span>
       )}
-      {isExternalLink(item.href) && <SquareArrowOutUpRightIcon className='ml-auto size-3.5 shrink-0 opacity-50' />}
+      
     </div>
   </DropdownMenuItem>
 )
@@ -324,7 +327,7 @@ const SidebarGroupedMenuItems = ({
                                     <SidebarMenuSubItem key={leaf.label}>
                                       <SidebarMenuSubButton
                                         className='data-active:bg-primary/10! justify-between'
-                                        render={<Link href={leaf.href} target={leaf.target} />}
+                                        render={<Link href={leaf.href} target={getLinkTarget(leaf.href, leaf.target)} />}
                                         isActive={isLinkActive(leaf.href, leaf.activePath, pathname, searchParams)}
                                       >
                                         <span
@@ -348,9 +351,7 @@ const SidebarGroupedMenuItems = ({
                                             {leaf.badge}
                                           </SidebarMenuBadge>
                                         )}
-                                        {isExternalLink(leaf.href) && (
-                                          <SquareArrowOutUpRightIcon className='ml-auto size-3.5! shrink-0 opacity-50' />
-                                        )}
+                                        
                                       </SidebarMenuSubButton>
                                     </SidebarMenuSubItem>
                                   ))}
@@ -362,7 +363,7 @@ const SidebarGroupedMenuItems = ({
                           <SidebarMenuSubItem key={subItem.label}>
                             <SidebarMenuSubButton
                               className='data-active:bg-primary/10! justify-between'
-                              render={<Link href={subItem.href} target={subItem.target} />}
+                              render={<Link href={subItem.href} target={getLinkTarget(subItem.href, subItem.target)} />}
                               isActive={isLinkActive(subItem.href, subItem.activePath, pathname, searchParams)}
                             >
                               <span
@@ -386,9 +387,6 @@ const SidebarGroupedMenuItems = ({
                                   {subItem.badge}
                                 </SidebarMenuBadge>
                               )}
-                              {isExternalLink(subItem.href) && (
-                                <SquareArrowOutUpRightIcon className='ml-auto size-3.5! shrink-0 opacity-50' />
-                              )}
                             </SidebarMenuSubButton>
                           </SidebarMenuSubItem>
                         )
@@ -401,7 +399,7 @@ const SidebarGroupedMenuItems = ({
               <SidebarMenuItem key={item.label}>
                 <SidebarMenuButton
                   tooltip={item.label}
-                  render={<Link href={item.href} target={item.target} />}
+                  render={<Link href={item.href} target={getLinkTarget(item.href, item.target)} />}
                   isActive={pathname === item.href}
                   className='data-active:bg-primary/10!'
                 >
@@ -427,9 +425,6 @@ const SidebarGroupedMenuItems = ({
                       {item.badge}
                     </SidebarMenuBadge>
                   )}
-                  {isExternalLink(item.href) && (
-                    <SquareArrowOutUpRightIcon className='ml-auto size-3.5! shrink-0 opacity-50' />
-                  )}
                 </SidebarMenuButton>
               </SidebarMenuItem>
             )
@@ -454,28 +449,7 @@ const SidebarLayout = () => {
   // Anything absent from this map falls back to "open if it holds the active route".
   const [openItems, setOpenItems] = useState<Record<string, boolean>>({})
 
-  useEffect(() => {
-    let mounted = true
 
-    getNavApps().then(data => {
-      if (!mounted) return
-
-      setExternalApps(
-        data.map(app => ({
-          icon: app.icon as MenuItem['icon'],
-          label: app.name,
-          href: app.href,
-          badge: 'Pro',
-          badgeClassName: 'right-8',
-          ...(app.openInNewTab ? { target: '_blank' as const } : {})
-        }))
-      )
-    })
-
-    return () => {
-      mounted = false
-    }
-  }, [])
 
   // Nav groups rendered in the sidebar.
   // Remove the externalApps branch when the nav-apps API is removed. Until then, this is used to merge external nav-apps into the "Apps" group.

@@ -50,7 +50,7 @@ export function ProfileForm() {
   }
 
   return (
-    <Card>
+    <Card className="w-full">
       <CardHeader>
         <CardTitle>Personal Information</CardTitle>
         <CardDescription>

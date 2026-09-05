@@ -22,20 +22,3 @@ const isValidNavApp = (value: unknown): value is NavApp => {
   )
 }
 
-export const getNavApps = async (): Promise<NavApp[]> => {
-  try {
-    const response = await fetch(NAV_APPS_API_URL, { cache: 'no-store' })
-
-    if (!response.ok) return []
-
-    const payload = (await response.json()) as unknown
-
-    if (!Array.isArray(payload)) return []
-
-    const validApps = payload.filter(isValidNavApp)
-
-    return validApps
-  } catch {
-    return []
-  }
-}

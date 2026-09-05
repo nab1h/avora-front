@@ -25,7 +25,7 @@ import { useRouter } from 'next/navigation'
 const STATIC_USER = {
   fullName: 'John Doe',
   email: 'john.doe@example.com',
-  imageUrl: '/images/avatars/avatar-1.webp',
+  imageUrl: 'https://img.heroui.chat/image/avatar?w=400&h=400&u=3',
   initials: 'JD'
 }
 

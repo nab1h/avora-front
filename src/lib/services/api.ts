@@ -5,7 +5,6 @@ export const api = createApi({
 
   baseQuery: fetchBaseQuery({
     baseUrl: process.env.NEXT_PUBLIC_API_URL,
-
     prepareHeaders: (headers, { getState }) => {
       const token = localStorage.getItem("token");
 
@@ -20,5 +19,10 @@ export const api = createApi({
     },
   }),
 
+
+  tagTypes: [
+        "Roles",
+        "Permissions",
+    ],
   endpoints: () => ({}),
 });
