@@ -35,6 +35,8 @@ import {
     zodResolver
 } from "@hookform/resolvers/zod";
 
+import { toast } from "sonner";
+
 
 import {
     useGetPermissionsQuery,
@@ -234,12 +236,14 @@ export default function ManagePermissionsDialog({
 
             setOpen(false);
 
+            toast.success("Role and permissions updated successfully.");
+
 
 
         } catch (error) {
 
 
-            console.log(error);
+            toast.error("Failed to save role changes. Please try again.");
 
 
         }

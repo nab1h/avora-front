@@ -1,3 +1,5 @@
+'use client'
+
 // Next Imports
 import Link from 'next/link'
 
@@ -16,29 +18,28 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger
 } from '@/components/ui/dropdown-menu'
-import { useAppDispatch } from '@/lib/hooks'
+import { useAppDispatch, useAppSelector } from '@/lib/hooks'
+import { getInitials } from '@/lib/utils'
 
 import { logout } from '@/lib/features/auth/auth-slice'
 import { useRouter } from 'next/navigation'
 
-
-const STATIC_USER = {
-  fullName: 'John Doe',
-  email: 'john.doe@example.com',
-  imageUrl: 'https://img.heroui.chat/image/avatar?w=400&h=400&u=3',
-  initials: 'JD'
-}
-
 const ProfileDropdown = () => {
+  const dispatch = useAppDispatch()
+  const router = useRouter()
+  const user = useAppSelector(state => state.auth.user)
 
-const dispatch = useAppDispatch();
-const router = useRouter();
+  const fullName = user?.name ?? 'User'
+  const email = user?.email ?? ''
+  const initials = getInitials(fullName)
+  const isActive = user?.is_active ?? false
 
-const handleLogout = () => {
-  localStorage.removeItem("token");
-  dispatch(logout());
-  router.replace("/auth/login");
-};
+  const handleLogout = () => {
+    localStorage.removeItem('token')
+    localStorage.removeItem('user')
+    dispatch(logout())
+    router.replace('/auth/login')
+  }
 
 
   return (
@@ -47,24 +48,22 @@ const handleLogout = () => {
         render={<Button variant='ghost' size='icon' className='relative rounded-full hover:bg-transparent' />}
       >
         <Avatar>
-          <AvatarImage src={STATIC_USER.imageUrl} alt={STATIC_USER.fullName} />
-          <AvatarFallback>{STATIC_USER.initials}</AvatarFallback>
+          <AvatarFallback>{initials}</AvatarFallback>
         </Avatar>
-        <span className='ring-card absolute right-0 bottom-0 block size-2 rounded-full bg-green-600 ring-2' />
+        <span className={`ring-card absolute right-0 bottom-0 block size-2 rounded-full ring-2 ${isActive ? 'bg-green-600' : 'bg-red-600'}`} />
       </DropdownMenuTrigger>
       <DropdownMenuContent align='end' className='w-60'>
         <DropdownMenuGroup>
           <DropdownMenuLabel className='flex items-center gap-4 px-2 py-2.5 font-normal'>
             <div className='relative'>
               <Avatar className='size-10'>
-                <AvatarImage src={STATIC_USER.imageUrl} alt={STATIC_USER.fullName} />
-                <AvatarFallback>{STATIC_USER.initials}</AvatarFallback>
+                <AvatarFallback>{initials}</AvatarFallback>
               </Avatar>
-              <span className='ring-card absolute right-0 bottom-0 block size-2 rounded-full bg-green-600 ring-2' />
+              <span className={`ring-card absolute right-0 bottom-0 block size-2 rounded-full ring-2 ${isActive ? 'bg-green-600' : 'bg-red-600'}`} />
             </div>
             <div className='flex flex-1 flex-col items-start'>
-              <span className='text-foreground text-base font-semibold'>{STATIC_USER.fullName}</span>
-              <span className='text-muted-foreground text-sm'>{STATIC_USER.email}</span>
+              <span className='text-foreground text-base font-semibold'>{fullName}</span>
+              <span className='text-muted-foreground text-sm'>{email}</span>
             </div>
           </DropdownMenuLabel>
         </DropdownMenuGroup>
@@ -72,7 +71,7 @@ const handleLogout = () => {
         <DropdownMenuSeparator />
 
         <DropdownMenuGroup>
-          <DropdownMenuItem render={<Link href='/pages/user-profile?view=profile' />}>
+          <DropdownMenuItem render={<Link href='/dashboard/profile' />}>
             <UserIcon />
             <span>My Account</span>
           </DropdownMenuItem>

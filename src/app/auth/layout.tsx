@@ -9,7 +9,7 @@ import { ModeToggle } from "@/components/mode-toggle";
 export default function Layout({ children }: Readonly<{ children: ReactNode }>) {
   return (
     <main>
-      <div className="top-4">
+      <div className="absolute top-5 right-5 z-10">
         <ModeToggle />
       </div>
       <div className="grid h-dvh justify-center p-2 lg:grid-cols-2">

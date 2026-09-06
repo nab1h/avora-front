@@ -23,6 +23,7 @@ export const api = createApi({
   tagTypes: [
         "Roles",
         "Permissions",
+        "Users"
     ],
   endpoints: () => ({}),
 });

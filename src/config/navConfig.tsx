@@ -94,7 +94,7 @@ export const navItems: NavItem[] = [
         icon: 'UsersIcon',
         label: 'Users',
         childItems: [
-          { label: 'List', href: '/apps/users/list' },
+          { label: 'List', href: '/dashboard/users' },
           { label: 'View', href: '/apps/users/view' }
         ]
       },

@@ -26,6 +26,7 @@ import {
 
 
 import { useCreateRoleMutation } from "@/lib/services/roles-api";
+import { toast } from "sonner";
 
 
 
@@ -80,10 +81,11 @@ export default function AddRoleButton() {
 
             setOpen(false);
 
+            toast.success("Role created successfully!");
 
         } catch (error) {
 
-            console.error(error);
+            toast.error("Failed to create role. Please try again.");
 
         }
 
