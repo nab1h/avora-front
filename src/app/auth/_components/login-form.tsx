@@ -47,12 +47,11 @@ async function onSubmit(data: z.infer<typeof formSchema>) {
       password: data.password,
     });
     const { user, token } = response.data;
+    localStorage.setItem("token", token);
+
     dispatch(setCredentials({user,token,}));
 
     toast.success("Login successful");
-
-    localStorage.setItem("token", token);
-    localStorage.setItem("user", JSON.stringify(user));
 
     console.log("Login successful:", response.data);
     router.push("/dashboard");
