@@ -3,7 +3,10 @@
 import { useSelector } from "react-redux";
 import type { RootState } from "@/lib/store";
 
-import { useUpdateProfileMutation } from "@/lib/services/profile-api";
+import {
+  useSendVerificationNotificationMutation,
+  useUpdateProfileMutation,
+} from "@/lib/services/profile-api";
 
 import { Button } from "@/components/ui/button";
 import {
@@ -23,6 +26,17 @@ export function ProfileForm() {
 
   
   const [updateProfile, { isLoading, isSuccess }] = useUpdateProfileMutation();
+  const [sendVerificationNotification, { isLoading: isSendingVerification }] =
+    useSendVerificationNotificationMutation();
+
+  const handleSendVerification = async () => {
+    try {
+      const response = await sendVerificationNotification().unwrap();
+      toast.success(response.message || "Verification email sent successfully.");
+    } catch {
+      toast.error("Failed to send verification email. Please try again.");
+    }
+  };
 
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -86,6 +100,21 @@ export function ProfileForm() {
               defaultValue={user.email}
               required
             />
+
+            {!user.email_verified_at && (
+              <div className="flex flex-wrap items-center justify-between gap-3 rounded-md border border-amber-300 bg-amber-50 p-3 text-sm text-amber-900 dark:border-amber-700 dark:bg-amber-950/30 dark:text-amber-200">
+                <span>You must verify your email to complete your account verification.</span>
+                <Button
+                  type="button"
+                  size="sm"
+                  variant="outline"
+                  onClick={handleSendVerification}
+                  disabled={isSendingVerification}
+                >
+                  {isSendingVerification ? "Sending..." : "Verify email"}
+                </Button>
+              </div>
+            )}
           </div>
 
            {isLoading ? (

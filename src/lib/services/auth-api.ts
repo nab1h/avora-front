@@ -43,10 +43,14 @@ export const authApi = api.injectEndpoints({
     // -------------------
     getMe: builder.query<
       {
-        user: {
+        data: {
           id: number;
           name: string;
           email: string;
+          email_verified_at: string | null;
+          is_active: boolean;
+          created_at: string;
+          updated_at: string;
           roles: any[];
           permissions: any[];
         };
@@ -57,9 +61,24 @@ export const authApi = api.injectEndpoints({
         url: "/me",
         method: "GET",
       }),
+      providesTags: ["User"],
+
     }),
 
-    
+
+    verifyEmail: builder.mutation({
+      query: ({ id, hash, expires, signature }) => ({
+        url: `/email/verify/${id}/${hash}`,
+        method: "GET",
+        params: {
+          expires,
+          signature,
+        },
+      }),
+      invalidatesTags: ["User"],
+    }),
+
+
   }),
 });
 
@@ -68,4 +87,6 @@ export const {
   useForgotPasswordMutation,
   useResetPasswordMutation,
   useGetMeQuery,
+  useLazyGetMeQuery,
+  useVerifyEmailMutation,
 } = authApi;

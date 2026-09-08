@@ -36,8 +36,13 @@ export function ProtectedRoute({
     if (!reduxUser) {
       const storedUser = localStorage.getItem("user");
 
-      if (storedUser) {
-        dispatch(setUser(JSON.parse(storedUser) as User));
+      if (storedUser && storedUser !== "undefined") {
+        try {
+          dispatch(setUser(JSON.parse(storedUser) as User));
+        } catch (error) {
+          console.error("Invalid user data in localStorage:", error);
+          localStorage.removeItem("user");
+        }
       }
     }
 
@@ -49,7 +54,7 @@ export function ProtectedRoute({
     isLoading,
     isError,
   } = useGetMeQuery(undefined, {
-    skip: !token || !!reduxUser,
+    skip: !token,
   });
 
 
@@ -57,8 +62,8 @@ export function ProtectedRoute({
 
     if (data) {
       const user = "user" in data ? data.user : data;
-      dispatch(setUser(user));
-      localStorage.setItem("user", JSON.stringify(user));
+      dispatch(setUser(data.data));
+      localStorage.setItem("user", JSON.stringify(data.data));
     }
 
   }, [data, dispatch]);

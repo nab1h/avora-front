@@ -35,6 +35,11 @@ type ChangePasswordResponse = {
   message: string;
 };
 
+type VerificationNotificationResponse = {
+  message: string;
+  url: string;
+};
+
 export const profileApi = api.injectEndpoints({
   endpoints: (builder) => ({
     updateProfile: builder.mutation<
@@ -58,10 +63,21 @@ export const profileApi = api.injectEndpoints({
         body: data,
       }),
     }),
+
+    sendVerificationNotification: builder.mutation<
+      VerificationNotificationResponse,
+      void
+    >({
+      query: () => ({
+        url: "/email/verification-notification",
+        method: "POST",
+      }),
+    }),
   }),
 });
 
 export const {
   useUpdateProfileMutation,
   useChangePasswordMutation,
+  useSendVerificationNotificationMutation,
 } = profileApi;
