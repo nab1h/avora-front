@@ -4,6 +4,7 @@ import { useRouter } from "next/navigation";
 import { Button } from "@/components/ui/button";
 import { logout } from "@/lib/features/auth/auth-slice";
 import { useAppDispatch, useAppSelector } from "@/lib/hooks";
+import { api } from "@/lib/services/api";
 
 export function LogoutButton() {
   const dispatch = useAppDispatch();
@@ -13,6 +14,7 @@ export function LogoutButton() {
   const handleLogout = () => {
 
     dispatch(logout());
+    dispatch(api.util.resetApiState());
     console.log(token);
     localStorage.removeItem("token");
     localStorage.removeItem("user");

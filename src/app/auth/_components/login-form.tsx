@@ -16,6 +16,7 @@ import axios from "axios";
 import { useAppDispatch } from "@/lib/hooks";
 import { useRouter } from "next/navigation";
 import { setCredentials } from "@/lib/features/auth/auth-slice";
+import { api as rtkApi } from "@/lib/services/api";
 
 
 
@@ -48,12 +49,13 @@ async function onSubmit(data: z.infer<typeof formSchema>) {
     });
     const { user, token } = response.data;
     localStorage.setItem("token", token);
+    localStorage.setItem("user", JSON.stringify(user));
 
+    dispatch(rtkApi.util.resetApiState());
     dispatch(setCredentials({user,token,}));
 
     toast.success("Login successful");
 
-    console.log("Login successful:", response.data);
     router.push("/dashboard");
     } catch (error) {
     if (axios.isAxiosError(error)) {
@@ -64,13 +66,6 @@ async function onSubmit(data: z.infer<typeof formSchema>) {
       toast.error("Something went wrong");
     }
 }
-  toast("You submitted the following values", {
-    description: (
-      <pre className="mt-2 w-[320px] rounded-md bg-neutral-950 p-4">
-        <code className="text-white">{JSON.stringify(data, null, 2)}</code>
-      </pre>
-    ),
-  });
 }
 
 

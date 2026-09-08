@@ -13,6 +13,7 @@ import { useDispatch } from "react-redux";
 import { useRouter } from "next/navigation";
 import { api } from "@/lib/axios";
 import { setCredentials } from "@/lib/features/auth/auth-slice";
+import { api as rtkApi } from "@/lib/services/api";
 
 const formSchema = z
   .object({
@@ -52,6 +53,10 @@ export function RegisterForm() {
 
     const { user, token } = response.data;
 
+    localStorage.setItem("token", token);
+    localStorage.setItem("user", JSON.stringify(user));
+    dispatch(rtkApi.util.resetApiState());
+
     dispatch(
       setCredentials({
         user,
@@ -60,9 +65,6 @@ export function RegisterForm() {
     );
 
     toast.success("Registration successful");
-
-    localStorage.setItem("token", token);
-    console.log("Registration successful:", response.data);
 
     router.push("/dashboard");
   } catch (error) {

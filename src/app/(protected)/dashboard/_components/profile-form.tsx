@@ -20,11 +20,12 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Spinner } from "@/components/ui/spinner";
 import { toast } from "sonner";
+import { CheckCircle2 } from "lucide-react";
 
 export function ProfileForm() {
   const user = useSelector((state: RootState) => state.auth.user);
 
-  
+
   const [updateProfile, { isLoading, isSuccess }] = useUpdateProfileMutation();
   const [sendVerificationNotification, { isLoading: isSendingVerification }] =
     useSendVerificationNotificationMutation();
@@ -53,7 +54,7 @@ export function ProfileForm() {
       }).unwrap();
 
       toast.success("Profile updated successfully");
-      
+
     } catch (error) {
       console.error(error);
     }
@@ -115,9 +116,20 @@ export function ProfileForm() {
                 </Button>
               </div>
             )}
+            <div className="flex items-center gap-1.5 text-xs text-muted-foreground">
+              <span>{user.email}</span>
+
+              {user?.email_verified_at && (
+                <span className="flex items-center gap-1">
+                  <CheckCircle2 className="h-3.5 w-3.5" />
+                  Verified
+                </span>
+              )}
+            </div>
           </div>
 
-           {isLoading ? (
+
+          {isLoading ? (
             <Button variant="secondary" disabled>
               Changing...
               <Spinner data-icon="inline-start" />

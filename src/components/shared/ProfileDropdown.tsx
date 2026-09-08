@@ -12,26 +12,16 @@ import {
   DropdownMenuTrigger
 } from '@/components/ui/dropdown-menu'
 
-import { useAppDispatch } from '@/lib/hooks'
+import { useAppDispatch, useAppSelector } from '@/lib/hooks'
 import { getInitials } from '@/lib/utils'
 import { logout } from '@/lib/features/auth/auth-slice'
-import { useGetMeQuery } from '@/lib/services/auth-api'
 import { api } from '@/lib/services/api'
 
 const ProfileDropdown = () => {
   const dispatch = useAppDispatch()
   const router = useRouter()
 
-  const {
-    data,
-    isLoading,
-    isError
-  } = useGetMeQuery()
-
-  const user = data?.data
-
-console.log('ME RESPONSE:', data)
-console.log('USER FROM ME:', data?.data)
+  const user = useAppSelector((state) => state.auth.user)
 
   const fullName = user?.name ?? 'User'
   const email = user?.email ?? ''
@@ -39,14 +29,15 @@ console.log('USER FROM ME:', data?.data)
 
   const handleLogout = () => {
     localStorage.removeItem('token')
+    localStorage.removeItem('user')
 
     dispatch(logout())
-    dispatch(api.util.resetApiState());
+    dispatch(api.util.resetApiState())
 
     router.replace('/auth/login')
   }
 
-  if (isLoading || isError || !user) {
+  if (!user) {
     return null
   }
 
