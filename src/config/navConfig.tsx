@@ -10,11 +10,13 @@ export type MenuLeafSubItem = {
   badge?: string
   badgeClassName?: string
   target?: '_blank' | '_self' | '_parent' | '_top'
+  permission?: string
 }
 
 export type MenuGroupSubItem = {
   label: string
   childItems: MenuLeafSubItem[]
+  permission?: string
 }
 
 export type MenuSubItem = MenuLeafSubItem | MenuGroupSubItem
@@ -22,21 +24,22 @@ export type MenuSubItem = MenuLeafSubItem | MenuGroupSubItem
 export type MenuItem = {
   icon: IconName
   label: string
+  permission?: string
 } & (
-  | {
+    | {
       href: string
       badge?: string
       badgeClassName?: string
       childItems?: never
       target?: '_blank' | '_self' | '_parent' | '_top'
     }
-  | {
+    | {
       href?: never
       badge?: string
       badgeClassName?: string
       childItems: MenuSubItem[]
     }
-)
+  )
 
 export type NavItem = {
   groupLabel?: string
@@ -50,7 +53,8 @@ export const navItems: NavItem[] = [
       {
         icon: 'Package',
         label: 'Orders',
-        href: '/dashboard/profile'
+        href: '/dashboard/profile',
+        permission: 'manage-roles',
       },
       {
         icon: 'LayoutTemplate',
@@ -61,28 +65,15 @@ export const navItems: NavItem[] = [
           {
             label: 'Full Navbar',
             href: 'https://shadcn-nextjs-admincn-full-navbar-layout-admin-template.vercel.app/',
-            target: '_blank'
+            target: '_blank',
+            permission: 'manage-roles',
           },
           {
             label: 'Horizontal',
             href: 'https://shadcn-nextjs-admincn-horizontal-layout-admin-template.vercel.app/',
-            target: '_blank'
+            target: '_blank',
+            permission: 'manage-roles',
           },
-          {
-            label: 'Split',
-            href: 'https://shadcn-nextjs-admincn-split-layout-admin-template.vercel.app/',
-            target: '_blank'
-          },
-          {
-            label: 'Icon Menu',
-            href: 'https://shadcn-nextjs-admincn-icon-menu-layout-admin-template.vercel.app/',
-            target: '_blank'
-          },
-          {
-            label: 'Paper',
-            href: 'https://shadcn-nextjs-admincn-paper-layout-admin-template.vercel.app/',
-            target: '_blank'
-          }
         ]
       }
     ]
@@ -94,25 +85,33 @@ export const navItems: NavItem[] = [
         icon: 'UsersIcon',
         label: 'Users',
         childItems: [
-          { label: 'List', href: '/dashboard/users' },
-          { label: 'View', href: '/apps/users/view' }
-        ]
+          { label: 'List', href: '/dashboard/users', permission: 'manage-roles' },
+          { label: 'View', href: '/apps/users/view', permission: 'manage-roles' }
+        ],
+        permission: 'manage-roles',
       },
       {
         icon: 'ShieldCheckIcon',
         label: 'Roles & Permissions',
         // badge: 'Pro',
         badgeClassName: 'right-8',
+        permission: 'manage-roles',
         childItems: [
           {
             label: 'Roles',
-            href: '/dashboard/roles'
+            href: '/dashboard/roles',
+            permission: 'manage-roles',
+
+
           },
           {
             label: 'Permissions',
-            href: '/dashboard/permissions'
-          }
-        ]
+            href: '/dashboard/permissions',
+            permission: 'manage-roles',
+
+          },
+
+        ],
       }
     ]
   },
