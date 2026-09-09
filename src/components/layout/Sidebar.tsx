@@ -2,7 +2,6 @@
 
 // React Imports
 import { type ComponentType } from 'react'
-
 import { useCallback, useEffect, useMemo, useState } from 'react'
 
 // Next Imports
@@ -14,7 +13,13 @@ import * as Icon from 'lucide-react'
 import { ChevronRightIcon } from 'lucide-react'
 
 // Type Imports
-import type { MenuGroupSubItem, MenuItem, MenuLeafSubItem, MenuSubItem, NavItem } from '@/config/navConfig'
+import type {
+  MenuGroupSubItem,
+  MenuItem,
+  MenuLeafSubItem,
+  MenuSubItem,
+  NavItem
+} from '@/config/navConfig'
 
 // Component Imports
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/components/ui/collapsible'
@@ -52,8 +57,8 @@ import { navItems } from '@/config/navConfig'
 
 // Util Imports
 import { cn } from '@/lib/utils'
-
-
+import { useAppSelector } from '@/lib/hooks'
+import { filterNavItems } from '@/lib/utils/permissions'
 
 const isSubGroup = (item: MenuSubItem): item is MenuGroupSubItem => 'childItems' in item
 
@@ -107,7 +112,11 @@ function getActiveBranchKeys(
     group.items.forEach(item => {
       item.childItems?.forEach(subItem => {
         if (isSubGroup(subItem)) {
-          if (subItem.childItems.some(leaf => isLinkActive(leaf.href, leaf.activePath, pathname, searchParams))) {
+          if (
+            subItem.childItems.some(leaf =>
+              isLinkActive(leaf.href, leaf.activePath, pathname, searchParams)
+            )
+          ) {
             keys.add(item.label)
             keys.add(subGroupKey(item.label, subItem.label))
           }
@@ -122,19 +131,33 @@ function getActiveBranchKeys(
 }
 
 // A single navigable link inside the icon-mode flyout, at either nesting level.
-const FlyoutMenuLink = ({ item, isActive }: { item: MenuLeafSubItem; isActive: boolean }) => (
+const FlyoutMenuLink = ({
+  item,
+  isActive
+}: {
+  item: MenuLeafSubItem
+  isActive: boolean
+}) => (
   <DropdownMenuItem
-    className={cn('justify-between gap-2', isActive && 'bg-primary/10 text-accent-foreground font-medium')}
+    className={cn(
+      'justify-between gap-2',
+      isActive && 'bg-primary/10 text-accent-foreground font-medium'
+    )}
     render={<Link href={item.href} target={getLinkTarget(item.href, item.target)} />}
   >
     <span className='truncate'>{item.label}</span>
+
     <div className='flex items-center gap-2'>
       {item.badge && (
-        <span className={cn('bg-primary/10 ml-auto rounded-full px-1.5 text-xs font-normal', item.badgeClassName)}>
+        <span
+          className={cn(
+            'bg-primary/10 ml-auto rounded-full px-1.5 text-xs font-normal',
+            item.badgeClassName
+          )}
+        >
           {item.badge}
         </span>
       )}
-      
     </div>
   </DropdownMenuItem>
 )
@@ -161,42 +184,76 @@ const FlyoutMenuItem = ({
     <SidebarMenuItem>
       <DropdownMenu>
         <DropdownMenuTrigger
-          render={<SidebarMenuButton isActive={isChildActive} className='data-active:bg-primary/5!' />}
+          render={
+            <SidebarMenuButton
+              isActive={isChildActive}
+              className='data-active:bg-primary/5!'
+            />
+          }
         >
           {Tag && <Tag />}
           <span className='min-w-0 flex-1 truncate'>{item.label}</span>
           <ChevronRightIcon className='ml-auto' />
         </DropdownMenuTrigger>
-        <DropdownMenuContent side='right' align='start' sideOffset={12} className='w-auto min-w-52'>
+
+        <DropdownMenuContent
+          side='right'
+          align='start'
+          sideOffset={12}
+          className='w-auto min-w-52'
+        >
           {/* The label must live inside a Group — Base UI's GroupLabel throws without one. */}
           <DropdownMenuGroup>
             <DropdownMenuLabel className='text-foreground flex items-center gap-2 text-sm'>
               <span className='truncate'>{item.label}</span>
+
               {item.badge && (
-                <span className={cn('bg-primary/10 rounded-full px-1.5 text-xs font-normal', item.badgeClassName)}>
+                <span
+                  className={cn(
+                    'bg-primary/10 rounded-full px-1.5 text-xs font-normal',
+                    item.badgeClassName
+                  )}
+                >
                   {item.badge}
                 </span>
               )}
             </DropdownMenuLabel>
+
             <DropdownMenuSeparator />
+
             {childItems.map(subItem =>
               isSubGroup(subItem) ? (
                 <DropdownMenuSub key={subItem.label}>
                   <DropdownMenuSubTrigger
                     className={cn(
                       subItem.childItems.some(leaf =>
-                        isLinkActive(leaf.href, leaf.activePath, pathname, searchParams)
-                      ) && 'bg-primary/10 text-accent-foreground font-medium'
+                        isLinkActive(
+                          leaf.href,
+                          leaf.activePath,
+                          pathname,
+                          searchParams
+                        )
+                      ) &&
+                        'bg-primary/10 text-accent-foreground font-medium'
                     )}
                   >
                     <span className='truncate'>{subItem.label}</span>
                   </DropdownMenuSubTrigger>
-                  <DropdownMenuSubContent sideOffset={9} className='w-auto min-w-48'>
+
+                  <DropdownMenuSubContent
+                    sideOffset={9}
+                    className='w-auto min-w-48'
+                  >
                     {subItem.childItems.map(leaf => (
                       <FlyoutMenuLink
                         key={leaf.label}
                         item={leaf}
-                        isActive={isLinkActive(leaf.href, leaf.activePath, pathname, searchParams)}
+                        isActive={isLinkActive(
+                          leaf.href,
+                          leaf.activePath,
+                          pathname,
+                          searchParams
+                        )}
                       />
                     ))}
                   </DropdownMenuSubContent>
@@ -205,7 +262,12 @@ const FlyoutMenuItem = ({
                 <FlyoutMenuLink
                   key={subItem.label}
                   item={subItem}
-                  isActive={isLinkActive(subItem.href, subItem.activePath, pathname, searchParams)}
+                  isActive={isLinkActive(
+                    subItem.href,
+                    subItem.activePath,
+                    pathname,
+                    searchParams
+                  )}
                 />
               )
             )}
@@ -240,6 +302,7 @@ const SidebarGroupedMenuItems = ({
           {groupLabel}
         </SidebarGroupLabel>
       )}
+
       <SidebarGroupContent>
         <SidebarMenu>
           {data.map(item => {
@@ -248,8 +311,20 @@ const SidebarGroupedMenuItems = ({
             const isChildActive =
               item.childItems?.some(subItem =>
                 isSubGroup(subItem)
-                  ? subItem.childItems.some(leaf => isLinkActive(leaf.href, leaf.activePath, pathname, searchParams))
-                  : isLinkActive(subItem.href, subItem.activePath, pathname, searchParams)
+                  ? subItem.childItems.some(leaf =>
+                      isLinkActive(
+                        leaf.href,
+                        leaf.activePath,
+                        pathname,
+                        searchParams
+                      )
+                    )
+                  : isLinkActive(
+                      subItem.href,
+                      subItem.activePath,
+                      pathname,
+                      searchParams
+                    )
               ) ?? false
 
             if (item.childItems && isIconMode) {
@@ -283,7 +358,16 @@ const SidebarGroupedMenuItems = ({
                     }
                   >
                     {Tag && <Tag />}
-                    <span className={cn('min-w-0 flex-1 truncate', item.badge && 'pr-14')}>{item.label}</span>
+
+                    <span
+                      className={cn(
+                        'min-w-0 flex-1 truncate',
+                        item.badge && 'pr-14'
+                      )}
+                    >
+                      {item.label}
+                    </span>
+
                     {item.badge && (
                       <SidebarMenuBadge
                         className={cn(
@@ -294,8 +378,10 @@ const SidebarGroupedMenuItems = ({
                         {item.badge}
                       </SidebarMenuBadge>
                     )}
+
                     <ChevronRightIcon className='ml-auto transition-transform duration-200 group-data-open/collapsible:rotate-90' />
                   </CollapsibleTrigger>
+
                   <CollapsibleContent className='h-(--collapsible-panel-height) overflow-hidden transition-all duration-200 data-ending-style:h-0 data-starting-style:h-0'>
                     <SidebarMenuSub>
                       {item.childItems.map(subItem =>
@@ -303,8 +389,15 @@ const SidebarGroupedMenuItems = ({
                           <Collapsible
                             className='group/subcollapsible'
                             key={subItem.label}
-                            open={isBranchOpen(subGroupKey(item.label, subItem.label))}
-                            onOpenChange={open => setOpenItem(subGroupKey(item.label, subItem.label), open)}
+                            open={isBranchOpen(
+                              subGroupKey(item.label, subItem.label)
+                            )}
+                            onOpenChange={open =>
+                              setOpenItem(
+                                subGroupKey(item.label, subItem.label),
+                                open
+                              )
+                            }
                           >
                             <SidebarMenuSubItem>
                               <CollapsibleTrigger
@@ -313,45 +406,72 @@ const SidebarGroupedMenuItems = ({
                                   <SidebarMenuSubButton
                                     className='data-active:bg-primary/10! justify-between'
                                     isActive={subItem.childItems.some(leaf =>
-                                      isLinkActive(leaf.href, leaf.activePath, pathname, searchParams)
+                                      isLinkActive(
+                                        leaf.href,
+                                        leaf.activePath,
+                                        pathname,
+                                        searchParams
+                                      )
                                     )}
                                   />
                                 }
                               >
                                 {subItem.label}
+
                                 <ChevronRightIcon className='ml-auto shrink-0 transition-transform duration-200 group-data-open/subcollapsible:rotate-90' />
                               </CollapsibleTrigger>
+
                               <CollapsibleContent className='h-(--collapsible-panel-height) overflow-hidden transition-all duration-200 data-ending-style:h-0 data-starting-style:h-0'>
                                 <SidebarMenuSub className='mx-0'>
                                   {subItem.childItems.map(leaf => (
                                     <SidebarMenuSubItem key={leaf.label}>
                                       <SidebarMenuSubButton
                                         className='data-active:bg-primary/10! justify-between'
-                                        render={<Link href={leaf.href} target={getLinkTarget(leaf.href, leaf.target)} />}
-                                        isActive={isLinkActive(leaf.href, leaf.activePath, pathname, searchParams)}
+                                        render={
+                                          <Link
+                                            href={leaf.href}
+                                            target={getLinkTarget(
+                                              leaf.href,
+                                              leaf.target
+                                            )}
+                                          />
+                                        }
+                                        isActive={isLinkActive(
+                                          leaf.href,
+                                          leaf.activePath,
+                                          pathname,
+                                          searchParams
+                                        )}
                                       >
                                         <span
                                           className={cn(
                                             'min-w-0 flex-1 truncate',
-                                            leaf.badge && isExternalLink(leaf.href) && 'pr-8',
-                                            leaf.badge && !isExternalLink(leaf.href) && 'pr-14',
-                                            !leaf.badge && isExternalLink(leaf.href) && 'pr-6'
+                                            leaf.badge &&
+                                              isExternalLink(leaf.href) &&
+                                              'pr-8',
+                                            leaf.badge &&
+                                              !isExternalLink(leaf.href) &&
+                                              'pr-14',
+                                            !leaf.badge &&
+                                              isExternalLink(leaf.href) &&
+                                              'pr-6'
                                           )}
                                         >
                                           {leaf.label}
                                         </span>
+
                                         {leaf.badge && (
                                           <SidebarMenuBadge
                                             className={cn(
                                               'bg-primary/10 max-w-24 truncate rounded-full px-1.5 font-normal',
-                                              isExternalLink(leaf.href) && 'right-6',
+                                              isExternalLink(leaf.href) &&
+                                                'right-6',
                                               leaf.badgeClassName
                                             )}
                                           >
                                             {leaf.badge}
                                           </SidebarMenuBadge>
                                         )}
-                                        
                                       </SidebarMenuSubButton>
                                     </SidebarMenuSubItem>
                                   ))}
@@ -363,24 +483,45 @@ const SidebarGroupedMenuItems = ({
                           <SidebarMenuSubItem key={subItem.label}>
                             <SidebarMenuSubButton
                               className='data-active:bg-primary/10! justify-between'
-                              render={<Link href={subItem.href} target={getLinkTarget(subItem.href, subItem.target)} />}
-                              isActive={isLinkActive(subItem.href, subItem.activePath, pathname, searchParams)}
+                              render={
+                                <Link
+                                  href={subItem.href}
+                                  target={getLinkTarget(
+                                    subItem.href,
+                                    subItem.target
+                                  )}
+                                />
+                              }
+                              isActive={isLinkActive(
+                                subItem.href,
+                                subItem.activePath,
+                                pathname,
+                                searchParams
+                              )}
                             >
                               <span
                                 className={cn(
                                   'min-w-0 flex-1 truncate',
-                                  subItem.badge && isExternalLink(subItem.href) && 'pr-8',
-                                  subItem.badge && !isExternalLink(subItem.href) && 'pr-14',
-                                  !subItem.badge && isExternalLink(subItem.href) && 'pr-6'
+                                  subItem.badge &&
+                                    isExternalLink(subItem.href) &&
+                                    'pr-8',
+                                  subItem.badge &&
+                                    !isExternalLink(subItem.href) &&
+                                    'pr-14',
+                                  !subItem.badge &&
+                                    isExternalLink(subItem.href) &&
+                                    'pr-6'
                                 )}
                               >
                                 {subItem.label}
                               </span>
+
                               {subItem.badge && (
                                 <SidebarMenuBadge
                                   className={cn(
                                     'bg-primary/10 max-w-24 truncate rounded-full px-1.5 font-normal',
-                                    isExternalLink(subItem.href) && 'right-6',
+                                    isExternalLink(subItem.href) &&
+                                      'right-6',
                                     subItem.badgeClassName
                                   )}
                                 >
@@ -399,21 +540,34 @@ const SidebarGroupedMenuItems = ({
               <SidebarMenuItem key={item.label}>
                 <SidebarMenuButton
                   tooltip={item.label}
-                  render={<Link href={item.href} target={getLinkTarget(item.href, item.target)} />}
+                  render={
+                    <Link
+                      href={item.href}
+                      target={getLinkTarget(item.href, item.target)}
+                    />
+                  }
                   isActive={pathname === item.href}
                   className='data-active:bg-primary/10!'
                 >
                   {Tag && <Tag />}
+
                   <span
                     className={cn(
                       'min-w-0 flex-1 truncate',
-                      item.badge && isExternalLink(item.href) && 'pr-8',
-                      item.badge && !isExternalLink(item.href) && 'pr-14',
-                      !item.badge && isExternalLink(item.href) && 'pr-6'
+                      item.badge &&
+                        isExternalLink(item.href) &&
+                        'pr-8',
+                      item.badge &&
+                        !isExternalLink(item.href) &&
+                        'pr-14',
+                      !item.badge &&
+                        isExternalLink(item.href) &&
+                        'pr-6'
                     )}
                   >
                     {item.label}
                   </span>
+
                   {item.badge && (
                     <SidebarMenuBadge
                       className={cn(
@@ -440,28 +594,36 @@ const SidebarLayout = () => {
   const searchParams = useSearchParams()
   const { state, isMobile } = useSidebar()
 
-  // Remove this state when the nav-apps API is removed. Until then, this state is used to hold the external nav-apps fetched from the API JSON.
+  // Current authenticated user from Redux.
+  const user = useAppSelector(state => state.auth.user)
+
+  // Remove this state when the nav-apps API is removed.
+  // Until then, this state is used to hold the external nav-apps fetched from the API JSON.
   const [externalApps, setExternalApps] = useState<MenuItem[]>([])
 
-  // Branches the user has explicitly opened or closed, keyed by label. It lives here rather
-  // than inside each Collapsible so it survives the swap between the inline sub-menu and the
-  // icon-mode flyout — collapsing and re-expanding the sidebar keeps the tree as it was.
+  // Branches the user has explicitly opened or closed, keyed by label.
+  // It lives here rather than inside each Collapsible so it survives the swap
+  // between the inline sub-menu and the icon-mode flyout.
   // Anything absent from this map falls back to "open if it holds the active route".
   const [openItems, setOpenItems] = useState<Record<string, boolean>>({})
 
-
-
   // Nav groups rendered in the sidebar.
-  // Remove the externalApps branch when the nav-apps API is removed. Until then, this is used to merge external nav-apps into the "Apps" group.
-  const navGroups = useMemo(
-    () =>
+  // First merge external apps, then filter everything according to user permissions.
+  const navGroups = useMemo(() => {
+    const groups =
       externalApps.length > 0
         ? navItems.map(item =>
-            item.groupLabel === 'Apps' ? { ...item, items: item.items.concat(externalApps) } : item
+            item.groupLabel === 'Apps'
+              ? {
+                  ...item,
+                  items: item.items.concat(externalApps)
+                }
+              : item
           )
-        : navItems,
-    [externalApps]
-  )
+        : navItems
+
+    return filterNavItems(user, groups)
+  }, [user, externalApps])
 
   const activeBranchKeys = useMemo(
     () => getActiveBranchKeys(navGroups, pathname, searchParams),
@@ -478,8 +640,8 @@ const SidebarLayout = () => {
     setOpenItems(prev => ({ ...prev, [key]: open }))
   }, [])
 
-  // Only the icon rail is too narrow for the inline sub-menu. Mobile renders the full-width
-  // sheet, so it keeps the normal tree.
+  // Only the icon rail is too narrow for the inline sub-menu.
+  // Mobile renders the full-width sheet, so it keeps the normal tree.
   const isIconMode = state === 'collapsed' && !isMobile
 
   return (
@@ -494,13 +656,18 @@ const SidebarLayout = () => {
             >
               <LogoSvg className='[&_rect]:fill-sidebar [&_rect:first-child]:fill-primary' />
               <div className='flex flex-col items-start'>
-                <span className='text-lg font-semibold text-nowrap'>{themeConfig.templateName}</span>
-                <span className='text-xs font-light text-nowrap'>Dashboard Template</span>
+                <span className='text-lg font-semibold text-nowrap'>
+                  {themeConfig.templateName}
+                </span>
+                <span className='text-xs font-light text-nowrap'>
+                  Dashboard Template
+                </span>
               </div>
             </SidebarMenuButton> */}
           </SidebarMenuItem>
         </SidebarMenu>
       </SidebarHeader>
+
       <SidebarContent className='group-data-[collapsible=icon]:overflow-y-auto'>
         {navGroups.map((navItem, index) => {
           return (
