@@ -220,19 +220,28 @@ const permissions: UserPermission[] = permissionsData?.data ?? [];
         try {
 
 
-            await updateRoles({
+            const rolesChanged =
+                selectedRoles.length !== user.roles.length ||
+                selectedRoles.some((roleId) =>
+                    !user.roles.some((role) => role.id === roleId)
+                );
 
-                id:user.id,
+            const permissionsChanged =
+                selectedPermissions.length !== user.permissions.length ||
+                selectedPermissions.some((permissionId) =>
+                    !user.permissions.some(
+                        (permission) => permission.id === permissionId
+                    )
+                );
 
-                roles:selectedRoles
+            if (rolesChanged) {
+                await updateRoles({
+                    id: user.id,
+                    roles: selectedRoles,
+                }).unwrap();
+            }
 
-            }).unwrap();
-
-
-
-
-
-            if (selectedPermissions.length > 0) {
+            if (permissionsChanged) {
                 await updatePermissions({
                     id: user.id,
                     permissions: selectedPermissions,
