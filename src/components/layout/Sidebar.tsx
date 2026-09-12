@@ -59,6 +59,7 @@ import { navItems } from '@/config/navConfig'
 import { cn } from '@/lib/utils'
 import { useAppSelector } from '@/lib/hooks'
 import { filterNavItems } from '@/lib/utils/permissions'
+import { useTranslations } from 'next-intl'
 
 const isSubGroup = (item: MenuSubItem): item is MenuGroupSubItem => 'childItems' in item
 
@@ -295,11 +296,12 @@ const SidebarGroupedMenuItems = ({
   isBranchOpen: (key: string) => boolean
   setOpenItem: (key: string, open: boolean) => void
 }) => {
+  const t = useTranslations('sidebar')
   return (
     <SidebarGroup>
       {groupLabel && (
         <SidebarGroupLabel className='text-sidebar-foreground/50 tracking-wider uppercase'>
-          {groupLabel}
+          {t(groupLabel)}
         </SidebarGroupLabel>
       )}
 
@@ -643,7 +645,7 @@ const SidebarLayout = () => {
   // Only the icon rail is too narrow for the inline sub-menu.
   // Mobile renders the full-width sheet, so it keeps the normal tree.
   const isIconMode = state === 'collapsed' && !isMobile
-
+const t = useTranslations('sidebar')
   return (
     <Sidebar collapsible='icon' variant='sidebar'>
       <SidebarHeader>

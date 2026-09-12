@@ -26,6 +26,7 @@ import { SidebarTrigger } from '@/components/ui/sidebar'
 import LanguageDropdown from '../shared/LanguageDropdown'
 import { ModeToggle } from '../mode-toggle'
 import ProfileDropdown from '../shared/ProfileDropdown'
+import { LanguageSwitcher } from '../language-switcher'
 
 const Header = () => {
   const pathname = usePathname()
@@ -59,13 +60,7 @@ const Header = () => {
         </div>
         <div className='flex items-center gap-1.5'>
           <ModeToggle />
-          <LanguageDropdown
-            trigger={
-              <Button variant='ghost' size='icon-lg'>
-                <LanguagesIcon />
-              </Button>
-            }
-          />
+          <LanguageSwitcher />
           <ProfileDropdown />
         </div>
       </div>

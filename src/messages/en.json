@@ -1,0 +1,10 @@
+{
+  "common": {
+    "dashboard": "Dashboard",
+    "settings": "Settings",
+    "users": "Users",
+    "logout": "Logout",
+    "save": "Save",
+    "cancel": "Cancel"
+  }
+}

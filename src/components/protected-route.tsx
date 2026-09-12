@@ -57,11 +57,13 @@ export function ProtectedRoute({
 
     if (data) {
       const user = "user" in data ? data.user : data;
-      dispatch(setUser(user));
-      localStorage.setItem("user", JSON.stringify(user));
+      if (reduxUser?.id !== user.id) {
+        dispatch(setUser(user));
+        localStorage.setItem("user", JSON.stringify(user));
+      }
     }
 
-  }, [data, dispatch]);
+  }, [data, dispatch, reduxUser?.id]);
 
 
   useEffect(() => {

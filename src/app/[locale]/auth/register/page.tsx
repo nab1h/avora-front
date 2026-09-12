@@ -5,8 +5,6 @@ import { Globe } from "lucide-react";
 import { APP_CONFIG } from "@/config/app-config";
 
 import { RegisterForm } from "../_components/register-form";
-import { GoogleButton } from "../_components/social-auth/google-button";
-import { FacebookButton } from "../_components/social-auth/facebook-button";
 import { GuestRoute } from "@/components/GuestRoute";
 
 export default function Register() {
@@ -19,11 +17,6 @@ export default function Register() {
           <p className="text-muted-foreground text-sm">Please enter your details to register.</p>
         </div>
         <div className="space-y-4">
-          <GoogleButton className="w-full" />
-          <FacebookButton className="w-full" />
-          <div className="relative text-center text-sm after:absolute after:inset-0 after:top-1/2 after:z-0 after:flex after:items-center after:border-border after:border-t">
-            <span className="relative z-10 bg-background px-2 text-muted-foreground">Or continue with</span>
-          </div>
           <RegisterForm />
         </div>
       </div>
