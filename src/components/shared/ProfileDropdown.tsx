@@ -23,11 +23,13 @@ import { getInitials } from '@/lib/utils'
 
 import { logout } from '@/lib/features/auth/auth-slice'
 import { useRouter } from 'next/navigation'
+import { useTranslations } from 'next-intl'
 
 const ProfileDropdown = () => {
   const dispatch = useAppDispatch()
   const router = useRouter()
   const user = useAppSelector(state => state.auth.user)
+  const t = useTranslations('profile')
 
   const fullName = user?.name ?? 'User'
   const email = user?.email ?? ''
@@ -73,11 +75,11 @@ const ProfileDropdown = () => {
         <DropdownMenuGroup>
           <DropdownMenuItem render={<Link href='/dashboard/profile' />}>
             <UserIcon />
-            <span>My Account</span>
+            <span>{t('myAccount')}</span>
           </DropdownMenuItem>
           <DropdownMenuItem render={<Link href='/pages/user-settings?setting=general' />}>
             <SettingsIcon />
-            <span>Settings</span>
+            <span>{t('settings')}</span>
           </DropdownMenuItem>
         </DropdownMenuGroup>
 
@@ -86,7 +88,7 @@ const ProfileDropdown = () => {
         <DropdownMenuGroup>
           <DropdownMenuItem variant='destructive'  onClick={handleLogout}>
             <LogOutIcon />
-            <span>Sign out</span>
+            <span>{t('signOut')}</span>
           </DropdownMenuItem>
         </DropdownMenuGroup>
       </DropdownMenuContent>

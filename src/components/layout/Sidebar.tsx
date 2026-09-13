@@ -60,6 +60,7 @@ import { cn } from '@/lib/utils'
 import { useAppSelector } from '@/lib/hooks'
 import { filterNavItems } from '@/lib/utils/permissions'
 import { useTranslations } from 'next-intl'
+import { useLocale } from 'next-intl'
 
 const isSubGroup = (item: MenuSubItem): item is MenuGroupSubItem => 'childItems' in item
 
@@ -134,10 +135,12 @@ function getActiveBranchKeys(
 // A single navigable link inside the icon-mode flyout, at either nesting level.
 const FlyoutMenuLink = ({
   item,
-  isActive
+  isActive,
+  translateLabel
 }: {
   item: MenuLeafSubItem
   isActive: boolean
+  translateLabel: (item: MenuLeafSubItem) => string
 }) => (
   <DropdownMenuItem
     className={cn(
@@ -146,7 +149,7 @@ const FlyoutMenuLink = ({
     )}
     render={<Link href={item.href} target={getLinkTarget(item.href, item.target)} />}
   >
-    <span className='truncate'>{item.label}</span>
+    <span className='truncate'>{translateLabel(item)}</span>
 
     <div className='flex items-center gap-2'>
       {item.badge && (
@@ -171,15 +174,18 @@ const FlyoutMenuItem = ({
   childItems,
   isChildActive,
   pathname,
-  searchParams
+  searchParams,
+  translateLabel
 }: {
   item: MenuItem
   childItems: MenuSubItem[]
   isChildActive: boolean
   pathname: string
   searchParams: Pick<URLSearchParams, 'get'>
+  translateLabel: (item: MenuItem | MenuSubItem) => string
 }) => {
   const Tag = item.icon ? (Icon[item.icon] as ComponentType) : null
+  const isRtl = useLocale() === 'ar'
 
   return (
     <SidebarMenuItem>
@@ -193,8 +199,8 @@ const FlyoutMenuItem = ({
           }
         >
           {Tag && <Tag />}
-          <span className='min-w-0 flex-1 truncate'>{item.label}</span>
-          <ChevronRightIcon className='ml-auto' />
+          <span className='min-w-0 flex-1 truncate'>{translateLabel(item)}</span>
+          <ChevronRightIcon className={cn('ml-auto', isRtl && 'rotate-180')} />
         </DropdownMenuTrigger>
 
         <DropdownMenuContent
@@ -206,7 +212,7 @@ const FlyoutMenuItem = ({
           {/* The label must live inside a Group — Base UI's GroupLabel throws without one. */}
           <DropdownMenuGroup>
             <DropdownMenuLabel className='text-foreground flex items-center gap-2 text-sm'>
-              <span className='truncate'>{item.label}</span>
+              <span className='truncate'>{translateLabel(item)}</span>
 
               {item.badge && (
                 <span
@@ -238,7 +244,7 @@ const FlyoutMenuItem = ({
                         'bg-primary/10 text-accent-foreground font-medium'
                     )}
                   >
-                    <span className='truncate'>{subItem.label}</span>
+                    <span className='truncate'>{translateLabel(subItem)}</span>
                   </DropdownMenuSubTrigger>
 
                   <DropdownMenuSubContent
@@ -249,6 +255,7 @@ const FlyoutMenuItem = ({
                       <FlyoutMenuLink
                         key={leaf.label}
                         item={leaf}
+                        translateLabel={translateLabel}
                         isActive={isLinkActive(
                           leaf.href,
                           leaf.activePath,
@@ -263,6 +270,7 @@ const FlyoutMenuItem = ({
                 <FlyoutMenuLink
                   key={subItem.label}
                   item={subItem}
+                  translateLabel={translateLabel}
                   isActive={isLinkActive(
                     subItem.href,
                     subItem.activePath,
@@ -282,6 +290,7 @@ const FlyoutMenuItem = ({
 const SidebarGroupedMenuItems = ({
   data,
   groupLabel,
+  groupTranslationKey,
   pathname,
   searchParams,
   isIconMode,
@@ -290,6 +299,7 @@ const SidebarGroupedMenuItems = ({
 }: {
   data: MenuItem[]
   groupLabel?: string
+  groupTranslationKey?: string
   pathname: string
   searchParams: Pick<URLSearchParams, 'get'>
   isIconMode: boolean
@@ -297,11 +307,19 @@ const SidebarGroupedMenuItems = ({
   setOpenItem: (key: string, open: boolean) => void
 }) => {
   const t = useTranslations('sidebar')
+  const isRtl = useLocale() === 'ar'
+  const translateLabel = (item: MenuItem | MenuSubItem) =>
+    item.translationKey && t.has(item.translationKey)
+      ? t(item.translationKey)
+      : item.label
+
   return (
     <SidebarGroup>
       {groupLabel && (
         <SidebarGroupLabel className='text-sidebar-foreground/50 tracking-wider uppercase'>
-          {t(groupLabel)}
+          {groupTranslationKey && t.has(groupTranslationKey)
+            ? t(groupTranslationKey)
+            : groupLabel}
         </SidebarGroupLabel>
       )}
 
@@ -338,6 +356,7 @@ const SidebarGroupedMenuItems = ({
                   isChildActive={isChildActive}
                   pathname={pathname}
                   searchParams={searchParams}
+                  translateLabel={translateLabel}
                 />
               )
             }
@@ -367,7 +386,7 @@ const SidebarGroupedMenuItems = ({
                         item.badge && 'pr-14'
                       )}
                     >
-                      {item.label}
+                      {translateLabel(item)}
                     </span>
 
                     {item.badge && (
@@ -381,7 +400,13 @@ const SidebarGroupedMenuItems = ({
                       </SidebarMenuBadge>
                     )}
 
-                    <ChevronRightIcon className='ml-auto transition-transform duration-200 group-data-open/collapsible:rotate-90' />
+                    <ChevronRightIcon
+                      className={cn(
+                        'ml-auto transition-transform duration-200',
+                        isRtl && 'rotate-180',
+                        'group-data-open/collapsible:rotate-90'
+                      )}
+                    />
                   </CollapsibleTrigger>
 
                   <CollapsibleContent className='h-(--collapsible-panel-height) overflow-hidden transition-all duration-200 data-ending-style:h-0 data-starting-style:h-0'>
@@ -418,9 +443,15 @@ const SidebarGroupedMenuItems = ({
                                   />
                                 }
                               >
-                                {subItem.label}
+                                {translateLabel(subItem)}
 
-                                <ChevronRightIcon className='ml-auto shrink-0 transition-transform duration-200 group-data-open/subcollapsible:rotate-90' />
+                                <ChevronRightIcon
+                                  className={cn(
+                                    'ml-auto shrink-0 transition-transform duration-200',
+                                    isRtl && 'rotate-180',
+                                    'group-data-open/subcollapsible:rotate-90'
+                                  )}
+                                />
                               </CollapsibleTrigger>
 
                               <CollapsibleContent className='h-(--collapsible-panel-height) overflow-hidden transition-all duration-200 data-ending-style:h-0 data-starting-style:h-0'>
@@ -459,7 +490,7 @@ const SidebarGroupedMenuItems = ({
                                               'pr-6'
                                           )}
                                         >
-                                          {leaf.label}
+                                          {translateLabel(leaf)}
                                         </span>
 
                                         {leaf.badge && (
@@ -515,7 +546,7 @@ const SidebarGroupedMenuItems = ({
                                     'pr-6'
                                 )}
                               >
-                                {subItem.label}
+                                {translateLabel(subItem)}
                               </span>
 
                               {subItem.badge && (
@@ -567,7 +598,7 @@ const SidebarGroupedMenuItems = ({
                         'pr-6'
                     )}
                   >
-                    {item.label}
+                    {translateLabel(item)}
                   </span>
 
                   {item.badge && (
@@ -645,7 +676,6 @@ const SidebarLayout = () => {
   // Only the icon rail is too narrow for the inline sub-menu.
   // Mobile renders the full-width sheet, so it keeps the normal tree.
   const isIconMode = state === 'collapsed' && !isMobile
-const t = useTranslations('sidebar')
   return (
     <Sidebar collapsible='icon' variant='sidebar'>
       <SidebarHeader>
@@ -677,6 +707,7 @@ const t = useTranslations('sidebar')
               key={navItem.groupLabel || index}
               data={navItem.items}
               groupLabel={navItem.groupLabel}
+              groupTranslationKey={navItem.groupTranslationKey}
               pathname={pathname}
               searchParams={searchParams}
               isIconMode={isIconMode}

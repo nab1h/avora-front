@@ -4,6 +4,7 @@
 import { Fragment } from 'react'
 
 import { usePathname } from 'next/navigation'
+import { useLocale, useTranslations } from 'next-intl'
 
 // Third-party Imports
 import { LanguagesIcon } from 'lucide-react'
@@ -30,8 +31,10 @@ import { LanguageSwitcher } from '../language-switcher'
 
 const Header = () => {
   const pathname = usePathname()
+  const locale = useLocale()
+  const t = useTranslations('breadcrumb')
 
-  const segments = pathname.split('/').filter(Boolean)
+  const segments = pathname.split('/').filter(Boolean).filter(segment => segment !== locale)
 
   return (
     <header className='bg-card sticky top-0 z-50 border-b'>
@@ -43,7 +46,8 @@ const Header = () => {
             <BreadcrumbList>
               {segments.map((segment, index) => {
                 const isLast = index === segments.length - 1
-                const label = segment.replace(/-/g, ' ').replace(/\b\w/g, c => c.toUpperCase())
+                const fallbackLabel = segment.replace(/-/g, ' ').replace(/\b\w/g, c => c.toUpperCase())
+                const label = t.has(segment) ? t(segment) : fallbackLabel
                 const href = '/' + segments.slice(0, index + 1).join('/')
 
                 return (

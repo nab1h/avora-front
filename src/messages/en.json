@@ -6,5 +6,96 @@
     "logout": "Logout",
     "save": "Save",
     "cancel": "Cancel"
+  },
+  "sidebar": {
+    "dashboardLayouts": "Dashboard & Layouts",
+    "apps": "Apps",
+    "orders": "Orders",
+    "layouts": "Layouts",
+    "fullNavbar": "Full Navbar",
+    "horizontal": "Horizontal",
+    "users": "Users",
+    "list": "List",
+    "view": "View",
+    "rolesPermissions": "Roles & Permissions",
+    "roles": "Roles",
+    "permissions": "Permissions"
+  },
+  "profile": {
+    "myAccount": "My Account",
+    "settings": "Settings",
+    "signOut": "Sign out"
+  },
+  "breadcrumb": {
+    "dashboard": "Dashboard",
+    "profile": "Profile",
+    "users": "Users",
+    "roles": "Roles",
+    "permissions": "Permissions",
+    "login": "Login",
+    "register": "Register",
+    "forgot-password": "Forgot Password",
+    "reset-password": "Reset Password"
+  },
+  "users": {
+    "Users": "Users",
+    "User": "User",
+    "Email": "Email",
+    "Role": "Role",
+    "permissions": "permissions",
+    "status": "staus",
+    "actions": "Actions",
+    "disable": "Disable",
+    "enable": "Enable",
+    "Search": "Search by name or email",
+    "Next": "Next",
+    "previous": "previous",
+    "label-page": "Manage users and access controls",
+    "add-user": "Add User",
+    "edit-user": "Edit User",
+    "delete-user": "Delete User",
+    "edit-user-roles": "Manage Roles & Permission",
+    "userDisabledSuccessfully": "User disabled successfully.",
+    "userEnabledSuccessfully": "User enabled successfully.",
+    "failedToUpdateUserStatus": "Failed to update user status. Please try again.",
+    "filter": {
+      "all": "All Roles",
+      "admin": "Admin",
+      "Oldest": "Oldest",
+      "Newest": "Newest",
+      "NaZ": "Name A-Z",
+      "NaA": "Name Z-A"
+    }
+  },
+  "dialog": {
+    "saving": "Saving...",
+    "save": "Save Changes",
+    "premissions": "Permissions",
+    "roles": "Roles",
+    "label": "Manage User Access",
+    "updatedSuccessfully": "User roles and permissions updated successfully.",
+    "failedToUpdateAccess": "Failed to update user access. Please try again."
+  },
+  "add-user": "Add User",
+  "createNewUser": "Create New User",
+  "creating": "Creating...",
+  "createUser": "Create User",
+  "userCreatedSuccessfully": "User created successfully.",
+  "failedToCreateUser": "Failed to create user. Please try again.",
+  "fields": {
+    "name": "Name",
+    "email": "Email",
+    "password": "Password",
+    "confirmPassword": "Confirm Password",
+    "enterUserName": "Enter user name",
+    "emailPlaceholder": "user@example.com",
+    "enterPassword": "Enter password",
+    "repeatPassword": "Repeat password"
+  },
+  "validation": {
+    "nameMin": "Name must be at least 2 characters",
+    "emailInvalid": "Enter a valid email address",
+    "passwordMin": "Password must be at least 8 characters",
+    "passwordsMismatch": "Passwords do not match"
   }
 }

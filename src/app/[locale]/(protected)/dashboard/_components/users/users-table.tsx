@@ -39,29 +39,17 @@ import { Button } from "@/components/ui/button";
 import { toast } from "sonner";
 import { useUpdateUserStatusMutation } from "@/lib/services/users-api";
 import { Loader2 } from "lucide-react";
-
-
+import { useTranslations } from "next-intl";
 
 
 
 interface Props {
-
     users: User[];
-
     isLoading: boolean;
-
 }
-
-
-
-
-
 export default function UsersTable({
-
     users,
-
     isLoading
-
 }: Props) {
     const [currentUserId, setCurrentUserId] = useState<number | null>(null);
     const [updatingUserId, setUpdatingUserId] = useState<number | null>(null);
@@ -87,7 +75,7 @@ export default function UsersTable({
 
         try {
             await updateStatus({ id: userId, is_active: !isActive }).unwrap();
-            toast.success(isActive ? "User disabled successfully." : "User enabled successfully.");
+            toast.success(isActive ? t("userDisabledSuccessfully") : t("userEnabledSuccessfully"));
         } catch {
             toast.error("Failed to update user status. Please try again.");
         } finally {
@@ -95,243 +83,116 @@ export default function UsersTable({
         }
     }
 
+    const t = useTranslations('users')
     return (
-
-
         <Card>
-
-
             <CardContent>
-
-
-
                 <Table>
-
-
-
                     <TableHeader>
-
-
                         <TableRow>
-
-
-                            <TableHead>
-                                User
+                            <TableHead className="px-4 text-start">
+                                {t("Users")}
                             </TableHead>
 
-
-                            <TableHead>
-                                Email
+                            <TableHead className="px-4 text-start">
+                                {t("Email")}
                             </TableHead>
 
-
-                            <TableHead>
-                                Roles
+                            <TableHead className="px-4 text-start">
+                                {t("Role")}
                             </TableHead>
 
-
-                            <TableHead>
-                                Permissions
+                            <TableHead className="px-4 text-start">
+                                {t("permissions")}
                             </TableHead>
 
-
-                            <TableHead>
-                                Status
+                            <TableHead className="px-4 text-start">
+                                {t("status")}
                             </TableHead>
 
-
-                            <TableHead className="text-right">
-                                Actions
+                            <TableHead className="px-4 text-start">
+                                {t("actions")}
                             </TableHead>
-
-
                         </TableRow>
-
-
                     </TableHeader>
 
-
-
-
-
                     <TableBody>
-
-
-
-
-
                         {
                             isLoading &&
-
                             Array.from({
                                 length: 5
                             }).map((_, index) => (
-
-
                                 <TableRow key={index}>
-
-
                                     <TableCell>
-
                                         <div className="flex items-center gap-3">
-
                                             <Skeleton
                                                 className="h-10 w-10 rounded-full"
                                             />
-
-
                                             <Skeleton
                                                 className="h-5 w-32"
                                             />
-
                                         </div>
-
                                     </TableCell>
 
-
-
-
                                     <TableCell>
-
                                         <Skeleton
                                             className="h-5 w-40"
                                         />
-
                                     </TableCell>
 
-
-
-
-
                                     <TableCell>
-
                                         <Skeleton
                                             className="h-5 w-24"
                                         />
-
                                     </TableCell>
 
-
-
-
-
                                     <TableCell>
-
                                         <Skeleton
                                             className="h-5 w-24"
                                         />
-
                                     </TableCell>
 
-
-
-
-
                                     <TableCell>
-
                                         <Skeleton
                                             className="h-5 w-20"
                                         />
-
                                     </TableCell>
 
-
-
-
-
                                     <TableCell>
-
                                         <Skeleton
                                             className="h-8 w-8 ml-auto"
                                         />
-
                                     </TableCell>
-
-
-
                                 </TableRow>
-
-
                             ))
-
                         }
-
-
-
-
-
-
-
 
                         {
                             !isLoading && users.map((user) => (
-
-
-
                                 <TableRow
                                     key={user.id}
                                     className={user.id === currentUserId ? "bg-primary/5" : undefined}
                                 >
-
-
-
-
-
                                     <TableCell>
-
-
-
                                         <div className="flex items-center gap-3">
-
-
-
                                             <UserAvatar
-
                                                 name={user.name}
-
                                                 image={user.avatar}
-
                                             />
 
-
-
                                             <span className="font-medium">
-
                                                 {user.name}
-
                                             </span>
-
                                             {user.id === currentUserId && (
                                                 <Badge variant="outline">You</Badge>
                                             )}
-
-
-
                                         </div>
-
-
-
                                     </TableCell>
-
-
-
-
-
-
-
-
                                     <TableCell>
 
                                         {user.email}
 
                                     </TableCell>
-
-
-
-
-
-
-
 
                                     <TableCell>
                                         <div className="flex flex-wrap gap-2">
@@ -373,71 +234,33 @@ export default function UsersTable({
                                             onClick={() => handleStatusChange(user.id, user.is_active)}
                                         >
                                             {updatingUserId === user.id && <Loader2 className="animate-spin" />}
-                                            {user.is_active ? "Disable" : "Enable"}
+                                            {user.is_active ? t("disable") : t("enable")}
                                         </Button>
                                     </TableCell>
 
                                     <TableCell className="text-right">
-
                                         <UserActions user={user} />
-
                                     </TableCell>
                                 </TableRow>
                             ))
-
                         }
-
-
-
-
-
-
                         {
                             !isLoading && users.length === 0 && (
-
-
                                 <TableRow>
-
-
                                     <TableCell
-
                                         colSpan={6}
-
                                         className="text-center text-muted-foreground"
-
                                     >
-
                                         No users found
-
-
                                     </TableCell>
 
-
                                 </TableRow>
-
-
                             )
                         }
-
-
-
-
-
                     </TableBody>
-
-
-
                 </Table>
-
-
-
             </CardContent>
-
-
-
         </Card>
-
-
     );
 
 }

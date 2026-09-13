@@ -5,6 +5,7 @@ type IconName = keyof typeof Icon
 
 export type MenuLeafSubItem = {
   label: string
+  translationKey?: string
   href: string
   activePath?: string
   badge?: string
@@ -15,6 +16,7 @@ export type MenuLeafSubItem = {
 
 export type MenuGroupSubItem = {
   label: string
+  translationKey?: string
   childItems: MenuLeafSubItem[]
   permission?: string
 }
@@ -24,6 +26,7 @@ export type MenuSubItem = MenuLeafSubItem | MenuGroupSubItem
 export type MenuItem = {
   icon: IconName
   label: string
+  translationKey?: string
   permission?: string
 } & (
     | {
@@ -43,33 +46,39 @@ export type MenuItem = {
 
 export type NavItem = {
   groupLabel?: string
+  groupTranslationKey?: string
   items: MenuItem[]
 }
 
 export const navItems: NavItem[] = [
   {
     groupLabel: 'Dashboard & Layouts',
+    groupTranslationKey: 'dashboardLayouts',
     items: [
       {
         icon: 'Package',
         label: 'Orders',
+        translationKey: 'orders',
         href: '/dashboard/profile',
         permission: 'manage-roles',
       },
       {
         icon: 'LayoutTemplate',
         label: 'Layouts',
+        translationKey: 'layouts',
         // badge: 'Pro',
         badgeClassName: 'right-8',
         childItems: [
           {
             label: 'Full Navbar',
+            translationKey: 'fullNavbar',
             href: 'https://shadcn-nextjs-admincn-full-navbar-layout-admin-template.vercel.app/',
             target: '_blank',
             permission: 'manage-roles',
           },
           {
             label: 'Horizontal',
+            translationKey: 'horizontal',
             href: 'https://shadcn-nextjs-admincn-horizontal-layout-admin-template.vercel.app/',
             target: '_blank',
             permission: 'manage-roles',
@@ -80,25 +89,29 @@ export const navItems: NavItem[] = [
   },
   {
     groupLabel: 'Apps',
+    groupTranslationKey: 'apps',
     items: [
       {
         icon: 'UsersIcon',
         label: 'Users',
+        translationKey: 'users',
         childItems: [
-          { label: 'List', href: '/dashboard/users', permission: 'manage-roles' },
-          { label: 'View', href: '/apps/users/view', permission: 'manage-roles' }
+          { label: 'List', translationKey: 'list', href: '/dashboard/users', permission: 'manage-roles' },
+          { label: 'View', translationKey: 'view', href: '/apps/users/view', permission: 'manage-roles' }
         ],
         permission: 'manage-roles',
       },
       {
         icon: 'ShieldCheckIcon',
         label: 'Roles & Permissions',
+        translationKey: 'rolesPermissions',
         // badge: 'Pro',
         badgeClassName: 'right-8',
         permission: 'manage-roles',
         childItems: [
           {
             label: 'Roles',
+            translationKey: 'roles',
             href: '/dashboard/roles',
             permission: 'manage-roles',
 
@@ -106,6 +119,7 @@ export const navItems: NavItem[] = [
           },
           {
             label: 'Permissions',
+            translationKey: 'permissions',
             href: '/dashboard/permissions',
             permission: 'manage-roles',
 

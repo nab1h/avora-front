@@ -18,8 +18,7 @@ import EditUserDialog from "./edit-user-dialog";
 import DeleteUserDialog from "./delete-user-dialog";
 import ManageAccessDialog from "./manage-access-dialog";
 import { User } from "@/lib/features/auth/auth-slice";
-
-
+import { useTranslations } from "next-intl";
 
 
 export default function UserActions({
@@ -28,23 +27,13 @@ export default function UserActions({
     user: User
 }) {
 
-
     const [editOpen, setEditOpen] = useState(false);
-
     const [accessOpen, setAccessOpen] = useState(false);
-
     const [deleteOpen, setDeleteOpen] = useState(false);
-
-
-
+    const t = useTranslations('users')
     return (
-
         <>
-
-
             <DropdownMenu>
-
-
                 <DropdownMenuTrigger
                     render={
                         <Button
@@ -56,118 +45,48 @@ export default function UserActions({
                     }
                 />
 
-
-
                 <DropdownMenuContent align="end">
 
-
-
                     <DropdownMenuItem
-
                         onClick={() => setEditOpen(true)}
-
                     >
-
-                        Edit User
-
+                        {t("edit-user")}
                     </DropdownMenuItem>
-
-
-
-
 
                     <DropdownMenuItem
-
                         onClick={() => setAccessOpen(true)}
-
                     >
-
-                        Manage Roles & Permissions
-
+                        {t("edit-user-roles")}
                     </DropdownMenuItem>
-
-
-
-
 
                     <DropdownMenuSeparator />
 
-
-
-
-
                     <DropdownMenuItem
-
                         variant="destructive"
-
                         onClick={() => setDeleteOpen(true)}
-
                     >
-
-                        Delete User
-
+                        {t("delete-user")}
                     </DropdownMenuItem>
-
-
-
-
-
                 </DropdownMenuContent>
-
-
-
             </DropdownMenu>
 
-
-
-
-
-
-
             <EditUserDialog
-
                 user={user}
-
                 open={editOpen}
-
                 setOpen={setEditOpen}
-
             />
-
-
-
-
-
 
             <ManageAccessDialog
-
                 user={user}
-
                 open={accessOpen}
-
                 setOpen={setAccessOpen}
-
             />
-
-
-
-
-
-
 
             <DeleteUserDialog
-
                 user={user}
-
                 open={deleteOpen}
-
                 setOpen={setDeleteOpen}
-
             />
-
-
-
-
         </>
 
     );

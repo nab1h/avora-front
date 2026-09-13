@@ -6,5 +6,96 @@
     "logout": "تسجيل الخروج",
     "save": "حفظ",
     "cancel": "إلغاء"
+  },
+  "sidebar": {
+    "dashboardLayouts": "لوحة التحكم والتخطيطات",
+    "apps": "التطبيقات",
+    "orders": "الطلبات",
+    "layouts": "التخطيطات",
+    "fullNavbar": "شريط التنقل الكامل",
+    "horizontal": "أفقي",
+    "users": "المستخدمون",
+    "list": "القائمة",
+    "view": "عرض",
+    "rolesPermissions": "الأدوار والصلاحيات",
+    "roles": "الأدوار",
+    "permissions": "الصلاحيات"
+  },
+  "profile": {
+    "myAccount": "حسابي",
+    "settings": "الإعدادات",
+    "signOut": "تسجيل الخروج"
+  },
+  "breadcrumb": {
+    "dashboard": "لوحة التحكم",
+    "profile": "الملف الشخصي",
+    "users": "المستخدمون",
+    "roles": "الأدوار",
+    "permissions": "الصلاحيات",
+    "login": "تسجيل الدخول",
+    "register": "إنشاء حساب",
+    "forgot-password": "نسيت كلمة المرور",
+    "reset-password": "إعادة تعيين كلمة المرور"
+  },
+  "users": {
+    "Users": "المستخدمون",
+    "User": "المستخدم",
+    "Email": "البريد الإلكتروني",
+    "Role": "الدور",
+    "permissions": "الصلاحيات",
+    "status": "الحالة",
+    "actions": "العمليات",
+    "disable": "تعطيل",
+    "enable": "فتح",
+    "Search": "بحث عن طريق الاسم او البريد الإلكتروني",
+    "Next": "التالي",
+    "previous": "السابق",
+    "label-page": "إدارة المستخدمين وتحكم الوصول.",
+    "add-user": "إضافة مستخدم",
+    "edit-user": "تعديل المستخدم",
+    "delete-user": "حذف المستخدم",
+    "edit-user-roles": "إدارة الأدوار والصلاحيات",
+    "userDisabledSuccessfully": "تم تعطيل المستخدم بنجاح.",
+    "userEnabledSuccessfully": "تم تفعيل المستخدم بنجاح.",
+    "failedToUpdateUserStatus": "فشل في تحديث حالة المستخدم. حاول مرة أخرى.",
+    "filter": {
+      "all": "كل الادوار",
+      "admin": "المدير",
+      "Oldest": "الأقدم",
+      "Newest": "الأحدث",
+      "NaZ": "الترتيب أ-ي",
+      "NaA": "الترتيب ي-أ"
+    }
+  },
+  "dialog": {
+    "saving": "يحفظ...",
+    "save": "حفظ التغيرات",
+    "premissions": "الصلاحيات",
+    "roles": "الأدوار",
+    "label": "إدارة صلاحيات المستخدم",
+    "updatedSuccessfully": "تم تحديث أدوار وصلاحيات المستخدم بنجاح.",
+    "failedToUpdateAccess": "فشل في تحديث صلاحيات المستخدم. حاول مرة أخرى."
+  },
+  "add-user": "إضافة مستخدم",
+  "createNewUser": "إنشاء مستخدم جديد",
+  "creating": "جاري الإنشاء...",
+  "createUser": "إنشاء مستخدم",
+  "userCreatedSuccessfully": "تم إنشاء المستخدم بنجاح.",
+  "failedToCreateUser": "فشل في إنشاء المستخدم. حاول مرة أخرى.",
+  "fields": {
+    "name": "الاسم",
+    "email": "البريد الإلكتروني",
+    "password": "كلمة المرور",
+    "confirmPassword": "تأكيد كلمة المرور",
+    "enterUserName": "أدخل اسم المستخدم",
+    "emailPlaceholder": "user@example.com",
+    "enterPassword": "أدخل كلمة المرور",
+    "repeatPassword": "أعد كتابة كلمة المرور"
+  },
+  "validation": {
+    "nameMin": "يجب أن يحتوي الاسم على حرفين على الأقل",
+    "emailInvalid": "أدخل بريدًا إلكترونيًا صالحًا",
+    "passwordMin": "يجب أن تحتوي كلمة المرور على 8 أحرف على الأقل",
+    "passwordsMismatch": "كلمتا المرور غير متطابقتين"
   }
 }
