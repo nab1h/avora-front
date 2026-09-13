@@ -24,7 +24,31 @@
   "profile": {
     "myAccount": "My Account",
     "settings": "Settings",
-    "signOut": "Sign out"
+    "signOut": "Sign out",
+    "title": "Profile",
+    "description": "Please enter your details to update your profile.",
+    "personalInformation": "Personal Information",
+    "updateNameAndEmail": "Update your name and email address.",
+    "name": "Name",
+    "email": "Email",
+    "changing": "Changing...",
+    "changeInformation": "Change Information",
+    "updatedSuccessfully": "Profile updated successfully.",
+    "failedToUpdate": "Failed to update profile. Please try again.",
+    "changePassword": "Change Password",
+    "changePasswordDescription": "Update your password to keep your account secure.",
+    "currentPassword": "Current Password",
+    "newPassword": "New Password",
+    "confirmNewPassword": "Confirm New Password",
+    "changePasswordButton": "Change Password",
+    "passwordChangedSuccessfully": "Password changed successfully.",
+    "somethingWentWrong": "Something went wrong.",
+    "validation": {
+      "currentPasswordRequired": "Current password is required",
+      "passwordMin": "Password must be at least 8 characters",
+      "confirmPasswordRequired": "Please confirm your password",
+      "passwordsMismatch": "Passwords do not match"
+    }
   },
   "breadcrumb": {
     "dashboard": "Dashboard",
@@ -65,6 +89,16 @@
       "Newest": "Newest",
       "NaZ": "Name A-Z",
       "NaA": "Name Z-A"
+    },
+    "deleteUser": {
+      "title": "Delete User?",
+      "description": "Are you sure you want to delete",
+      "descriptionEnd": "? This action cannot be undone.",
+      "cancel": "Cancel",
+      "delete": "Delete",
+      "deleting": "Deleting...",
+      "deletedSuccessfully": "User deleted successfully.",
+      "failedToDelete": "Failed to delete user. Please try again."
     }
   },
   "dialog": {
@@ -97,5 +131,64 @@
     "emailInvalid": "Enter a valid email address",
     "passwordMin": "Password must be at least 8 characters",
     "passwordsMismatch": "Passwords do not match"
+  },
+  "roles": {
+    "title": "Roles",
+    "description": "Manage your roles and access controls.",
+    "addRole": "Add Role",
+    "createNewRole": "Create New Role",
+    "roleName": "Role Name",
+    "enterRoleName": "Enter role name",
+    "creating": "Creating...",
+    "createRole": "Create Role",
+    "roleCreatedSuccessfully": "Role created successfully.",
+    "failedToCreateRole": "Failed to create role. Please try again.",
+    "validation": {
+      "nameMin": "Role name must be at least 2 characters",
+      "nameMax": "Role name must be less than 50 characters"
+    },
+    "table": {
+      "id": "ID",
+      "roleName": "Role Name",
+      "permissions": "Permissions",
+      "actions": "Actions",
+      "noPermissions": "No permissions"
+    },
+    "actions": {
+      "managePermissions": "Manage Permissions",
+      "delete": "Delete"
+    },
+    "manage": {
+      "title": "Manage Role Permissions",
+      "saving": "Saving...",
+      "saveChanges": "Save Changes",
+      "updatedSuccessfully": "Role and permissions updated successfully.",
+      "failedToUpdate": "Failed to save role changes. Please try again."
+    },
+    "delete": {
+      "title": "Delete Role?",
+      "description": "Are you sure you want to delete",
+      "descriptionEnd": "? This action cannot be undone.",
+      "cancel": "Cancel",
+      "delete": "Delete",
+      "deleting": "Deleting...",
+      "deletedSuccessfully": "Role deleted successfully.",
+      "failedToDelete": "Failed to delete role. Please try again."
+    }
+  },
+  "permissions": {
+    "title": "Permissions",
+    "description": "Manage your permissions and access controls.",
+    "table": {
+      "id": "ID",
+      "name": "Name",
+      "actions": "Actions",
+      "openMenu": "Open menu"
+    },
+    "actions": {
+      "edit": "Edit",
+      "duplicate": "Duplicate",
+      "delete": "Delete"
+    }
   }
 }

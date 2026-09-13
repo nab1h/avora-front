@@ -17,14 +17,19 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Spinner } from "@/components/ui/spinner";
 import { toast } from "sonner";
+import { useTranslations } from "next-intl";
 
 export function ProfileForm() {
+  const t = useTranslations("profile");
+
   const user = useSelector((state: RootState) => state.auth.user);
 
-  
-  const [updateProfile, { isLoading, isSuccess }] = useUpdateProfileMutation();
+  const [updateProfile, { isLoading, isSuccess }] =
+    useUpdateProfileMutation();
 
-  const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (
+    event: React.FormEvent<HTMLFormElement>
+  ) => {
     event.preventDefault();
 
     const formData = new FormData(event.currentTarget);
@@ -33,15 +38,15 @@ export function ProfileForm() {
     const email = formData.get("email") as string;
 
     try {
-      const response = await updateProfile({
+      await updateProfile({
         name,
         email,
       }).unwrap();
 
-      toast.success("Profile updated successfully");
-      
+      toast.success(t("updatedSuccessfully"));
     } catch (error) {
       console.error(error);
+      toast.error(t("failedToUpdate"));
     }
   };
 
@@ -52,9 +57,10 @@ export function ProfileForm() {
   return (
     <Card className="w-full">
       <CardHeader>
-        <CardTitle>Personal Information</CardTitle>
+        <CardTitle>{t("personalInformation")}</CardTitle>
+
         <CardDescription>
-          Update your name and email address.
+          {t("updateNameAndEmail")}
         </CardDescription>
       </CardHeader>
 
@@ -62,11 +68,14 @@ export function ProfileForm() {
         <form onSubmit={handleSubmit} className="space-y-5">
           {isSuccess && (
             <p className="text-sm text-green-500">
-              Profile updated successfully
+              {t("updatedSuccessfully")}
             </p>
           )}
+
           <div className="space-y-2">
-            <Label htmlFor="name">Name</Label>
+            <Label htmlFor="name">
+              {t("name")}
+            </Label>
 
             <Input
               id="name"
@@ -77,7 +86,9 @@ export function ProfileForm() {
           </div>
 
           <div className="space-y-2">
-            <Label htmlFor="email">Email</Label>
+            <Label htmlFor="email">
+              {t("email")}
+            </Label>
 
             <Input
               id="email"
@@ -88,14 +99,14 @@ export function ProfileForm() {
             />
           </div>
 
-           {isLoading ? (
+          {isLoading ? (
             <Button variant="secondary" disabled>
-              Changing...
+              {t("changing")}
               <Spinner data-icon="inline-start" />
             </Button>
           ) : (
             <Button type="submit">
-              Change information
+              {t("changeInformation")}
             </Button>
           )}
         </form>

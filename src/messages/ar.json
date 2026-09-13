@@ -24,7 +24,31 @@
   "profile": {
     "myAccount": "حسابي",
     "settings": "الإعدادات",
-    "signOut": "تسجيل الخروج"
+    "signOut": "تسجيل الخروج",
+    "title": "الملف الشخصي",
+    "description": "يرجى إدخال بياناتك لتحديث ملفك الشخصي.",
+    "personalInformation": "المعلومات الشخصية",
+    "updateNameAndEmail": "قم بتحديث اسمك وعنوان بريدك الإلكتروني.",
+    "name": "الاسم",
+    "email": "البريد الإلكتروني",
+    "changing": "جاري التغيير...",
+    "changeInformation": "تغيير المعلومات",
+    "updatedSuccessfully": "تم تحديث الملف الشخصي بنجاح.",
+    "failedToUpdate": "فشل في تحديث الملف الشخصي. حاول مرة أخرى.",
+    "changePassword": "تغيير كلمة المرور",
+    "changePasswordDescription": "قم بتحديث كلمة المرور للحفاظ على أمان حسابك.",
+    "currentPassword": "كلمة المرور الحالية",
+    "newPassword": "كلمة المرور الجديدة",
+    "confirmNewPassword": "تأكيد كلمة المرور الجديدة",
+    "changePasswordButton": "تغيير كلمة المرور",
+    "passwordChangedSuccessfully": "تم تغيير كلمة المرور بنجاح.",
+    "somethingWentWrong": "حدث خطأ ما.",
+    "validation": {
+      "currentPasswordRequired": "كلمة المرور الحالية مطلوبة",
+      "passwordMin": "يجب أن تحتوي كلمة المرور على 8 أحرف على الأقل",
+      "confirmPasswordRequired": "يرجى تأكيد كلمة المرور",
+      "passwordsMismatch": "كلمتا المرور غير متطابقتين"
+    }
   },
   "breadcrumb": {
     "dashboard": "لوحة التحكم",
@@ -65,6 +89,16 @@
       "Newest": "الأحدث",
       "NaZ": "الترتيب أ-ي",
       "NaA": "الترتيب ي-أ"
+    },
+    "deleteUser": {
+      "title": "حذف المستخدم؟",
+      "description": "هل أنت متأكد أنك تريد حذف",
+      "descriptionEnd": "؟ لا يمكن التراجع عن هذا الإجراء.",
+      "cancel": "إلغاء",
+      "delete": "حذف",
+      "deleting": "جاري الحذف...",
+      "deletedSuccessfully": "تم حذف المستخدم بنجاح.",
+      "failedToDelete": "فشل في حذف المستخدم. حاول مرة أخرى."
     }
   },
   "dialog": {
@@ -97,5 +131,64 @@
     "emailInvalid": "أدخل بريدًا إلكترونيًا صالحًا",
     "passwordMin": "يجب أن تحتوي كلمة المرور على 8 أحرف على الأقل",
     "passwordsMismatch": "كلمتا المرور غير متطابقتين"
+  },
+  "roles": {
+    "title": "الأدوار",
+    "description": "إدارة الأدوار وعناصر التحكم في الوصول.",
+    "addRole": "إضافة دور",
+    "createNewRole": "إنشاء دور جديد",
+    "roleName": "اسم الدور",
+    "enterRoleName": "أدخل اسم الدور",
+    "creating": "جاري الإنشاء...",
+    "createRole": "إنشاء الدور",
+    "roleCreatedSuccessfully": "تم إنشاء الدور بنجاح.",
+    "failedToCreateRole": "فشل في إنشاء الدور. حاول مرة أخرى.",
+    "validation": {
+      "nameMin": "يجب أن يحتوي اسم الدور على حرفين على الأقل",
+      "nameMax": "يجب ألا يزيد اسم الدور عن 50 حرفًا"
+    },
+    "table": {
+      "id": "المعرف",
+      "roleName": "اسم الدور",
+      "permissions": "الصلاحيات",
+      "actions": "الإجراءات",
+      "noPermissions": "لا توجد صلاحيات"
+    },
+    "actions": {
+      "managePermissions": "إدارة الصلاحيات",
+      "delete": "حذف"
+    },
+    "manage": {
+      "title": "إدارة صلاحيات الدور",
+      "saving": "جاري الحفظ...",
+      "saveChanges": "حفظ التغييرات",
+      "updatedSuccessfully": "تم تحديث الدور والصلاحيات بنجاح.",
+      "failedToUpdate": "فشل في حفظ تغييرات الدور. حاول مرة أخرى."
+    },
+    "delete": {
+      "title": "حذف الدور؟",
+      "description": "هل أنت متأكد أنك تريد حذف",
+      "descriptionEnd": "؟ لا يمكن التراجع عن هذا الإجراء.",
+      "cancel": "إلغاء",
+      "delete": "حذف",
+      "deleting": "جاري الحذف...",
+      "deletedSuccessfully": "تم حذف الدور بنجاح.",
+      "failedToDelete": "فشل في حذف الدور. حاول مرة أخرى."
+    }
+  },
+  "permissions": {
+  "title": "الصلاحيات",
+  "description": "إدارة الصلاحيات وعناصر التحكم في الوصول.",
+  "table": {
+    "id": "المعرف",
+    "name": "الاسم",
+    "actions": "الإجراءات",
+    "openMenu": "فتح القائمة"
+  },
+  "actions": {
+    "edit": "تعديل",
+    "duplicate": "نسخ",
+    "delete": "حذف"
   }
+}
 }
