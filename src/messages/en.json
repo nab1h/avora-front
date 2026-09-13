@@ -1,0 +1,11 @@
+{
+  "Dashboard": {
+    "title": "Dashboard",
+    "welcome": "Welcome"
+  },
+  "Sidebar": {
+    "dashboard": "Dashboard",
+    "users": "Users",
+    "settings": "Settings"
+  }
+}

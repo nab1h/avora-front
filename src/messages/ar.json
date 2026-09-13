@@ -1,0 +1,11 @@
+{
+  "Dashboard": {
+    "title": "لوحة التحكم",
+    "welcome": "مرحبًا بك"
+  },
+  "Sidebar": {
+    "dashboard": "لوحة التحكم",
+    "users": "المستخدمين",
+    "settings": "الإعدادات"
+  }
+}
