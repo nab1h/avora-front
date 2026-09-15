@@ -10,6 +10,7 @@ import {
     SelectTrigger,
     SelectValue,
 } from "@/components/ui/select";
+import { useTranslations } from "next-intl";
 
 
 
@@ -29,141 +30,78 @@ interface Props {
 
 }
 
-
-
 export default function UsersFilters({
-
     search,
     setSearch,
     role,
     setRole,
     sort,
     setSort
-
 }: Props) {
 
-
-
+const t = useTranslations('users')
     return (
-
         <div className="flex flex-col gap-4 md:flex-row">
-
-
             <Input
-
-                placeholder="Search by name or email..."
-
+                placeholder={t("Search")}
                 value={search}
-
                 onChange={(e) =>
                     setSearch(e.target.value)
                 }
-
                 className="md:w-80"
-
             />
 
-
-
-
             <Select
-
                 value={role}
-
                 onValueChange={(value) => {
-
                     if (value) {
                         setRole(value);
                     }
-
                 }}
-
             >
-
                 <SelectTrigger className="md:w-48">
-
-                    <SelectValue placeholder="Filter role" />
-
+                    <SelectValue placeholder={t("filter.all")} />
                 </SelectTrigger>
-
-
-
                 <SelectContent>
-
-
                     <SelectItem value="all">
-                        All Roles
+                        {t("filter.all")}
                     </SelectItem>
-
-
                     <SelectItem value="admin">
-                        Admin
+                        {t("filter.admin")}
                     </SelectItem>
-
-
                 </SelectContent>
-
-
             </Select>
-
-
 
 
 
             <Select
-
                 value={sort}
-
                 onValueChange={(value) => {
-
                     if (value) {
                         setSort(value);
                     }
-
                 }}
-
             >
-
                 <SelectTrigger className="md:w-48">
-
                     <SelectValue placeholder="Sort" />
-
                 </SelectTrigger>
 
-
-
                 <SelectContent>
-
-
                     <SelectItem value="created_at">
-                        Oldest
+                        {t("filter.Oldest")}
                     </SelectItem>
-
-
                     <SelectItem value="-created_at">
-                        Newest
+                        {t("filter.Newest")}
                     </SelectItem>
-
-
                     <SelectItem value="name">
-                        Name A-Z
+                        {t("filter.NaZ")}
                     </SelectItem>
-
-
                     <SelectItem value="-name">
-                        Name Z-A
+                        {t("filter.NaA")}
                     </SelectItem>
-
-
-
                 </SelectContent>
-
-
             </Select>
-
-
         </div>
-
     );
 
 }

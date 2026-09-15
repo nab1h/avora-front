@@ -2,6 +2,7 @@
 
 
 import { Button } from "@/components/ui/button";
+import { useTranslations } from "next-intl";
 
 
 
@@ -26,41 +27,25 @@ export default function UsersPagination({
     setPage
 
 }:Props){
-
-
+    const t = useTranslations('users')
     return (
-
         <div className="flex justify-end gap-2 mt-5">
-
-
             <Button
-
                 variant="outline"
-
                 disabled={current===1}
-
                 onClick={()=>
                     setPage(current-1)
                 }
 
             >
-
-                Previous
-
+                {t("previous")}
             </Button>
-
-
-
 
             <span className="flex items-center px-3">
 
                 {current} / {last}
 
             </span>
-
-
-
-
 
             <Button
 
@@ -71,17 +56,9 @@ export default function UsersPagination({
                 onClick={()=>
                     setPage(current+1)
                 }
-
             >
-
-                Next
-
+                {t("Next")}
             </Button>
-
-
-
         </div>
-
     );
-
 }

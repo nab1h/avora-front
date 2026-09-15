@@ -7,33 +7,40 @@ import { useForm } from "react-hook-form";
 import { toast } from "sonner";
 import { Spinner } from "@/components/ui/spinner";
 import { Label } from "@/components/ui/label";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+import { useTranslations } from "next-intl";
 
 type LaravelError = {
   message?: string;
   errors?: Record<string, string[]>;
 };
 
-const changePasswordSchema = z
-  .object({
-    current_password: z.string().min(1, "Current password is required"),
-    password: z.string().min(8, "Password must be at least 8 characters"),
-    password_confirmation: z
-      .string()
-      .min(1, "Please confirm your password"),
-  })
-  .refine((data) => data.password === data.password_confirmation, {
-    message: "Passwords do not match",
-    path: ["password_confirmation"],
-  });
-
-
-type ChangePasswordFormData = z.infer<typeof changePasswordSchema>;
-
-
 export function ChangePasswordForm() {
+  const t = useTranslations("profile");
+
+  const changePasswordSchema = z
+    .object({
+      current_password: z.string().min(1, t("validation.currentPasswordRequired")),
+      password: z.string().min(8, t("validation.passwordMin")),
+      password_confirmation: z
+        .string()
+        .min(1, t("validation.confirmPasswordRequired")),
+    })
+    .refine((data) => data.password === data.password_confirmation, {
+      message: t("validation.passwordsMismatch"),
+      path: ["password_confirmation"],
+    });
+
+  type ChangePasswordFormData = z.infer<typeof changePasswordSchema>;
+
   const [changePassword, { isLoading, isSuccess }] =
     useChangePasswordMutation();
 
@@ -51,12 +58,11 @@ export function ChangePasswordForm() {
     },
   });
 
-
   const onSubmit = async (data: ChangePasswordFormData) => {
     try {
       const response = await changePassword(data).unwrap();
 
-      toast.success(response.message);
+      toast.success(response.message || t("passwordChangedSuccessfully"));
 
       reset();
     } catch (error) {
@@ -66,32 +72,33 @@ export function ChangePasswordForm() {
 
       toast.error(
         apiError.data?.errors?.password?.[0] ??
-        apiError.data?.message ??
-        "Something went wrong"
+          apiError.data?.message ??
+          t("somethingWentWrong")
       );
     }
   };
 
-
   return (
     <Card>
       <CardHeader>
-        <CardTitle>Change Password</CardTitle>
+        <CardTitle>{t("changePassword")}</CardTitle>
+
         <CardDescription>
-          Update your password to keep your account secure.
+          {t("changePasswordDescription")}
         </CardDescription>
       </CardHeader>
 
       <CardContent>
         <form onSubmit={handleSubmit(onSubmit)} className="space-y-5">
-          <div className="space-y-2">
-            {isSuccess && (
+          {isSuccess && (
             <p className="text-sm text-green-500">
-              Password changed successfully
+              {t("passwordChangedSuccessfully")}
             </p>
           )}
+
+          <div className="space-y-2">
             <Label htmlFor="current_password">
-              Current Password
+              {t("currentPassword")}
             </Label>
 
             <Input
@@ -109,15 +116,15 @@ export function ChangePasswordForm() {
 
           <div className="space-y-2">
             <Label htmlFor="password">
-              New Password
+              {t("newPassword")}
             </Label>
 
             <Input
               id="password"
-
               type="password"
               {...register("password")}
             />
+
             {errors.password && (
               <p className="text-sm text-destructive">
                 {errors.password.message}
@@ -127,7 +134,7 @@ export function ChangePasswordForm() {
 
           <div className="space-y-2">
             <Label htmlFor="password_confirmation">
-              Confirm New Password
+              {t("confirmNewPassword")}
             </Label>
 
             <Input
@@ -142,14 +149,15 @@ export function ChangePasswordForm() {
               </p>
             )}
           </div>
+
           {isLoading ? (
             <Button variant="secondary" disabled>
-              Changing...
+              {t("changing")}
               <Spinner data-icon="inline-start" />
             </Button>
           ) : (
             <Button type="submit">
-              Change password
+              {t("changePasswordButton")}
             </Button>
           )}
         </form>

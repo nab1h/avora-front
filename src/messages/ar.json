@@ -11,6 +11,7 @@
     "dashboardLayouts": "لوحة التحكم والتخطيطات",
     "apps": "التطبيقات",
     "orders": "الطلبات",
+    "invitations": "الدعوات",
     "layouts": "التخطيطات",
     "fullNavbar": "شريط التنقل الكامل",
     "horizontal": "أفقي",
@@ -177,18 +178,18 @@
     }
   },
   "permissions": {
-  "title": "الصلاحيات",
-  "description": "إدارة الصلاحيات وعناصر التحكم في الوصول.",
-  "table": {
-    "id": "المعرف",
-    "name": "الاسم",
-    "actions": "الإجراءات",
-    "openMenu": "فتح القائمة"
-  },
-  "actions": {
-    "edit": "تعديل",
-    "duplicate": "نسخ",
-    "delete": "حذف"
+    "title": "الصلاحيات",
+    "description": "إدارة الصلاحيات وعناصر التحكم في الوصول.",
+    "table": {
+      "id": "المعرف",
+      "name": "الاسم",
+      "actions": "الإجراءات",
+      "openMenu": "فتح القائمة"
+    },
+    "actions": {
+      "edit": "تعديل",
+      "duplicate": "نسخ",
+      "delete": "حذف"
+    }
   }
-}
 }

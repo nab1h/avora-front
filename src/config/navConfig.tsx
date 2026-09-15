@@ -62,6 +62,14 @@ export const navItems: NavItem[] = [
         href: '/dashboard/profile',
         permission: 'manage-roles',
       },
+
+      {
+        icon: 'LockKeyholeIcon',
+        label: 'Invitations',
+        translationKey: 'invitations',
+        href: '/dashboard/invitations',
+        permission: 'manage-roles',
+      },
       {
         icon: 'LayoutTemplate',
         label: 'Layouts',
