@@ -4,9 +4,8 @@
 import { type ComponentType } from 'react'
 import { useCallback, useEffect, useMemo, useState } from 'react'
 
-// Next Imports
-import Link from 'next/link'
-import { usePathname, useSearchParams } from 'next/navigation'
+import { useSearchParams } from 'next/navigation'
+import { Link, usePathname } from '@/i18n/navigation'
 
 // Third-party Imports
 import * as Icon from 'lucide-react'
@@ -145,7 +144,7 @@ const FlyoutMenuLink = ({
   <DropdownMenuItem
     className={cn(
       'justify-between gap-2',
-      isActive && 'bg-primary/10 text-accent-foreground font-medium'
+      isActive && 'bg-primary/10 ms-auto rounded-full px-1.5 text-xs font-normal'
     )}
     render={<Link href={item.href} target={getLinkTarget(item.href, item.target)} />}
   >
@@ -200,7 +199,7 @@ const FlyoutMenuItem = ({
         >
           {Tag && <Tag />}
           <span className='min-w-0 flex-1 truncate'>{translateLabel(item)}</span>
-          <ChevronRightIcon className={cn('ml-auto', isRtl && 'rotate-180')} />
+          <ChevronRightIcon className={cn('ms-auto', isRtl && 'rotate-180')} />
         </DropdownMenuTrigger>
 
         <DropdownMenuContent
@@ -402,7 +401,7 @@ const SidebarGroupedMenuItems = ({
 
                     <ChevronRightIcon
                       className={cn(
-                        'ml-auto transition-transform duration-200',
+                        'ms-auto transition-transform duration-200',
                         isRtl && 'rotate-180',
                         'group-data-open/collapsible:rotate-90'
                       )}
@@ -679,7 +678,7 @@ const SidebarLayout = () => {
   // Mobile renders the full-width sheet, so it keeps the normal tree.
   const isIconMode = state === 'collapsed' && !isMobile
   return (
-    <Sidebar collapsible='icon' variant='sidebar'  side={isRtl ? 'right' : 'left'}>
+    <Sidebar collapsible='icon' variant='sidebar'>
       <SidebarHeader>
         <SidebarMenu>
           <SidebarMenuItem>

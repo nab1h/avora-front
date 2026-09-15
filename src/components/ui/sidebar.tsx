@@ -68,15 +68,10 @@ function SidebarProvider({
   open?: boolean
   onOpenChange?: (open: boolean) => void
 }) {
-  const locale = useLocale()
   const isMobile = useIsMobile()
-
-  const direction = locale === "ar" ? "rtl" : "ltr"
 
   const [openMobile, setOpenMobile] = React.useState(false)
 
-  // This is the internal state of the sidebar.
-  // We use openProp and setOpenProp for control from outside the component.
   const [_open, _setOpen] = React.useState(defaultOpen)
 
   const open = openProp ?? _open
@@ -97,14 +92,12 @@ function SidebarProvider({
     [setOpenProp, open]
   )
 
-  // Helper to toggle the sidebar.
   const toggleSidebar = React.useCallback(() => {
     return isMobile
       ? setOpenMobile((open) => !open)
       : setOpen((open) => !open)
   }, [isMobile, setOpen])
 
-  // Adds a keyboard shortcut to toggle the sidebar.
   React.useEffect(() => {
     const handleKeyDown = (event: KeyboardEvent) => {
       if (
@@ -123,8 +116,6 @@ function SidebarProvider({
     }
   }, [toggleSidebar])
 
-  // We add a state so that we can do data-state="expanded" or "collapsed".
-  // This makes it easier to style the sidebar with Tailwind classes.
   const state = open ? "expanded" : "collapsed"
 
   const contextValue = React.useMemo<SidebarContextProps>(
@@ -152,8 +143,6 @@ function SidebarProvider({
     <SidebarContext.Provider value={contextValue}>
       <div
         data-slot="sidebar-wrapper"
-        dir={direction}
-        data-sidebar-direction={direction}
         style={
           {
             "--sidebar-width": SIDEBAR_WIDTH,
@@ -173,27 +162,17 @@ function SidebarProvider({
   )
 }
 
+// الاتجاه كله بيتحكم فيه dir على <html> + logical CSS (start/end) — مفيش JS هنا
 function Sidebar({
-  side,
   variant = "sidebar",
   collapsible = "offcanvas",
   className,
   children,
-  dir,
   ...props
 }: React.ComponentProps<"div"> & {
-  side?: "left" | "right"
   variant?: "sidebar" | "floating" | "inset"
   collapsible?: "offcanvas" | "icon" | "none"
 }) {
-  const locale = useLocale()
-
-  const sidebarSide =
-    side ?? (locale === "ar" ? "right" : "left")
-
-  const direction =
-    dir ?? (locale === "ar" ? "rtl" : "ltr")
-
   const { isMobile, state, openMobile, setOpenMobile } =
     useSidebar()
 
@@ -201,8 +180,6 @@ function Sidebar({
     return (
       <div
         data-slot="sidebar"
-        data-side={sidebarSide}
-        dir={direction}
         className={cn(
           "flex h-full w-(--sidebar-width) flex-col bg-sidebar text-sidebar-foreground",
           className
@@ -222,18 +199,16 @@ function Sidebar({
         {...props}
       >
         <SheetContent
-          dir={direction}
+          side="right"
           data-sidebar="sidebar"
           data-slot="sidebar"
           data-mobile="true"
-          data-side={sidebarSide}
-          className="w-(--sidebar-width) bg-sidebar p-0 text-sidebar-foreground [&>button]:hidden"
+          className="w-(--sidebar-width) bg-sidebar p-0 text-sidebar-foreground [&>button]:hidden ltr:!right-auto ltr:!left-0"
           style={
             {
               "--sidebar-width": SIDEBAR_WIDTH_MOBILE,
             } as React.CSSProperties
           }
-          side={sidebarSide}
         >
           <SheetHeader className="sr-only">
             <SheetTitle>Sidebar</SheetTitle>
@@ -258,9 +233,7 @@ function Sidebar({
         state === "collapsed" ? collapsible : ""
       }
       data-variant={variant}
-      data-side={sidebarSide}
       data-slot="sidebar"
-      dir={direction}
     >
       {/* This is what handles the sidebar gap on desktop */}
       <div
@@ -274,15 +247,14 @@ function Sidebar({
         )}
       />
 
+      {/* start-0 بدل left/right: يمين في RTL وشمال في LTR تلقائيًا من dir */}
       <div
         data-slot="sidebar-container"
-        data-side={sidebarSide}
-        dir={direction}
         className={cn(
-          "fixed inset-y-0 z-10 hidden h-svh w-(--sidebar-width) transition-[left,right,width] duration-200 ease-linear data-[side=left]:left-0 data-[side=left]:group-data-[collapsible=offcanvas]:left-[calc(var(--sidebar-width)*-1)] data-[side=right]:right-0 data-[side=right]:group-data-[collapsible=offcanvas]:right-[calc(var(--sidebar-width)*-1)] md:flex",
+          "fixed inset-y-0 start-0 z-10 hidden h-svh w-(--sidebar-width) transition-[inset-inline-start,width] duration-200 ease-linear group-data-[collapsible=offcanvas]:start-[calc(var(--sidebar-width)*-1)] md:flex",
           variant === "floating" || variant === "inset"
             ? "p-2 group-data-[collapsible=icon]:w-[calc(var(--sidebar-width-icon)+(--spacing(4))+2px)]"
-            : "group-data-[collapsible=icon]:w-(--sidebar-width-icon) group-data-[side=left]:border-r group-data-[side=right]:border-l",
+            : "group-data-[collapsible=icon]:w-(--sidebar-width-icon) border-e",
           className
         )}
         {...props}
@@ -340,12 +312,10 @@ function SidebarRail({
       onClick={toggleSidebar}
       title="Toggle Sidebar"
       className={cn(
-        "absolute inset-y-0 z-20 hidden w-4 transition-all ease-linear group-data-[side=left]:-right-4 group-data-[side=right]:left-0 after:absolute after:inset-y-0 after:start-1/2 after:w-[2px] hover:after:bg-sidebar-border sm:flex",
-        "in-data-[side=left]:cursor-w-resize in-data-[side=right]:cursor-e-resize",
-        "[[data-side=left][data-state=collapsed]_&]:cursor-e-resize [[data-side=right][data-state=collapsed]_&]:cursor-w-resize",
-        "group-data-[collapsible=offcanvas]:translate-x-0 group-data-[collapsible=offcanvas]:after:left-full hover:group-data-[collapsible=offcanvas]:bg-sidebar",
-        "[[data-side=left][data-collapsible=offcanvas]_&]:-right-2",
-        "[[data-side=right][data-collapsible=offcanvas]_&]:-left-2",
+        "absolute inset-y-0 z-20 hidden w-4 -end-4 transition-all ease-linear",
+        "after:absolute after:inset-y-0 after:start-1/2 after:w-[2px] hover:after:bg-sidebar-border sm:flex",
+        "group-data-[collapsible=offcanvas]:-end-2 group-data-[collapsible=offcanvas]:after:start-full",
+        "hover:group-data-[collapsible=offcanvas]:bg-sidebar",
         className
       )}
       {...props}
@@ -357,9 +327,6 @@ function SidebarInset({
   className,
   ...props
 }: React.ComponentProps<"main">) {
-  const locale = useLocale()
-  const isRtl = locale === "ar"
-
   return (
     <main
       data-slot="sidebar-inset"
@@ -368,9 +335,8 @@ function SidebarInset({
         "md:peer-data-[variant=inset]:m-2",
         "md:peer-data-[variant=inset]:rounded-xl",
         "md:peer-data-[variant=inset]:shadow-sm",
-        isRtl
-          ? "md:peer-data-[variant=inset]:mr-0 md:peer-data-[variant=inset]:peer-data-[state=collapsed]:mr-2"
-          : "md:peer-data-[variant=inset]:ml-0 md:peer-data-[variant=inset]:peer-data-[state=collapsed]:ml-2",
+        "md:peer-data-[variant=inset]:ms-0",
+        "md:peer-data-[variant=inset]:peer-data-[state=collapsed]:ms-2",
         className
       )}
       {...props}
@@ -620,8 +586,8 @@ function SidebarMenuButton({
     isActive?: boolean
     tooltip?: string | React.ComponentProps<typeof TooltipContent>
   } & VariantProps<typeof sidebarMenuButtonVariants>) {
-  const locale = useLocale()
-  const isRtl = locale === "ar"
+  // useLocale هنا للـ tooltip بس (cosmetic) — مش layout
+  const isRtl = useLocale() === "ar"
 
   const { isMobile, state } = useSidebar()
 
@@ -728,7 +694,6 @@ function SidebarMenuSkeleton({
 }: React.ComponentProps<"div"> & {
   showIcon?: boolean
 }) {
-  // Random width between 50 to 90%.
   const [width] = React.useState(() => {
     return `${Math.floor(Math.random() * 40) + 50}%`
   })
@@ -767,18 +732,12 @@ function SidebarMenuSub({
   className,
   ...props
 }: React.ComponentProps<"ul">) {
-  const locale = useLocale()
-  const isRtl = locale === "ar"
-
   return (
     <ul
       data-slot="sidebar-menu-sub"
       data-sidebar="menu-sub"
       className={cn(
-        "mx-3.5 flex min-w-0 flex-col gap-1 border-sidebar-border px-2.5 py-0.5 group-data-[collapsible=icon]:hidden",
-        isRtl
-          ? "translate-x-px border-r"
-          : "-translate-x-px border-l",
+        "mx-3.5 flex min-w-0 flex-col gap-1 border-s border-sidebar-border px-2.5 py-0.5 group-data-[collapsible=icon]:hidden rtl:translate-x-px ltr:-translate-x-px",
         className
       )}
       {...props}
@@ -814,18 +773,12 @@ function SidebarMenuSubButton({
     size?: "sm" | "md"
     isActive?: boolean
   }) {
-  const locale = useLocale()
-  const isRtl = locale === "ar"
-
   return useRender({
     defaultTagName: "a",
     props: mergeProps<"a">(
       {
         className: cn(
-          "flex h-7 min-w-0 items-center gap-2 overflow-hidden rounded-md px-2 text-sidebar-foreground ring-sidebar-ring outline-hidden group-data-[collapsible=icon]:hidden hover:bg-sidebar-accent hover:text-sidebar-accent-foreground focus-visible:ring-2 active:bg-sidebar-accent active:text-sidebar-accent-foreground disabled:pointer-events-none disabled:opacity-50 aria-disabled:pointer-events-none aria-disabled:opacity-50 data-[size=md]:text-sm data-[size=sm]:text-xs data-active:bg-sidebar-accent data-active:text-sidebar-accent-foreground [&>span:last-child]:truncate [&>svg]:size-4 [&>svg]:shrink-0 [&>svg]:text-sidebar-accent-foreground",
-          isRtl
-            ? "translate-x-px"
-            : "-translate-x-px",
+          "flex h-7 min-w-0 items-center gap-2 overflow-hidden rounded-md px-2 text-sidebar-foreground ring-sidebar-ring outline-hidden group-data-[collapsible=icon]:hidden hover:bg-sidebar-accent hover:text-sidebar-accent-foreground focus-visible:ring-2 active:bg-sidebar-accent active:text-sidebar-accent-foreground disabled:pointer-events-none disabled:opacity-50 aria-disabled:pointer-events-none aria-disabled:opacity-50 data-[size=md]:text-sm data-[size=sm]:text-xs data-active:bg-sidebar-accent data-active:text-sidebar-accent-foreground [&>span:last-child]:truncate [&>svg]:size-4 [&>svg]:shrink-0 [&>svg]:text-sidebar-accent-foreground rtl:translate-x-px ltr:-translate-x-px",
           className
         ),
       },

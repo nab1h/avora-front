@@ -1,7 +1,7 @@
 "use client";
 
-import { Languages } from "lucide-react";
 import { useLocale } from "next-intl";
+import { useSearchParams } from "next/navigation";
 import { usePathname, useRouter } from "@/i18n/navigation";
 import { routing } from "@/i18n/routing";
 
@@ -9,13 +9,15 @@ export function LanguageSwitcher() {
   const locale = useLocale();
   const router = useRouter();
   const pathname = usePathname();
+  const searchParams = useSearchParams();
 
   const changeLanguage = (newLocale: "ar" | "en") => {
     if (newLocale === locale) return;
 
-    router.replace(pathname, {
-      locale: newLocale,
-    });
+    router.replace(
+      { pathname, query: Object.fromEntries(searchParams.entries()) },
+      { locale: newLocale }
+    );
   };
 
   return (
