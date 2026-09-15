@@ -204,7 +204,7 @@ const FlyoutMenuItem = ({
         </DropdownMenuTrigger>
 
         <DropdownMenuContent
-          side='right'
+          side={isRtl ? 'left' : 'right'}
           align='start'
           sideOffset={12}
           className='w-auto min-w-52'
@@ -626,6 +626,8 @@ const SidebarLayout = () => {
   const pathname = usePathname()
   const searchParams = useSearchParams()
   const { state, isMobile } = useSidebar()
+   const locale = useLocale()
+  const isRtl = locale === 'ar'
 
   // Current authenticated user from Redux.
   const user = useAppSelector(state => state.auth.user)
@@ -677,7 +679,7 @@ const SidebarLayout = () => {
   // Mobile renders the full-width sheet, so it keeps the normal tree.
   const isIconMode = state === 'collapsed' && !isMobile
   return (
-    <Sidebar collapsible='icon' variant='sidebar'>
+    <Sidebar collapsible='icon' variant='sidebar'  side={isRtl ? 'right' : 'left'}>
       <SidebarHeader>
         <SidebarMenu>
           <SidebarMenuItem>
