@@ -9,6 +9,7 @@ import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Field, FieldContent, FieldError, FieldGroup, FieldLabel } from "@/components/ui/field";
 import { Input } from "@/components/ui/input";
+import { Spinner } from "@/components/ui/spinner";
 import Link from "next/link";
 import { api } from "@/lib/axios";
 import axios from "axios";
@@ -130,8 +131,19 @@ async function onSubmit(data: z.infer<typeof formSchema>) {
           )}
         />
       </FieldGroup>
-      <Button className="w-full" type="submit">
-        {t("submit")}
+      <Button
+        className="w-full"
+        type="submit"
+        disabled={form.formState.isSubmitting}
+      >
+        {form.formState.isSubmitting ? (
+          <>
+            {t("submitting")}
+            <Spinner data-icon="inline-end" />
+          </>
+        ) : (
+          t("submit")
+        )}
       </Button>
       <div className="flex w-full justify-end px-10">
         <div className="text-muted-foreground text-sm">

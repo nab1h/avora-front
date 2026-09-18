@@ -18,6 +18,7 @@
       "continueWithFacebook": "المتابعة باستخدام Facebook",
       "email": "البريد الإلكتروني",
       "password": "كلمة المرور",
+      "submitting": "جاري تسجيل الدخول...",
       "remember": "تذكرني لمدة 30 يومًا",
       "submit": "تسجيل الدخول",
       "forgotPassword": "هل نسيت كلمة المرور؟",
@@ -78,8 +79,9 @@
   "sidebar": {
     "dashboardLayouts": "لوحة التحكم والتخطيطات",
     "apps": "التطبيقات",
-    "orders": "الطلبات",
+    "profile": "حسابي",
     "invitations": "الدعوات",
+    "dashboard": "لوحة التحكم",
     "layouts": "التخطيطات",
     "fullNavbar": "شريط التنقل الكامل",
     "horizontal": "أفقي",

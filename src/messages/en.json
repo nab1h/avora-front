@@ -18,6 +18,7 @@
       "continueWithFacebook": "Continue with Facebook",
       "email": "Email Address",
       "password": "Password",
+      "submitting": "Signing in...",
       "remember": "Remember me for 30 days",
       "submit": "Login",
       "forgotPassword": "Forgot your password?",
@@ -78,8 +79,9 @@
   "sidebar": {
     "dashboardLayouts": "Dashboard & Layouts",
     "apps": "Apps",
-    "orders": "Orders",
+    "profile": "Profile",
     "invitations": "Invitations",
+    "dashboard": "Dashboard",
     "layouts": "Layouts",
     "fullNavbar": "Full Navbar",
     "horizontal": "Horizontal",

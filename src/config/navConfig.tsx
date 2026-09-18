@@ -56,15 +56,21 @@ export const navItems: NavItem[] = [
     groupTranslationKey: 'dashboardLayouts',
     items: [
       {
-        icon: 'Package',
-        label: 'Orders',
-        translationKey: 'orders',
+        icon: 'House',
+        label: 'Dashboard',
+        translationKey: 'dashboard',
+        href: '/dashboard',
+        permission: 'manage-roles',
+      },
+      {
+        icon: 'User',
+        label: 'Profile',
+        translationKey: 'profile',
         href: '/dashboard/profile',
         permission: 'manage-roles',
       },
-
       {
-        icon: 'LockKeyholeIcon',
+        icon: 'Mail',
         label: 'Invitations',
         translationKey: 'invitations',
         href: '/dashboard/invitations',
