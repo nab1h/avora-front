@@ -17,19 +17,18 @@ import { useAppDispatch } from "@/lib/hooks";
 import { useRouter } from "next/navigation";
 import { setCredentials } from "@/lib/features/auth/auth-slice";
 import { api as rtkApi } from "@/lib/services/api";
-
-
-
-const formSchema = z.object({
-  email: z.email({ message: "Please enter a valid email address." }),
-  password: z.string().min(6, { message: "Password must be at least 6 characters." }),
-  remember: z.boolean().optional(),
-});
+import { useTranslations } from "next-intl";
 
 export function LoginForm() {
   const dispatch = useAppDispatch();
 
   const router = useRouter();
+  const t = useTranslations("auth.login");
+  const formSchema = z.object({
+    email: z.email({ message: t("invalidEmail") }),
+    password: z.string().min(6, { message: t("passwordMin") }),
+    remember: z.boolean().optional(),
+  });
   
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
@@ -54,16 +53,16 @@ async function onSubmit(data: z.infer<typeof formSchema>) {
     dispatch(rtkApi.util.resetApiState());
     dispatch(setCredentials({user,token,}));
 
-    toast.success("Login successful");
+    toast.success(t("success"));
 
     router.push("/dashboard");
     } catch (error) {
     if (axios.isAxiosError(error)) {
       toast.error(
-        error.response?.data?.message || "Invalid email or password"
+        error.response?.data?.message || t("invalidCredentials")
       );
     } else {
-      toast.error("Something went wrong");
+      toast.error(t("error"));
     }
 }
 }
@@ -78,7 +77,7 @@ async function onSubmit(data: z.infer<typeof formSchema>) {
           name="email"
           render={({ field, fieldState }) => (
             <Field className="gap-1.5" data-invalid={fieldState.invalid}>
-              <FieldLabel htmlFor="login-email">Email Address</FieldLabel>
+              <FieldLabel htmlFor="login-email">{t("email")}</FieldLabel>
               <Input
                 {...field}
                 id="login-email"
@@ -96,7 +95,7 @@ async function onSubmit(data: z.infer<typeof formSchema>) {
           name="password"
           render={({ field, fieldState }) => (
             <Field className="gap-1.5" data-invalid={fieldState.invalid}>
-              <FieldLabel htmlFor="login-password">Password</FieldLabel>
+              <FieldLabel htmlFor="login-password">{t("password")}</FieldLabel>
               <Input
                 {...field}
                 id="login-password"
@@ -123,7 +122,7 @@ async function onSubmit(data: z.infer<typeof formSchema>) {
               />
               <FieldContent>
                 <FieldLabel htmlFor="login-remember" className="font-normal">
-                  Remember me for 30 days
+                  {t("remember")}
                 </FieldLabel>
                 {fieldState.invalid && <FieldError errors={[fieldState.error]} />}
               </FieldContent>
@@ -132,13 +131,13 @@ async function onSubmit(data: z.infer<typeof formSchema>) {
         />
       </FieldGroup>
       <Button className="w-full" type="submit">
-        Login
+        {t("submit")}
       </Button>
       <div className="flex w-full justify-end px-10">
         <div className="text-muted-foreground text-sm">
-          are you forgot your password?{" "}
+          {t("forgotPassword")}{" "}
           <Link prefetch={false} className="text-foreground" href="forgot-password">
-            Reset Password
+            {t("resetPassword")}
           </Link>
         </div>
       </div>

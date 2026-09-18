@@ -14,16 +14,16 @@ import {
 import { Input } from "@/components/ui/input";
 import { useState } from "react";
 import { useForgotPasswordMutation } from "@/lib/services/auth-api";
-
-
-const formSchema = z.object({
-  email: z.email({
-    message: "Please enter a valid email address.",
-  }),
-});
+import { useTranslations } from "next-intl";
 
 export function ForgetPasswordForm() {
   const [isSuccess, setIsSuccess] = useState(false);
+  const t = useTranslations("auth.passwordReset");
+  const formSchema = z.object({
+    email: z.email({
+      message: t("invalidEmail"),
+    }),
+  });
 
   const [forgotPassword, { isLoading }] = useForgotPasswordMutation();
 
@@ -39,7 +39,7 @@ export function ForgetPasswordForm() {
       const response = await forgotPassword(data).unwrap();
 
       toast.success(
-        response.message || "Password reset link sent successfully."
+        response.message || t("linkSent")
       );
 
       form.reset();
@@ -47,7 +47,7 @@ export function ForgetPasswordForm() {
     } catch (error: any) {
       toast.error(
         error?.data?.message ||
-          "Something went wrong. Please try again."
+          t("error")
       );
     }
   }
@@ -74,13 +74,11 @@ export function ForgetPasswordForm() {
 
         <div className="space-y-2">
           <h2 className="text-xl font-semibold">
-            Check your email
+            {t("checkEmail")}
           </h2>
 
           <p className="text-sm text-muted-foreground">
-            We&apos;ve sent you a password reset link.
-            Please check your email and follow the link to reset
-            your password.
+            {t("checkEmailDescription")}
           </p>
         </div>
       </div>
@@ -103,7 +101,7 @@ export function ForgetPasswordForm() {
               data-invalid={fieldState.invalid}
             >
               <FieldLabel htmlFor="login-email">
-                Email Address
+                {t("email")}
               </FieldLabel>
 
               <Input
@@ -128,7 +126,7 @@ export function ForgetPasswordForm() {
         type="submit"
         disabled={isLoading}
       >
-        {isLoading ? "Sending..." : "Reset Password"}
+        {isLoading ? t("sending") : t("requestSubmit")}
       </Button>
     </form>
   );

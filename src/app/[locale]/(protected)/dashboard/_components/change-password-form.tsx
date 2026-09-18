@@ -17,6 +17,9 @@ import {
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { useTranslations } from "next-intl";
+import { useState } from "react";
+import { useAppDispatch, useAppSelector } from "@/lib/hooks";
+import { setUser } from "@/lib/features/auth/auth-slice";
 
 type LaravelError = {
   message?: string;
@@ -25,18 +28,35 @@ type LaravelError = {
 
 export function ChangePasswordForm() {
   const t = useTranslations("profile");
+  const dispatch = useAppDispatch();
+  const user = useAppSelector((state) => state.auth.user);
+  const hasPassword = user?.has_password !== false;
+  const [successMessage, setSuccessMessage] = useState<string | null>(null);
 
   const changePasswordSchema = z
     .object({
-      current_password: z.string().min(1, t("validation.currentPasswordRequired")),
+      current_password: z.string().optional(),
       password: z.string().min(8, t("validation.passwordMin")),
       password_confirmation: z
         .string()
         .min(1, t("validation.confirmPasswordRequired")),
     })
-    .refine((data) => data.password === data.password_confirmation, {
-      message: t("validation.passwordsMismatch"),
-      path: ["password_confirmation"],
+    .superRefine((data, context) => {
+      if (hasPassword && !data.current_password) {
+        context.addIssue({
+          code: "custom",
+          message: t("validation.currentPasswordRequired"),
+          path: ["current_password"],
+        });
+      }
+
+      if (data.password !== data.password_confirmation) {
+        context.addIssue({
+          code: "custom",
+          message: t("validation.passwordsMismatch"),
+          path: ["password_confirmation"],
+        });
+      }
     });
 
   type ChangePasswordFormData = z.infer<typeof changePasswordSchema>;
@@ -59,10 +79,28 @@ export function ChangePasswordForm() {
   });
 
   const onSubmit = async (data: ChangePasswordFormData) => {
-    try {
-      const response = await changePassword(data).unwrap();
+    setSuccessMessage(null);
 
-      toast.success(response.message || t("passwordChangedSuccessfully"));
+    try {
+      const request = hasPassword
+        ? data
+        : {
+            password: data.password,
+            password_confirmation: data.password_confirmation,
+          };
+      const response = await changePassword(request).unwrap();
+
+      toast.success(
+        response.message ||
+          t(hasPassword ? "passwordChangedSuccessfully" : "passwordCreatedSuccessfully")
+      );
+      setSuccessMessage(
+        t(hasPassword ? "passwordChangedSuccessfully" : "passwordCreatedSuccessfully")
+      );
+
+      if (user) {
+        dispatch(setUser({ ...user, has_password: true }));
+      }
 
       reset();
     } catch (error) {
@@ -81,38 +119,40 @@ export function ChangePasswordForm() {
   return (
     <Card>
       <CardHeader>
-        <CardTitle>{t("changePassword")}</CardTitle>
+        <CardTitle>{t(hasPassword ? "changePassword" : "createPassword")}</CardTitle>
 
         <CardDescription>
-          {t("changePasswordDescription")}
+          {t(hasPassword ? "changePasswordDescription" : "createPasswordDescription")}
         </CardDescription>
       </CardHeader>
 
       <CardContent>
         <form onSubmit={handleSubmit(onSubmit)} className="space-y-5">
-          {isSuccess && (
+          {isSuccess && successMessage && (
             <p className="text-sm text-green-500">
-              {t("passwordChangedSuccessfully")}
+              {successMessage}
             </p>
           )}
 
-          <div className="space-y-2">
-            <Label htmlFor="current_password">
-              {t("currentPassword")}
-            </Label>
+          {hasPassword && (
+            <div className="space-y-2">
+              <Label htmlFor="current_password">
+                {t("currentPassword")}
+              </Label>
 
-            <Input
-              id="current_password"
-              type="password"
-              {...register("current_password")}
-            />
+              <Input
+                id="current_password"
+                type="password"
+                {...register("current_password")}
+              />
 
-            {errors.current_password && (
-              <p className="text-sm text-destructive">
-                {errors.current_password.message}
-              </p>
-            )}
-          </div>
+              {errors.current_password && (
+                <p className="text-sm text-destructive">
+                  {errors.current_password.message}
+                </p>
+              )}
+            </div>
+          )}
 
           <div className="space-y-2">
             <Label htmlFor="password">
@@ -134,7 +174,7 @@ export function ChangePasswordForm() {
 
           <div className="space-y-2">
             <Label htmlFor="password_confirmation">
-              {t("confirmNewPassword")}
+              {t("confirmPassword")}
             </Label>
 
             <Input
@@ -152,12 +192,12 @@ export function ChangePasswordForm() {
 
           {isLoading ? (
             <Button variant="secondary" disabled>
-              {t("changing")}
+              {t(hasPassword ? "changing" : "creating")}
               <Spinner data-icon="inline-start" />
             </Button>
           ) : (
             <Button type="submit">
-              {t("changePasswordButton")}
+              {t(hasPassword ? "changePasswordButton" : "createPasswordButton")}
             </Button>
           )}
         </form>

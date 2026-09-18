@@ -26,7 +26,7 @@ type UpdateProfileResponse = {
 };
 
 type ChangePasswordRequest = {
-  current_password: string;
+  current_password?: string;
   password: string;
   password_confirmation: string;
 };
@@ -62,6 +62,7 @@ export const profileApi = api.injectEndpoints({
         method: "POST",
         body: data,
       }),
+      invalidatesTags: ["User"],
     }),
 
     sendVerificationNotification: builder.mutation<

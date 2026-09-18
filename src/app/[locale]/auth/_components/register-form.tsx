@@ -14,23 +14,24 @@ import { useRouter } from "next/navigation";
 import { api } from "@/lib/axios";
 import { setCredentials } from "@/lib/features/auth/auth-slice";
 import { api as rtkApi } from "@/lib/services/api";
-
-const formSchema = z
-  .object({
-    name: z.string().min(2, { message: "Please enter a valid name." }),
-    email: z.email({ message: "Please enter a valid email address." }),
-    password: z.string().min(6, { message: "Password must be at least 6 characters." }),
-    confirmPassword: z.string().min(6, { message: "Confirm Password must be at least 6 characters." }),
-  })
-  .refine((data) => data.password === data.confirmPassword, {
-    message: "Passwords do not match.",
-    path: ["confirmPassword"],
-  });
+import { useTranslations } from "next-intl";
 
 
 export function RegisterForm() {
   const dispatch = useDispatch();
   const router = useRouter();
+  const t = useTranslations("auth.register");
+  const formSchema = z
+    .object({
+      name: z.string().min(2, { message: t("invalidName") }),
+      email: z.email({ message: t("invalidEmail") }),
+      password: z.string().min(6, { message: t("passwordMin") }),
+      confirmPassword: z.string().min(6, { message: t("confirmPasswordMin") }),
+    })
+    .refine((data) => data.password === data.confirmPassword, {
+      message: t("passwordsMismatch"),
+      path: ["confirmPassword"],
+    });
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
@@ -64,7 +65,7 @@ export function RegisterForm() {
       })
     );
 
-    toast.success("Registration successful");
+    toast.success(t("success"));
 
     router.push("/dashboard");
   } catch (error) {
@@ -81,13 +82,11 @@ export function RegisterForm() {
           }
         });
       } else {
-        toast.error(
-          error.response?.data?.message || "Registration failed"
-        );
+          toast.error(error.response?.data?.message || t("failed"));
       }
     } else {
       console.error(error);
-      toast.error("Something went wrong");
+      toast.error(t("error"));
     }
   }
 }
@@ -100,12 +99,12 @@ export function RegisterForm() {
           name="name"
           render={({ field, fieldState }) => (
             <Field className="gap-1.5" data-invalid={fieldState.invalid}>
-              <FieldLabel htmlFor="register-email">Name</FieldLabel>
+              <FieldLabel htmlFor="register-name">{t("name")}</FieldLabel>
               <Input
                 {...field}
                 id="register-name"
                 type="text"
-                placeholder="John Doe"
+                placeholder={t("namePlaceholder")}
                 autoComplete="name"
                 aria-invalid={fieldState.invalid}
               />
@@ -118,12 +117,12 @@ export function RegisterForm() {
           name="email"
           render={({ field, fieldState }) => (
             <Field className="gap-1.5" data-invalid={fieldState.invalid}>
-              <FieldLabel htmlFor="register-email">Email Address</FieldLabel>
+              <FieldLabel htmlFor="register-email">{t("email")}</FieldLabel>
               <Input
                 {...field}
                 id="register-email"
                 type="email"
-                placeholder="you@example.com"
+                placeholder={t("emailPlaceholder")}
                 autoComplete="email"
                 aria-invalid={fieldState.invalid}
               />
@@ -136,7 +135,7 @@ export function RegisterForm() {
           name="password"
           render={({ field, fieldState }) => (
             <Field className="gap-1.5" data-invalid={fieldState.invalid}>
-              <FieldLabel htmlFor="register-password">Password</FieldLabel>
+              <FieldLabel htmlFor="register-password">{t("password")}</FieldLabel>
               <Input
                 {...field}
                 id="register-password"
@@ -154,7 +153,7 @@ export function RegisterForm() {
           name="confirmPassword"
           render={({ field, fieldState }) => (
             <Field className="gap-1.5" data-invalid={fieldState.invalid}>
-              <FieldLabel htmlFor="register-confirm-password">Confirm Password</FieldLabel>
+              <FieldLabel htmlFor="register-confirm-password">{t("confirmPassword")}</FieldLabel>
               <Input
                 {...field}
                 id="register-confirm-password"
@@ -174,8 +173,8 @@ export function RegisterForm() {
         disabled={form.formState.isSubmitting}
       >
         {form.formState.isSubmitting
-          ? "Registering..."
-          : "Register"}
+          ? t("submitting")
+          : t("submit")}
       </Button>
     </form>
   );

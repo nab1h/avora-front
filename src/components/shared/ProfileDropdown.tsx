@@ -2,6 +2,7 @@
 
 import { LogOutIcon, SettingsIcon, UserIcon } from 'lucide-react'
 import { useRouter } from 'next/navigation'
+import { useTranslations } from 'next-intl'
 
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
 
@@ -20,10 +21,11 @@ import { api } from '@/lib/services/api'
 const ProfileDropdown = () => {
   const dispatch = useAppDispatch()
   const router = useRouter()
+  const t = useTranslations('profile')
 
   const user = useAppSelector((state) => state.auth.user)
 
-  const fullName = user?.name ?? 'User'
+  const fullName = user?.name ?? t('user')
   const email = user?.email ?? ''
   const initials = getInitials(fullName)
 
@@ -80,7 +82,7 @@ const ProfileDropdown = () => {
           onClick={() => router.push('/dashboard/profile')}
         >
           <UserIcon />
-          Profile
+          {t('title')}
         </DropdownMenuItem>
 
         {/* Settings */}
@@ -88,7 +90,7 @@ const ProfileDropdown = () => {
           onClick={() => router.push('/dashboard/settings')}
         >
           <SettingsIcon />
-          Settings
+          {t('settings')}
         </DropdownMenuItem>
 
         <div className='my-1 h-px bg-border' />
@@ -96,7 +98,7 @@ const ProfileDropdown = () => {
         {/* Logout */}
         <DropdownMenuItem onClick={handleLogout}>
           <LogOutIcon />
-          Logout
+          {t('signOut')}
         </DropdownMenuItem>
 
       </DropdownMenuContent>

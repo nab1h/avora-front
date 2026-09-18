@@ -4,8 +4,10 @@ import { siFacebook} from "simple-icons";
 import { SimpleIcon } from "@/components/simple-icon";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
+import { useTranslations } from "next-intl";
 
 export function FacebookButton({ className, ...props }: React.ComponentProps<typeof Button>) {
+  const t = useTranslations("auth.login");
   
 function handleFacebookLogin() {
 
@@ -17,7 +19,7 @@ function handleFacebookLogin() {
   return (
     <Button variant="secondary" className={cn(className)} {...props} onClick={handleFacebookLogin}>
       <SimpleIcon icon={siFacebook} className="size-4" />
-      Continue with Facebook
+      {t("continueWithFacebook")}
     </Button>
   );
 }

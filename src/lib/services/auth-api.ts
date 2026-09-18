@@ -47,6 +47,7 @@ export const authApi = api.injectEndpoints({
           id: number;
           name: string;
           email: string;
+          has_password: boolean;
           email_verified_at: string | null;
           is_active: boolean;
           created_at: string;

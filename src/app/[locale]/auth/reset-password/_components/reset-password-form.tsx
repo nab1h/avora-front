@@ -11,21 +11,7 @@ import { useResetPasswordMutation } from "@/lib/services/auth-api";
 
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-
-const formSchema = z
-  .object({
-    password: z.string().min(8, {
-      message: "Password must be at least 8 characters.",
-    }),
-
-    password_confirmation: z.string(),
-  })
-  .refine((data) => data.password === data.password_confirmation, {
-    message: "Passwords do not match.",
-    path: ["password_confirmation"],
-  });
-
-type FormValues = z.infer<typeof formSchema>;
+import { useTranslations } from "next-intl";
 
 interface ResetPasswordFormProps {
   token: string;
@@ -37,6 +23,19 @@ export function ResetPasswordForm({
   email,
 }: ResetPasswordFormProps) {
   const router = useRouter();
+  const t = useTranslations("auth.passwordReset");
+  const formSchema = z
+    .object({
+      password: z.string().min(8, {
+        message: t("passwordMin"),
+      }),
+      password_confirmation: z.string(),
+    })
+    .refine((data) => data.password === data.password_confirmation, {
+      message: t("passwordsMismatch"),
+      path: ["password_confirmation"],
+    });
+  type FormValues = z.infer<typeof formSchema>;
 
   const [resetPassword, { isLoading }] =
     useResetPasswordMutation();
@@ -64,7 +63,7 @@ export function ResetPasswordForm({
     } catch (error: any) {
       toast.error(
         error?.data?.message ||
-          "Unable to reset password. Please try again."
+          t("resetError")
       );
     }
   }
@@ -77,7 +76,7 @@ export function ResetPasswordForm({
       <div className="space-y-2">
         <Input
           type="password"
-          placeholder="New password"
+          placeholder={t("newPassword")}
           {...form.register("password")}
         />
 
@@ -91,7 +90,7 @@ export function ResetPasswordForm({
       <div className="space-y-2">
         <Input
           type="password"
-          placeholder="Confirm password"
+          placeholder={t("confirmPassword")}
           {...form.register("password_confirmation")}
         />
 
@@ -103,7 +102,7 @@ export function ResetPasswordForm({
       </div>
 
       <Button type="submit" disabled={isLoading}>
-        {isLoading ? "Resetting..." : "Reset password"}
+        {isLoading ? t("resetting") : t("resetSubmit")}
       </Button>
     </form>
   );

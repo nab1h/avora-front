@@ -21,9 +21,11 @@ import { Label } from "@/components/ui/label";
 import { Spinner } from "@/components/ui/spinner";
 import { toast } from "sonner";
 import { CheckCircle2 } from "lucide-react";
+import { useTranslations } from "next-intl";
 
 export function ProfileForm() {
   const user = useSelector((state: RootState) => state.auth.user);
+  const t = useTranslations("profile");
 
 
   const [updateProfile, { isLoading, isSuccess }] = useUpdateProfileMutation();
@@ -33,9 +35,9 @@ export function ProfileForm() {
   const handleSendVerification = async () => {
     try {
       const response = await sendVerificationNotification().unwrap();
-      toast.success(response.message || "Verification email sent successfully.");
+      toast.success(response.message || t("verificationEmailSent"));
     } catch {
-      toast.error("Failed to send verification email. Please try again.");
+      toast.error(t("failedToSendVerification"));
     }
   };
 
@@ -53,7 +55,7 @@ export function ProfileForm() {
         email,
       }).unwrap();
 
-      toast.success("Profile updated successfully");
+      toast.success(t("updatedSuccessfully"));
 
     } catch (error) {
       console.error(error);
@@ -67,9 +69,9 @@ export function ProfileForm() {
   return (
     <Card className="w-full">
       <CardHeader>
-        <CardTitle>Personal Information</CardTitle>
+        <CardTitle>{t("personalInformation")}</CardTitle>
         <CardDescription>
-          Update your name and email address.
+          {t("updateNameAndEmail")}
         </CardDescription>
       </CardHeader>
 
@@ -77,11 +79,11 @@ export function ProfileForm() {
         <form onSubmit={handleSubmit} className="space-y-5">
           {isSuccess && (
             <p className="text-sm text-green-500">
-              Profile updated successfully
+              {t("updatedSuccessfully")}
             </p>
           )}
           <div className="space-y-2">
-            <Label htmlFor="name">Name</Label>
+            <Label htmlFor="name">{t("name")}</Label>
 
             <Input
               id="name"
@@ -92,7 +94,7 @@ export function ProfileForm() {
           </div>
 
           <div className="space-y-2">
-            <Label htmlFor="email">Email</Label>
+            <Label htmlFor="email">{t("email")}</Label>
 
             <Input
               id="email"
@@ -104,7 +106,7 @@ export function ProfileForm() {
 
             {!user.email_verified_at && (
               <div className="flex flex-wrap items-center justify-between gap-3 rounded-md border border-amber-300 bg-amber-50 p-3 text-sm text-amber-900 dark:border-amber-700 dark:bg-amber-950/30 dark:text-amber-200">
-                <span>You must verify your email to complete your account verification.</span>
+                <span>{t("verifyEmailInstruction")}</span>
                 <Button
                   type="button"
                   size="sm"
@@ -112,7 +114,7 @@ export function ProfileForm() {
                   onClick={handleSendVerification}
                   disabled={isSendingVerification}
                 >
-                  {isSendingVerification ? "Sending..." : "Verify email"}
+                  {isSendingVerification ? t("sending") : t("verifyEmail")}
                 </Button>
               </div>
             )}
@@ -122,7 +124,7 @@ export function ProfileForm() {
               {user?.email_verified_at && (
                 <span className="flex items-center gap-1">
                   <CheckCircle2 className="h-3.5 w-3.5" />
-                  Verified
+                  {t("verified")}
                 </span>
               )}
             </div>
@@ -131,12 +133,12 @@ export function ProfileForm() {
 
           {isLoading ? (
             <Button variant="secondary" disabled>
-              Changing...
+              {t("changing")}
               <Spinner data-icon="inline-start" />
             </Button>
           ) : (
             <Button type="submit">
-              Change information
+              {t("changeInformation")}
             </Button>
           )}
         </form>
