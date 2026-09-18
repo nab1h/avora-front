@@ -54,6 +54,7 @@
   "breadcrumb": {
     "dashboard": "Dashboard",
     "profile": "Profile",
+    "invitations": "Invitations",
     "users": "Users",
     "roles": "Roles",
     "permissions": "Permissions",
@@ -100,6 +101,32 @@
       "deleting": "Deleting...",
       "deletedSuccessfully": "User deleted successfully.",
       "failedToDelete": "Failed to delete user. Please try again."
+    }
+  },
+  "invitations": {
+    "title": "Invitations",
+    "description": "Manage user invitations and access.",
+    "addInvitation": "Add Invitation",
+    "sendInvitation": "Send Invitation",
+    "email": "Email",
+    "role": "Role",
+    "selectRole": "Select role",
+    "sending": "Sending...",
+    "invitedBy": "Invited By",
+    "status": "Status",
+    "createdAt": "Created At",
+    "actions": "Actions",
+    "accepted": "Accepted",
+    "revoked": "Revoked",
+    "pending": "Pending",
+    "resend": "Resend",
+    "invitationSent": "Invitation sent successfully.",
+    "failedToSend": "Failed to send invitation. Please try again.",
+    "invitationResent": "Invitation resent successfully.",
+    "failedToResend": "Failed to resend invitation. Please try again.",
+    "validation": {
+      "validEmail": "Please enter a valid email.",
+      "roleRequired": "Please select a role."
     }
   },
   "dialog": {

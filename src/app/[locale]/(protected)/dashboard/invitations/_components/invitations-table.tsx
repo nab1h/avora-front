@@ -43,12 +43,14 @@ import {
 } from "lucide-react";
 import { useState } from "react";
 import { toast } from "sonner";
+import { useTranslations } from "next-intl";
 
 
 export default function InvitationsTable() {
 
 
     const [resendingId, setResendingId] = useState<number | null>(null);
+    const t = useTranslations("invitations");
 
     const {
         data,
@@ -85,14 +87,14 @@ export default function InvitationsTable() {
             setResendingId(id);
             await resendInvitation(id).unwrap();
 
-            toast.success("Invitation resent successfully!");
+            toast.success(t("invitationResent"));
 
         } catch (error: any) {
 
             console.log(error);
             toast.error(
                 error?.data?.message ||
-                "Failed to resend invitation. Please try again."
+                t("failedToResend")
             );
 
         }
@@ -112,7 +114,7 @@ export default function InvitationsTable() {
             return (
 
                 <Badge>
-                    Accepted
+                    {t("accepted")}
                 </Badge>
 
             );
@@ -126,7 +128,7 @@ export default function InvitationsTable() {
             return (
 
                 <Badge variant="destructive">
-                    Revoked
+                    {t("revoked")}
                 </Badge>
 
             );
@@ -138,7 +140,7 @@ export default function InvitationsTable() {
         return (
 
             <Badge variant="secondary">
-                Pending
+                {t("pending")}
             </Badge>
 
         );
@@ -166,33 +168,33 @@ export default function InvitationsTable() {
                         <TableRow>
 
 
-                            <TableHead>
-                                Email
+                            <TableHead className="text-start">
+                                {t("email")}
                             </TableHead>
 
 
-                            <TableHead>
-                                Role
+                            <TableHead className="text-start">
+                                {t("role")}
                             </TableHead>
 
 
-                            <TableHead>
-                                Invited By
+                            <TableHead className="text-start">
+                                {t("invitedBy")}
                             </TableHead>
 
 
-                            <TableHead>
-                                Status
+                            <TableHead className="text-start">
+                                {t("status")}
                             </TableHead>
 
 
-                            <TableHead>
-                                Created At
+                            <TableHead className="text-start">
+                                {t("createdAt")}
                             </TableHead>
 
 
                             <TableHead className="text-right">
-                                Actions
+                                {t("actions")}
                             </TableHead>
 
 
@@ -365,7 +367,7 @@ export default function InvitationsTable() {
 
                                                     ) : (
 
-                                                        "Resend"
+                                                        t("resend")
 
                                                     )
                                                 }

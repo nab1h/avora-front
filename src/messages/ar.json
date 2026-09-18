@@ -54,6 +54,7 @@
   "breadcrumb": {
     "dashboard": "لوحة التحكم",
     "profile": "الملف الشخصي",
+    "invitations": "الدعوات",
     "users": "المستخدمون",
     "roles": "الأدوار",
     "permissions": "الصلاحيات",
@@ -100,6 +101,32 @@
       "deleting": "جاري الحذف...",
       "deletedSuccessfully": "تم حذف المستخدم بنجاح.",
       "failedToDelete": "فشل في حذف المستخدم. حاول مرة أخرى."
+    }
+  },
+  "invitations": {
+    "title": "الدعوات",
+    "description": "إدارة دعوات المستخدمين والوصول.",
+    "addInvitation": "إضافة دعوة",
+    "sendInvitation": "إرسال دعوة",
+    "email": "البريد الإلكتروني",
+    "role": "الدور",
+    "selectRole": "اختر الدور",
+    "sending": "جاري الإرسال...",
+    "invitedBy": "تمت الدعوة بواسطة",
+    "status": "الحالة",
+    "createdAt": "تاريخ الإنشاء",
+    "actions": "الإجراءات",
+    "accepted": "مقبولة",
+    "revoked": "ملغاة",
+    "pending": "معلقة",
+    "resend": "إعادة الإرسال",
+    "invitationSent": "تم إرسال الدعوة بنجاح.",
+    "failedToSend": "فشل في إرسال الدعوة. حاول مرة أخرى.",
+    "invitationResent": "تمت إعادة إرسال الدعوة بنجاح.",
+    "failedToResend": "فشل في إعادة إرسال الدعوة. حاول مرة أخرى.",
+    "validation": {
+      "validEmail": "يرجى إدخال بريد إلكتروني صالح.",
+      "roleRequired": "يرجى اختيار دور."
     }
   },
   "dialog": {

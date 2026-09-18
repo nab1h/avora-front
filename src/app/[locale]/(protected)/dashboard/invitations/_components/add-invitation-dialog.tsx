@@ -42,25 +42,12 @@ import {
 } from "@/lib/services/roles-api";
 import React from "react";
 import { toast } from "sonner";
+import { useTranslations } from "next-intl";
 
-
-
-const schema = z.object({
-
-    email: z
-        .string()
-        .email("Please enter a valid email"),
-
-
-    role_id: z
-        .string()
-        .min(1, "Please select a role"),
-
-});
-
-
-
-type FormValues = z.infer<typeof schema>;
+type FormValues = {
+    email: string;
+    role_id: string;
+};
 
 
 
@@ -71,6 +58,11 @@ export default function AddInvitationDialog() {
 
 
     const [open, setOpen] = React.useState(false);
+    const t = useTranslations("invitations");
+    const schema = z.object({
+        email: z.string().email(t("validation.validEmail")),
+        role_id: z.string().min(1, t("validation.roleRequired")),
+    });
 
 
 
@@ -135,12 +127,12 @@ export default function AddInvitationDialog() {
 
             setOpen(false);
 
-            toast.success("Invitation sent successfully");
+            toast.success(t("invitationSent"));
 
 
 
         } catch (error: any) {
-            toast.error(error?.data?.message || "Failed to send invitation. Please try again.");
+            toast.error(error?.data?.message || t("failedToSend"));
         }
 
 
@@ -164,7 +156,7 @@ export default function AddInvitationDialog() {
             <DialogTrigger
                 render={
                     <Button>
-                        + Add Invitation
+                        + {t("addInvitation")}
                     </Button>
                 }
             />
@@ -177,7 +169,7 @@ export default function AddInvitationDialog() {
                 <DialogHeader>
 
                     <DialogTitle>
-                        Send Invitation
+                        {t("sendInvitation")}
                     </DialogTitle>
 
                 </DialogHeader>
@@ -212,7 +204,7 @@ export default function AddInvitationDialog() {
                             >
 
                                 <FieldLabel>
-                                    Email
+                                    {t("email")}
                                 </FieldLabel>
 
 
@@ -256,7 +248,7 @@ export default function AddInvitationDialog() {
                             >
 
                                 <FieldLabel>
-                                    Role
+                                    {t("role")}
                                 </FieldLabel>
 
 
@@ -267,7 +259,7 @@ export default function AddInvitationDialog() {
 
                                     <SelectTrigger>
 
-                                        <SelectValue placeholder="Select role">
+                                        <SelectValue placeholder={t("selectRole")}>
                                             {
                                                 roles.find(
                                                     (role) =>
@@ -344,12 +336,12 @@ export default function AddInvitationDialog() {
                                         "
                                     />
 
-                                    Sending...
+                                    {t("sending")}
 
                                 </>
 
                             ) : (
-                                "Send Invitation"
+                                t("sendInvitation")
                             )
                         }
 
