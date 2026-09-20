@@ -103,9 +103,17 @@
     "updateNameAndEmail": "Update your name and email address.",
     "name": "Name",
     "email": "Email",
+    "phone": "Mobile number",
+    "birthday": "Birthday",
+    "nationalId": "National ID",
+    "job": "Job",
+    "profilePicture": "Profile picture",
+    "changePhoto": "Change photo",
+    "pickBirthday": "Pick a birthday",
     "changing": "Changing...",
     "changeInformation": "Change Information",
     "updatedSuccessfully": "Profile updated successfully.",
+    "updatedError": "Profile updated error.",
     "failedToUpdate": "Failed to update profile. Please try again.",
     "verificationEmailSent": "Verification email sent successfully.",
     "failedToSendVerification": "Failed to send verification email. Please try again.",
@@ -132,7 +140,9 @@
       "passwordMin": "Password must be at least 8 characters",
       "confirmPasswordRequired": "Please confirm your password",
       "passwordsMismatch": "Passwords do not match"
-    }
+    },
+    "required": "This field is required",
+    "invalidEmail": "Invalid email address"
   },
   "breadcrumb": {
     "dashboard": "Dashboard",

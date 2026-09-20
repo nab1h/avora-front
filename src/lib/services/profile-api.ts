@@ -1,28 +1,20 @@
 import { api } from "./api";
+import type { User } from "@/lib/features/auth/auth-slice";
 
 type UpdateProfileRequest = {
   name: string;
   email: string;
+  phone: string;
+  birthday: string;
+  national_id: string;
+  job: string;
+  avatar?: File;
 };
 
 type UpdateProfileResponse = {
   message: string;
-  user: {
-    id: number;
-    name: string;
-    email: string;
-    is_active: boolean;
-    roles: {
-      id: number;
-      name: string;
-      guard_name: string;
-    }[];
-    permissions: {
-      id: number;
-      name: string;
-      guard_name: string;
-    }[];
-  };
+  user?: User;
+  data?: User;
 };
 
 type ChangePasswordRequest = {
@@ -46,11 +38,29 @@ export const profileApi = api.injectEndpoints({
       UpdateProfileResponse,
       UpdateProfileRequest
     >({
-      query: (data) => ({
-        url: "/profile",
-        method: "PUT",
-        body: data,
-      }),
+      query: (data) => {
+        const formData = new FormData();
+
+        // Laravel/PHP does not reliably parse multipart fields on PUT requests.
+        formData.append("_method", "PUT");
+        formData.append("name", data.name);
+        formData.append("email", data.email);
+        formData.append("phone", data.phone);
+        formData.append("birthday", data.birthday);
+        formData.append("national_id", data.national_id);
+        formData.append("job", data.job);
+
+        if (data.avatar) {
+          formData.append("avatar", data.avatar);
+        }
+
+        return {
+          url: "/profile",
+          method: "POST",
+          body: formData,
+        };
+      },
+      invalidatesTags: ["User"],
     }),
 
     changePassword: builder.mutation<

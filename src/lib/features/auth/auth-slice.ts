@@ -16,6 +16,11 @@ export type User = {
   id: number;
   name: string;
   email: string;
+  phone?: string | null;
+  birthday?: string | null;
+  national_id?: string | null;
+  job?: string | null;
+  avatar?: string | null;
   has_password?: boolean;
   email_verified_at?: string | null;
   is_active?: boolean;

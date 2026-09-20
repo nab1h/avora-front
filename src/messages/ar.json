@@ -103,9 +103,17 @@
     "updateNameAndEmail": "قم بتحديث اسمك وعنوان بريدك الإلكتروني.",
     "name": "الاسم",
     "email": "البريد الإلكتروني",
+    "phone": "رقم الموبايل",
+    "birthday": "تاريخ الميلاد",
+    "nationalId": "الرقم القومي",
+    "job": "الوظيفة",
+    "profilePicture": "صورة الملف الشخصي",
+    "changePhoto": "تغيير الصورة",
+    "pickBirthday": "اختر تاريخ الميلاد",
     "changing": "جاري التغيير...",
     "changeInformation": "تغيير المعلومات",
     "updatedSuccessfully": "تم تحديث الملف الشخصي بنجاح.",
+    "updatedError": "حدث خطأ",
     "failedToUpdate": "فشل في تحديث الملف الشخصي. حاول مرة أخرى.",
     "verificationEmailSent": "تم إرسال رسالة التحقق بنجاح.",
     "failedToSendVerification": "فشل في إرسال رسالة التحقق. حاول مرة أخرى.",
@@ -132,7 +140,9 @@
       "passwordMin": "يجب أن تحتوي كلمة المرور على 8 أحرف على الأقل",
       "confirmPasswordRequired": "يرجى تأكيد كلمة المرور",
       "passwordsMismatch": "كلمتا المرور غير متطابقتين"
-    }
+    },
+    "required": "هذا الحقل مطلوب",
+    "invalidEmail": "البريد الإلكتروني غير صحيح"
   },
   "breadcrumb": {
     "dashboard": "لوحة التحكم",
