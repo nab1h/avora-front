@@ -1,4 +1,5 @@
 import { api } from "./api";
+import type { User } from "@/lib/features/auth/auth-slice";
 
 export const authApi = api.injectEndpoints({
   endpoints: (builder) => ({
@@ -43,17 +44,7 @@ export const authApi = api.injectEndpoints({
     // -------------------
     getMe: builder.query<
       {
-        data: {
-          id: number;
-          name: string;
-          email: string;
-          email_verified_at: string | null;
-          is_active: boolean;
-          created_at: string;
-          updated_at: string;
-          roles: any[];
-          permissions: any[];
-        };
+        data: User;
       },
       void
     >({
