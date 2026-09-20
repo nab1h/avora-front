@@ -1,13 +1,10 @@
 "use client";
 
 import { useEffect, useState } from "react";
-
 import {
     Card,
     CardContent,
 } from "@/components/ui/card";
-
-
 import {
     Table,
     TableBody,
@@ -16,21 +13,13 @@ import {
     TableHeader,
     TableRow,
 } from "@/components/ui/table";
-
-
 import {
     Badge
 } from "@/components/ui/badge";
-
-
 import {
     Skeleton
 } from "@/components/ui/skeleton";
-
-
 import UserAvatar from "./user-avatar";
-
-
 import type {
     User
 } from "@/types/users";
@@ -40,10 +29,6 @@ import { toast } from "sonner";
 import { useUpdateUserStatusMutation } from "@/lib/services/users-api";
 import { Loader2 } from "lucide-react";
 
-
-
-
-
 interface Props {
 
     users: User[];
@@ -51,15 +36,8 @@ interface Props {
     isLoading: boolean;
 
 }
-
-
-
-
-
 export default function UsersTable({
-
     users,
-
     isLoading
 
 }: Props) {
@@ -96,243 +74,104 @@ export default function UsersTable({
     }
 
     return (
-
-
         <Card>
-
-
             <CardContent>
-
-
-
                 <Table>
-
-
-
                     <TableHeader>
-
-
                         <TableRow>
-
-
                             <TableHead>
                                 User
                             </TableHead>
-
-
                             <TableHead>
                                 Email
                             </TableHead>
-
-
                             <TableHead>
                                 Roles
                             </TableHead>
-
-
                             <TableHead>
                                 Permissions
                             </TableHead>
-
-
                             <TableHead>
                                 Status
                             </TableHead>
 
-
                             <TableHead className="text-right">
                                 Actions
                             </TableHead>
-
-
                         </TableRow>
-
-
                     </TableHeader>
-
-
-
-
-
                     <TableBody>
-
-
-
-
-
                         {
                             isLoading &&
-
                             Array.from({
                                 length: 5
                             }).map((_, index) => (
-
-
                                 <TableRow key={index}>
-
-
                                     <TableCell>
-
                                         <div className="flex items-center gap-3">
-
                                             <Skeleton
                                                 className="h-10 w-10 rounded-full"
                                             />
-
-
                                             <Skeleton
                                                 className="h-5 w-32"
                                             />
-
                                         </div>
-
                                     </TableCell>
-
-
-
-
                                     <TableCell>
-
                                         <Skeleton
                                             className="h-5 w-40"
                                         />
-
                                     </TableCell>
 
-
-
-
-
                                     <TableCell>
-
                                         <Skeleton
                                             className="h-5 w-24"
                                         />
-
                                     </TableCell>
 
-
-
-
-
                                     <TableCell>
-
                                         <Skeleton
                                             className="h-5 w-24"
                                         />
-
                                     </TableCell>
 
-
-
-
-
                                     <TableCell>
-
                                         <Skeleton
                                             className="h-5 w-20"
                                         />
-
                                     </TableCell>
 
-
-
-
-
                                     <TableCell>
-
                                         <Skeleton
                                             className="h-8 w-8 ml-auto"
                                         />
-
                                     </TableCell>
-
-
-
                                 </TableRow>
-
-
                             ))
-
                         }
-
-
-
-
-
-
-
-
                         {
                             !isLoading && users.map((user) => (
-
-
-
                                 <TableRow
                                     key={user.id}
                                     className={user.id === currentUserId ? "bg-primary/5" : undefined}
                                 >
-
-
-
-
-
                                     <TableCell>
-
-
-
                                         <div className="flex items-center gap-3">
-
-
-
                                             <UserAvatar
-
                                                 name={user.name}
-
                                                 image={user.avatar}
-
                                             />
-
-
-
                                             <span className="font-medium">
-
                                                 {user.name}
-
                                             </span>
-
                                             {user.id === currentUserId && (
                                                 <Badge variant="outline">You</Badge>
                                             )}
-
-
-
                                         </div>
-
-
-
                                     </TableCell>
-
-
-
-
-
-
-
-
                                     <TableCell>
-
                                         {user.email}
-
                                     </TableCell>
-
-
-
-
-
-
-
-
                                     <TableCell>
                                         <div className="flex flex-wrap gap-2">
                                             {user.roles.length > 0 ? (
@@ -378,66 +217,26 @@ export default function UsersTable({
                                     </TableCell>
 
                                     <TableCell className="text-right">
-
                                         <UserActions user={user} />
-
                                     </TableCell>
                                 </TableRow>
                             ))
-
                         }
-
-
-
-
-
-
                         {
                             !isLoading && users.length === 0 && (
-
-
                                 <TableRow>
-
-
                                     <TableCell
-
                                         colSpan={6}
-
                                         className="text-center text-muted-foreground"
-
                                     >
-
                                         No users found
-
-
                                     </TableCell>
-
-
                                 </TableRow>
-
-
                             )
                         }
-
-
-
-
-
                     </TableBody>
-
-
-
                 </Table>
-
-
-
             </CardContent>
-
-
-
         </Card>
-
-
     );
-
 }
