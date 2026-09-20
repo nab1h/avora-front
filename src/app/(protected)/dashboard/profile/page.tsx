@@ -1,4 +1,8 @@
+<<<<<<< HEAD:src/app/(protected)/dashboard/profile/page.tsx
 import { ChangePasswordForm } from "../_components/change-password-form";
+=======
+import { useTranslations } from "next-intl";
+>>>>>>> 1ac9351 (finish v2-ar):src/app/[locale]/(protected)/dashboard/profile/page.tsx
 import { ProfileForm } from "../_components/profile-form";
 
 export default function ProfilePage() {
@@ -11,7 +15,6 @@ export default function ProfilePage() {
         </div>
         <div className="w-full space-y-4 ">
           <ProfileForm />
-          <ChangePasswordForm />
         </div>
       </div>
     </>

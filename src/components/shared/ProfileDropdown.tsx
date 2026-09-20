@@ -16,14 +16,21 @@ import { useAppDispatch, useAppSelector } from '@/lib/hooks'
 import { getInitials } from '@/lib/utils'
 import { logout } from '@/lib/features/auth/auth-slice'
 import { api } from '@/lib/services/api'
+import { getAvatarUrl } from '@/lib/avatar-url'
+import { useState } from 'react'
 
 const ProfileDropdown = () => {
   const dispatch = useAppDispatch()
   const router = useRouter()
 
   const user = useAppSelector((state) => state.auth.user)
+<<<<<<< HEAD
 
   const fullName = user?.name ?? 'User'
+=======
+  const [avatarPreview, setAvatarPreview] = useState<string | null>(null);
+  const fullName = user?.name ?? t('user')
+>>>>>>> 1ac9351 (finish v2-ar)
   const email = user?.email ?? ''
   const initials = getInitials(fullName)
 
@@ -41,13 +48,15 @@ const ProfileDropdown = () => {
     return null
   }
 
+  const avatarSrc = avatarPreview ?? getAvatarUrl(user.avatar);
+
   return (
     <DropdownMenu>
 
       <DropdownMenuTrigger>
         <Avatar>
           <AvatarImage
-            src=''
+            src={avatarSrc}
             alt={fullName}
           />
 
@@ -62,7 +71,6 @@ const ProfileDropdown = () => {
         align='end'
       >
 
-        {/* User Information */}
         <div className='px-2 py-2'>
           <div className='font-medium'>
             {fullName}
@@ -72,6 +80,7 @@ const ProfileDropdown = () => {
             {email}
           </div>
         </div>
+        
 
         <div className='my-1 h-px bg-border' />
 
