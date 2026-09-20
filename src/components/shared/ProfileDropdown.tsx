@@ -2,9 +2,7 @@
 
 import { LogOutIcon, SettingsIcon, UserIcon } from 'lucide-react'
 import { useRouter } from 'next/navigation'
-
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
-
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -24,13 +22,9 @@ const ProfileDropdown = () => {
   const router = useRouter()
 
   const user = useAppSelector((state) => state.auth.user)
-<<<<<<< HEAD
 
-  const fullName = user?.name ?? 'User'
-=======
   const [avatarPreview, setAvatarPreview] = useState<string | null>(null);
-  const fullName = user?.name ?? t('user')
->>>>>>> 1ac9351 (finish v2-ar)
+  const fullName = user?.name ?? 'user'
   const email = user?.email ?? ''
   const initials = getInitials(fullName)
 
