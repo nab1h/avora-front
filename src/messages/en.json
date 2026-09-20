@@ -144,6 +144,10 @@
     "required": "This field is required",
     "invalidEmail": "Invalid email address"
   },
+  "settings": {
+    "title": "Settings",
+    "description": "change the password and settings your account"
+  },
   "breadcrumb": {
     "dashboard": "Dashboard",
     "profile": "Profile",

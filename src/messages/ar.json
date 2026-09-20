@@ -144,6 +144,10 @@
     "required": "هذا الحقل مطلوب",
     "invalidEmail": "البريد الإلكتروني غير صحيح"
   },
+  "settings": {
+    "title": "الإعدادات",
+    "description": "تغير كلمه السر الخاص بحسابك"
+  },
   "breadcrumb": {
     "dashboard": "لوحة التحكم",
     "profile": "الملف الشخصي",

@@ -1,8 +1,8 @@
 import { useTranslations } from "next-intl";
-import { ProfileForm } from "../_components/profile-form";
+import { ChangePasswordForm } from "../_components/change-password-form";
 
 export default function ProfilePage() {
-  const t = useTranslations("profile");
+  const t = useTranslations("settings");
 
   return (
     <>
@@ -18,7 +18,7 @@ export default function ProfilePage() {
         </div>
 
         <div className="w-full space-y-4">
-          <ProfileForm />
+          <ChangePasswordForm />
         </div>
       </div>
     </>
