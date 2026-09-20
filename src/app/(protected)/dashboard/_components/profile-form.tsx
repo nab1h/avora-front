@@ -49,9 +49,6 @@ export function ProfileForm() {
 
 function ProfileFormFields({ user }: { user: User }) {
   const dispatch = useDispatch();
-  const t = useTranslations("profile");
-
-
   const [form, setForm] = useState({
     name: user.name,
     email: user.email,
@@ -76,12 +73,12 @@ function ProfileFormFields({ user }: { user: User }) {
     useSendVerificationNotificationMutation();
 
   const schema = z.object({
-    name: z.string().min(1, t("required")),
-    email: z.string().email(t("invalidEmail")),
-    phone: z.string().min(1, t("required")),
-    birthday: z.string().min(1, t("required")),
-    national_id: z.string().min(1, t("required")),
-    job: z.string().min(1, t("required")),
+    name: z.string().min(1, "Name is required"),
+    email: z.string().email("Invalid email address"),
+    phone: z.string().min(1, "Phone is required"),
+    birthday: z.string().min(1, "Birthday is required"),
+    national_id: z.string().min(1, "National ID is required"),
+    job: z.string().min(1, "Job is required"),
   });
 
   const birthdayValue = birthdayDate
@@ -131,9 +128,10 @@ function ProfileFormFields({ user }: { user: User }) {
       if (updatedUser) dispatch(setUser(updatedUser));
 
       setAvatarLoadError(false);
-      toast.success(t("updatedSuccessfully"));
+      toast.success("Profile updated successfully");
+
     } catch {
-      toast.error(t("updatedError"));
+      toast.error("Failed to update profile");
     }
   };
 
@@ -144,8 +142,8 @@ function ProfileFormFields({ user }: { user: User }) {
   return (
     <Card className="w-full">
       <CardHeader>
-        <CardTitle>{t("personalInformation")}</CardTitle>
-        <CardDescription>{t("updateNameAndEmail")}</CardDescription>
+        <CardTitle>Personal Information</CardTitle>
+        <CardDescription>Update your name and email address</CardDescription>
       </CardHeader>
 
       <CardContent>
@@ -154,7 +152,7 @@ function ProfileFormFields({ user }: { user: User }) {
             <button
               type="button"
               onClick={() => avatarInputRef.current?.click()}
-              aria-label={t("profilePicture")}
+              aria-label="Profile picture"
               className="group relative size-32 cursor-pointer overflow-hidden rounded-full ring-2 ring-border ring-offset-2 ring-offset-background transition hover:ring-primary/60 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
             >
               {avatarSrc && !avatarLoadError ? (
@@ -169,9 +167,10 @@ function ProfileFormFields({ user }: { user: User }) {
                   <UserRound className="size-12 text-muted-foreground" />
                 </span>
               )}
+
               <span className="absolute inset-0 flex flex-col items-center justify-center gap-1 bg-black/55 text-white opacity-0 transition-opacity group-hover:opacity-100">
                 <Camera className="size-6" />
-                <span className="text-xs font-medium">{t("changePhoto")}</span>
+                <span className="text-xs font-medium">Change photo</span>
               </span>
             </button>
 
@@ -182,6 +181,7 @@ function ProfileFormFields({ user }: { user: User }) {
               className="hidden"
               onChange={(event) => {
                 const file = event.target.files?.[0];
+
                 if (file) {
                   setAvatarLoadError(false);
                   setAvatarPreview(URL.createObjectURL(file));
@@ -190,45 +190,50 @@ function ProfileFormFields({ user }: { user: User }) {
             />
 
             <p className="text-center text-sm text-muted-foreground">
-              {t("profilePicture")}
+              Profile picture
             </p>
           </div>
 
           <form onSubmit={handleSubmit} className="flex-1 space-y-5">
             {isSuccess && (
               <p className="text-sm text-green-500">
-                {t("updatedSuccessfully")}
+                Profile updated successfully
               </p>
             )}
 
             <div className="grid gap-5 sm:grid-cols-2">
               <div className="space-y-2 sm:col-span-2">
-                <Label htmlFor="name">{t("name")}</Label>
+                <Label htmlFor="name">Name</Label>
+
                 <Input
                   id="name"
                   value={form.name}
                   onChange={(event) => setField("name", event.target.value)}
                 />
+
                 {errors.name && (
                   <p className="text-sm text-destructive">{errors.name}</p>
                 )}
               </div>
 
               <div className="space-y-2 sm:col-span-2">
-                <Label htmlFor="email">{t("email")}</Label>
+                <Label htmlFor="email">Email</Label>
+
                 <Input
                   id="email"
                   type="email"
                   value={form.email}
                   onChange={(event) => setField("email", event.target.value)}
                 />
+
                 {errors.email && (
                   <p className="text-sm text-destructive">{errors.email}</p>
                 )}
 
                 {!user.email_verified_at && (
                   <div className="flex flex-wrap items-center justify-between gap-3 rounded-md border border-amber-300 bg-amber-50 p-3 text-sm text-amber-900 dark:border-amber-700 dark:bg-amber-950/30 dark:text-amber-200">
-                    <span>{t("verifyEmailInstruction")}</span>
+                    <span>Please verify your email address.</span>
+
                     <Button
                       type="button"
                       size="sm"
@@ -236,36 +241,41 @@ function ProfileFormFields({ user }: { user: User }) {
                       onClick={handleSendVerification}
                       disabled={isSendingVerification}
                     >
-                      {isSendingVerification ? t("sending") : t("verifyEmail")}
+                      {isSendingVerification ? "Sending..." : "Verify email"}
                     </Button>
                   </div>
                 )}
+
                 <div className="flex items-center gap-1.5 text-xs text-muted-foreground">
                   <span dir="ltr">{user.email}</span>
+
                   {user?.email_verified_at && (
                     <span className="flex items-center gap-1">
                       <CheckCircle2 className="h-3.5 w-3.5" />
-                      {t("verified")}
+                      Verified
                     </span>
                   )}
                 </div>
               </div>
 
               <div className="space-y-2">
-                <Label htmlFor="phone">{t("phone")}</Label>
+                <Label htmlFor="phone">Phone</Label>
+
                 <Input
                   id="phone"
                   type="tel"
                   value={form.phone}
                   onChange={(event) => setField("phone", event.target.value)}
                 />
+
                 {errors.phone && (
                   <p className="text-sm text-destructive">{errors.phone}</p>
                 )}
               </div>
 
               <div className="space-y-2">
-                <Label htmlFor="birthday">{t("birthday")}</Label>
+                <Label htmlFor="birthday">Birthday</Label>
+
                 <Popover>
                   <PopoverTrigger
                     render={
@@ -280,12 +290,14 @@ function ProfileFormFields({ user }: { user: User }) {
                     }
                   >
                     <CalendarIcon className="size-4 text-muted-foreground" />
+
                     {birthdayDate ? (
                       birthdayValue
                     ) : (
-                      <span>{t("pickBirthday")}</span>
+                      <span>Select birthday</span>
                     )}
                   </PopoverTrigger>
+
                   <PopoverContent className="w-auto p-0" align="start">
                     <Calendar
                       mode="single"
@@ -299,13 +311,15 @@ function ProfileFormFields({ user }: { user: User }) {
                     />
                   </PopoverContent>
                 </Popover>
+
                 {errors.birthday && (
                   <p className="text-sm text-destructive">{errors.birthday}</p>
                 )}
               </div>
 
               <div className="space-y-2">
-                <Label htmlFor="national_id">{t("nationalId")}</Label>
+                <Label htmlFor="national_id">National ID</Label>
+
                 <Input
                   id="national_id"
                   inputMode="numeric"
@@ -314,6 +328,7 @@ function ProfileFormFields({ user }: { user: User }) {
                     setField("national_id", event.target.value)
                   }
                 />
+
                 {errors.national_id && (
                   <p className="text-sm text-destructive">
                     {errors.national_id}
@@ -322,12 +337,14 @@ function ProfileFormFields({ user }: { user: User }) {
               </div>
 
               <div className="space-y-2">
-                <Label htmlFor="job">{t("job")}</Label>
+                <Label htmlFor="job">Job</Label>
+
                 <Input
                   id="job"
                   value={form.job}
                   onChange={(event) => setField("job", event.target.value)}
                 />
+
                 {errors.job && (
                   <p className="text-sm text-destructive">{errors.job}</p>
                 )}
@@ -336,11 +353,11 @@ function ProfileFormFields({ user }: { user: User }) {
 
             {isLoading ? (
               <Button variant="secondary" disabled>
-                {t("changing")}
+                Updating...
                 <Spinner data-icon="inline-start" />
               </Button>
             ) : (
-              <Button type="submit">{t("changeInformation")}</Button>
+              <Button type="submit">Update Information</Button>
             )}
           </form>
         </div>
