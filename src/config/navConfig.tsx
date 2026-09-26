@@ -58,13 +58,13 @@ export const navItems: NavItem[] = [
       },
       {
         icon: 'LayoutTemplate',
-        label: 'Layouts',
+        label: 'services',
         // badge: 'Pro',
         badgeClassName: 'right-8',
         childItems: [
           {
-            label: 'Full Navbar',
-            href: 'https://shadcn-nextjs-admincn-full-navbar-layout-admin-template.vercel.app/',
+            label: 'Services',
+            href: '/dashboard/services',
             target: '_blank',
             permission: 'manage-roles',
           },
