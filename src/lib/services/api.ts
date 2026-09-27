@@ -23,6 +23,8 @@ export const api = createApi({
         "Users",
         "Invitations",
         "User",
+        "Services",
+        "Gallery"
     ],
   endpoints: () => ({}),
 });
