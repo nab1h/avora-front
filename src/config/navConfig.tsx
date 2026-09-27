@@ -81,6 +81,11 @@ export const navItems: NavItem[] = [
             translationKey: 'gallery',
             target: '_blank',
             permission: 'manage-roles',
+          },{
+            label: 'Social Link',
+            href: '/dashboard/social-link',
+            target: '_blank',
+            permission: 'manage-roles',
           },
           {
             label: 'Social Media',
