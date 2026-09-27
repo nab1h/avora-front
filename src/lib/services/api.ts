@@ -22,7 +22,8 @@ export const api = createApi({
         "Roles",
         "Permissions",
         "Users",
-        "Services"
+        "Services",
+        "Gallery"
     ],
   endpoints: () => ({}),
 });
