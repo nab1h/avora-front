@@ -69,6 +69,18 @@ export const navItems: NavItem[] = [
             permission: 'manage-roles',
           },
           {
+
+            label: 'Gallery',
+            href: '/dashboard/gallery',
+            target: '_blank',
+            permission: 'manage-roles',
+          },{
+            label: 'Social Link',
+            href: '/dashboard/social-link',
+            target: '_blank',
+            permission: 'manage-roles',
+          },
+          {
             label: 'Horizontal',
             href: 'https://shadcn-nextjs-admincn-horizontal-layout-admin-template.vercel.app/',
             target: '_blank',
