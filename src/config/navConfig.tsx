@@ -73,6 +73,11 @@ export const navItems: NavItem[] = [
             href: '/dashboard/gallery',
             target: '_blank',
             permission: 'manage-roles',
+          },{
+            label: 'Social Link',
+            href: '/dashboard/social-link',
+            target: '_blank',
+            permission: 'manage-roles',
           },
           {
             label: 'Horizontal',
