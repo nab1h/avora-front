@@ -359,5 +359,88 @@
         "confirm": "حذف"
       }
     }
+  },
+  "services": {
+    "title": "الخدمات",
+    "description": "إدارة الخدمات.",
+    "add": "إضافة خدمة",
+    "dialog": {
+      "title": "إضافة خدمة",
+      "description": "إنشاء خدمة جديدة.",
+      "editTitle": "تعديل الخدمة",
+      "editDescription": "تعديل بيانات {name}.",
+      "name": "اسم الخدمة",
+      "namePlaceholder": "أدخل اسم الخدمة",
+      "slug": "المعرّف",
+      "slugPlaceholder": "أدخل معرّف الخدمة",
+      "descriptionField": "الوصف",
+      "descriptionPlaceholder": "أدخل وصف الخدمة",
+      "image": "الصورة",
+      "imagePreview": "معاينة الخدمة",
+      "chooseImage": "اختر صورة",
+      "imageHint": "JPG أو PNG أو WebP حتى 2 ميجابايت",
+      "cancel": "إلغاء",
+      "creating": "جاري الإنشاء...",
+      "create": "إنشاء الخدمة",
+      "saving": "جاري الحفظ...",
+      "saveChanges": "حفظ التغييرات",
+      "validation": {
+        "nameRequired": "اسم الخدمة مطلوب.",
+        "nameMax": "يجب ألا يتجاوز اسم الخدمة 255 حرفًا.",
+        "slugRequired": "المعرّف مطلوب.",
+        "slugMax": "يجب ألا يتجاوز المعرّف 255 حرفًا.",
+        "descriptionMax": "يجب ألا يتجاوز الوصف 5000 حرف.",
+        "imageSize": "يجب ألا يتجاوز حجم الصورة 2 ميجابايت.",
+        "imageType": "يسمح فقط بصور JPG وPNG وWebP."
+      },
+      "messages": {
+        "created": "تم إنشاء الخدمة بنجاح.",
+        "createFailed": "فشل إنشاء الخدمة. حاول مرة أخرى.",
+        "updated": "تم تحديث الخدمة بنجاح.",
+        "updateFailed": "فشل تحديث الخدمة. حاول مرة أخرى."
+      }
+    },
+    "table": {
+      "id": "المعرّف",
+      "image": "الصورة",
+      "name": "اسم الخدمة",
+      "description": "الوصف",
+      "slug": "المعرّف",
+      "actions": "الإجراءات",
+      "loadFailed": "تعذر تحميل الخدمات.",
+      "tryAgain": "حاول مرة أخرى",
+      "emptyTitle": "لا توجد خدمات حتى الآن",
+      "emptyDescription": "أضف خدمة لعرضها هنا.",
+      "noDescription": "لا يوجد وصف",
+      "editService": "تعديل الخدمة",
+      "deleteService": "حذف الخدمة",
+      "messages": {
+        "deleted": "تم حذف الخدمة بنجاح.",
+        "deleteFailed": "فشل حذف الخدمة. حاول مرة أخرى."
+      },
+      "deleteDialog": {
+        "title": "حذف الخدمة؟",
+        "description": "هل أنت متأكد أنك تريد حذف {name}؟ لا يمكن التراجع عن هذا الإجراء.",
+        "cancel": "إلغاء",
+        "deleting": "جاري الحذف...",
+        "confirm": "حذف الخدمة"
+      }
+    }
+  },
+  "gallery": {
+    "title": "المعرض",
+    "description": "إدارة معرض الصور.",
+    "addPhoto": "إضافة صورة",
+    "uploading": "جاري الرفع...",
+    "selected": "تم تحديد {count} صورة",
+    "deleteSelected": "حذف المحدد",
+    "deleting": "جاري الحذف...",
+    "imageAlt": "صورة من المعرض",
+    "messages": {
+      "uploaded": "تم رفع الصور بنجاح.",
+      "uploadFailed": "فشل رفع الصور.",
+      "deleted": "تم حذف الصور بنجاح.",
+      "deleteFailed": "فشل حذف الصور."
+    }
   }
 }

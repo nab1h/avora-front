@@ -359,5 +359,88 @@
         "confirm": "Delete"
       }
     }
+  },
+  "services": {
+    "title": "Services",
+    "description": "Manage your services.",
+    "add": "Add Service",
+    "dialog": {
+      "title": "Add Service",
+      "description": "Create a new service.",
+      "editTitle": "Edit Service",
+      "editDescription": "Edit the {name}.",
+      "name": "Service Name",
+      "namePlaceholder": "Enter service name",
+      "slug": "Slug",
+      "slugPlaceholder": "Enter service slug",
+      "descriptionField": "Description",
+      "descriptionPlaceholder": "Enter service description",
+      "image": "Image",
+      "imagePreview": "Service preview",
+      "chooseImage": "Choose an image",
+      "imageHint": "JPG, PNG or WebP up to 2MB",
+      "cancel": "Cancel",
+      "creating": "Creating...",
+      "create": "Create Service",
+      "saving": "Saving...",
+      "saveChanges": "Save changes",
+      "validation": {
+        "nameRequired": "Service name is required.",
+        "nameMax": "Service name must not exceed 255 characters.",
+        "slugRequired": "Slug is required.",
+        "slugMax": "Slug must not exceed 255 characters.",
+        "descriptionMax": "Description must not exceed 5000 characters.",
+        "imageSize": "Image must not exceed 2MB.",
+        "imageType": "Only JPG, PNG and WebP images are allowed."
+      },
+      "messages": {
+        "created": "Service created successfully.",
+        "createFailed": "Failed to create service. Please try again.",
+        "updated": "Service updated successfully.",
+        "updateFailed": "Failed to update service. Please try again."
+      }
+    },
+    "table": {
+      "id": "ID",
+      "image": "Image",
+      "name": "Service Name",
+      "description": "Description",
+      "slug": "Slug",
+      "actions": "Actions",
+      "loadFailed": "Services could not be loaded.",
+      "tryAgain": "Try again",
+      "emptyTitle": "No services yet",
+      "emptyDescription": "Add a service to see it listed here.",
+      "noDescription": "No description provided",
+      "editService": "Edit service",
+      "deleteService": "Delete service",
+      "messages": {
+        "deleted": "Service deleted successfully.",
+        "deleteFailed": "Failed to delete service. Please try again."
+      },
+      "deleteDialog": {
+        "title": "Delete service?",
+        "description": "Are you sure you want to delete {name}? This action cannot be undone.",
+        "cancel": "Cancel",
+        "deleting": "Deleting...",
+        "confirm": "Delete service"
+      }
+    }
+  },
+  "gallery": {
+    "title": "Gallery",
+    "description": "Manage your gallery.",
+    "addPhoto": "Add Photo",
+    "uploading": "Uploading...",
+    "selected": "{count} selected",
+    "deleteSelected": "Delete Selected",
+    "deleting": "Deleting...",
+    "imageAlt": "Gallery photo",
+    "messages": {
+      "uploaded": "Images uploaded successfully.",
+      "uploadFailed": "Failed to upload images.",
+      "deleted": "Images deleted successfully.",
+      "deleteFailed": "Failed to delete images."
+    }
   }
 }
