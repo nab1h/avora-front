@@ -65,25 +65,27 @@ export const navItems: NavItem[] = [
       {
         icon: 'LayoutTemplate',
         label: 'services',
-        // badge: 'Pro',
+        translationKey: 'services',
         badgeClassName: 'right-8',
         childItems: [
           {
             label: 'Services',
             href: '/dashboard/services',
+            translationKey: 'services',
             target: '_blank',
             permission: 'manage-roles',
           },
           {
             label: 'Gallery',
             href: '/dashboard/gallery',
+            translationKey: 'gallery',
             target: '_blank',
             permission: 'manage-roles',
           },
           {
-            label: 'Horizontal',
-            translationKey: 'horizontal',
-            href: 'https://shadcn-nextjs-admincn-horizontal-layout-admin-template.vercel.app/',
+            label: 'Social Media',
+            href: '/dashboard/social-link',
+            translationKey: 'social',
             target: '_blank',
             permission: 'manage-roles',
           },
