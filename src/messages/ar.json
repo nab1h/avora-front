@@ -79,10 +79,17 @@
   "sidebar": {
     "dashboardLayouts": "لوحة التحكم والتخطيطات",
     "apps": "التطبيقات",
+<<<<<<< HEAD
     "profile": "حسابي",
     "invitations": "الدعوات",
     "dashboard": "لوحة التحكم",
     "layouts": "التخطيطات",
+=======
+    "orders": "الطلبات",
+    "services": "الخدمات",
+    "gallery": "المعرض",
+    "social": "مواقع التواصل الإجتماعي",
+>>>>>>> 4944a72 (df)
     "fullNavbar": "شريط التنقل الكامل",
     "horizontal": "أفقي",
     "users": "المستخدمون",

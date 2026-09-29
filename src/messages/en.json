@@ -79,10 +79,17 @@
   "sidebar": {
     "dashboardLayouts": "Dashboard & Layouts",
     "apps": "Apps",
+<<<<<<< HEAD
     "profile": "Profile",
     "invitations": "Invitations",
     "dashboard": "Dashboard",
     "layouts": "Layouts",
+=======
+    "orders": "Orders",
+    "services": "Services",
+    "gallery": "Gallery",
+    "social": "Social Media",
+>>>>>>> 4944a72 (df)
     "fullNavbar": "Full Navbar",
     "horizontal": "Horizontal",
     "users": "Users",
