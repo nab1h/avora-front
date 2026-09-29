@@ -99,12 +99,6 @@ export const navItems: NavItem[] = [
           },{
             label: 'Social Link',
             href: '/dashboard/social-link',
-            target: '_blank',
-            permission: 'manage-roles',
-          },
-          {
-            label: 'Social Media',
-            href: '/dashboard/social-link',
             translationKey: 'social',
             target: '_blank',
             permission: 'manage-roles',
