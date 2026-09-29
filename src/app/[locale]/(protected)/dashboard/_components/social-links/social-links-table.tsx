@@ -3,6 +3,7 @@
 import { Pencil, Trash2 } from "lucide-react";
 import { useState } from "react";
 import { toast } from "sonner";
+import { useTranslations } from "next-intl";
 
 import {
     Card,
@@ -40,6 +41,7 @@ import {
     useGetSocialLinksQuery,
     type SocialLink,
 } from "@/lib/services/social-links";
+
 import SocialPlatformIcon from "@/components/social-platform-icon";
 
 interface Props {
@@ -49,13 +51,17 @@ interface Props {
 export default function SocialLinksTable({
     onEdit,
 }: Props) {
+    const t = useTranslations("socialLinks.table");
+
     const {
         data: socialLinks,
         isLoading,
     } = useGetSocialLinksQuery();
 
-    const [deleteSocialLink, { isLoading: isDeleting }] =
-        useDeleteSocialLinkMutation();
+    const [
+        deleteSocialLink,
+        { isLoading: isDeleting },
+    ] = useDeleteSocialLinkMutation();
 
     const [selectedLink, setSelectedLink] =
         useState<SocialLink | null>(null);
@@ -69,7 +75,7 @@ export default function SocialLinksTable({
             ).unwrap();
 
             toast.success(
-                "Social link deleted successfully."
+                t("messages.deleted")
             );
 
             setSelectedLink(null);
@@ -81,8 +87,8 @@ export default function SocialLinksTable({
 
             toast.error(
                 error?.data?.message ||
-                error?.data?.error ||
-                "Failed to delete social link."
+                    error?.data?.error ||
+                    t("messages.deleteFailed")
             );
         }
     };
@@ -95,14 +101,14 @@ export default function SocialLinksTable({
                 </CardHeader>
 
                 <CardContent className="space-y-3">
-                    {Array.from({ length: 5 }).map(
-                        (_, index) => (
-                            <Skeleton
-                                key={index}
-                                className="h-12 w-full"
-                            />
-                        )
-                    )}
+                    {Array.from({
+                        length: 5,
+                    }).map((_, index) => (
+                        <Skeleton
+                            key={index}
+                            className="h-12 w-full"
+                        />
+                    ))}
                 </CardContent>
             </Card>
         );
@@ -113,7 +119,7 @@ export default function SocialLinksTable({
             <Card>
                 <CardHeader>
                     <CardTitle>
-                        Social Links
+                        {t("title")}
                     </CardTitle>
                 </CardHeader>
 
@@ -124,23 +130,23 @@ export default function SocialLinksTable({
                                 <TableHeader>
                                     <TableRow>
                                         <TableHead>
-                                            Platform
+                                            {t("platform")}
                                         </TableHead>
 
                                         <TableHead>
-                                            URL
+                                            {t("url")}
                                         </TableHead>
 
                                         <TableHead>
-                                            Status
+                                            {t("status")}
                                         </TableHead>
 
                                         <TableHead>
-                                            Sort Order
+                                            {t("sortOrder")}
                                         </TableHead>
 
                                         <TableHead className="text-end">
-                                            Actions
+                                            {t("actions")}
                                         </TableHead>
                                     </TableRow>
                                 </TableHeader>
@@ -157,7 +163,11 @@ export default function SocialLinksTable({
                                                     <div className="flex items-center gap-3">
                                                         <div className="flex size-9 items-center justify-center rounded-md border bg-muted">
                                                             <SocialPlatformIcon
-                                                                icon={socialLink.platform.icon}
+                                                                icon={
+                                                                    socialLink
+                                                                        .platform
+                                                                        .icon
+                                                                }
                                                                 className="size-5"
                                                             />
                                                         </div>
@@ -196,8 +206,12 @@ export default function SocialLinksTable({
                                                         }
                                                     >
                                                         {socialLink.is_active
-                                                            ? "Active"
-                                                            : "Inactive"}
+                                                            ? t(
+                                                                  "active"
+                                                              )
+                                                            : t(
+                                                                  "inactive"
+                                                              )}
                                                     </span>
                                                 </TableCell>
 
@@ -244,7 +258,7 @@ export default function SocialLinksTable({
                         </div>
                     ) : (
                         <div className="py-12 text-center text-sm text-muted-foreground">
-                            No social links found.
+                            {t("empty")}
                         </div>
                     )}
                 </CardContent>
@@ -261,11 +275,11 @@ export default function SocialLinksTable({
                 <AlertDialogContent>
                     <AlertDialogHeader>
                         <AlertDialogTitle>
-                            Delete social link?
+                            {t("delete.title")}
                         </AlertDialogTitle>
 
                         <AlertDialogDescription>
-                            This action cannot be undone.
+                            {t("delete.description")}
                         </AlertDialogDescription>
                     </AlertDialogHeader>
 
@@ -273,7 +287,7 @@ export default function SocialLinksTable({
                         <AlertDialogCancel
                             disabled={isDeleting}
                         >
-                            Cancel
+                            {t("delete.cancel")}
                         </AlertDialogCancel>
 
                         <AlertDialogAction
@@ -282,8 +296,8 @@ export default function SocialLinksTable({
                             className="bg-destructive text-destructive-foreground hover:bg-destructive/90"
                         >
                             {isDeleting
-                                ? "Deleting..."
-                                : "Delete"}
+                                ? t("delete.deleting")
+                                : t("delete.confirm")}
                         </AlertDialogAction>
                     </AlertDialogFooter>
                 </AlertDialogContent>
