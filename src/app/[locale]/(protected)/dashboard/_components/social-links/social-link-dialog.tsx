@@ -4,6 +4,7 @@ import { useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { Loader2 } from "lucide-react";
 import { toast } from "sonner";
+import { useTranslations } from "next-intl";
 
 import {
     Dialog,
@@ -15,6 +16,7 @@ import {
 } from "@/components/ui/dialog";
 
 import { Button } from "@/components/ui/button";
+
 import {
     Field,
     FieldError,
@@ -42,6 +44,7 @@ import {
     useUpdateSocialLinkMutation,
     type SocialLink,
 } from "@/lib/services/social-links";
+
 import SocialPlatformIcon from "@/components/social-platform-icon";
 
 interface Props {
@@ -62,6 +65,8 @@ export default function SocialLinkDialog({
     onOpenChange,
     socialLink,
 }: Props) {
+    const t = useTranslations("socialLinks.dialog");
+
     const isEdit = Boolean(socialLink);
 
     const {
@@ -84,7 +89,8 @@ export default function SocialLinkDialog({
         },
     });
 
-    const isSubmitting = isCreating || isUpdating;
+    const isSubmitting =
+        isCreating || isUpdating;
 
     useEffect(() => {
         if (socialLink) {
@@ -106,7 +112,9 @@ export default function SocialLinkDialog({
         }
     }, [socialLink, form]);
 
-    const onSubmit = async (values: FormValues) => {
+    const onSubmit = async (
+        values: FormValues
+    ) => {
         try {
             const data = {
                 social_platform_id: Number(
@@ -114,7 +122,9 @@ export default function SocialLinkDialog({
                 ),
                 url: values.url,
                 is_active: values.is_active,
-                sort_order: Number(values.sort_order),
+                sort_order: Number(
+                    values.sort_order
+                ),
             };
 
             if (socialLink) {
@@ -124,13 +134,15 @@ export default function SocialLinkDialog({
                 }).unwrap();
 
                 toast.success(
-                    "Social link updated successfully."
+                    t("messages.updated")
                 );
             } else {
-                await createSocialLink(data).unwrap();
+                await createSocialLink(
+                    data
+                ).unwrap();
 
                 toast.success(
-                    "Social link created successfully."
+                    t("messages.created")
                 );
             }
 
@@ -144,8 +156,8 @@ export default function SocialLinkDialog({
 
             toast.error(
                 error?.data?.message ||
-                error?.data?.error ||
-                "Something went wrong."
+                    error?.data?.error ||
+                    t("messages.error")
             );
         }
     };
@@ -159,36 +171,44 @@ export default function SocialLinkDialog({
                 <DialogHeader>
                     <DialogTitle>
                         {isEdit
-                            ? "Edit Social Link"
-                            : "Add Social Link"}
+                            ? t("editTitle")
+                            : t("addTitle")}
                     </DialogTitle>
 
                     <DialogDescription>
                         {isEdit
-                            ? "Update the social link details."
-                            : "Add a new social media link."}
+                            ? t("editDescription")
+                            : t("addDescription")}
                     </DialogDescription>
                 </DialogHeader>
 
                 <form
-                    onSubmit={form.handleSubmit(onSubmit)}
+                    onSubmit={form.handleSubmit(
+                        onSubmit
+                    )}
                     className="space-y-5"
                 >
                     {/* Platform */}
                     <Field>
                         <FieldLabel>
-                            Platform
+                            {t("platform")}
                         </FieldLabel>
 
                         <Select
-                            value={form.watch("social_platform_id")}
+                            value={form.watch(
+                                "social_platform_id"
+                            )}
                             onValueChange={(value) => {
-                                if (value !== null) {
+                                if (
+                                    value !==
+                                    null
+                                ) {
                                     form.setValue(
                                         "social_platform_id",
                                         value,
                                         {
-                                            shouldValidate: true,
+                                            shouldValidate:
+                                                true,
                                         }
                                     );
                                 }
@@ -198,146 +218,188 @@ export default function SocialLinkDialog({
                                 isSubmitting
                             }
                         >
-                            <SelectTrigger className="size-11 p-0 justify-center">
+                            <SelectTrigger className="size-11 justify-center p-0">
                                 <SelectValue
-                                    placeholder="Select platform"
+                                    placeholder={t(
+                                        "selectPlatform"
+                                    )}
                                 />
                             </SelectTrigger>
 
                             <SelectContent>
-                                {platforms?.map((platform) => (
-                                    <SelectItem
-                                        key={platform.id}
-                                        value={String(platform.id)}
-                                    >
-                                        <div className="flex items-center gap-2">
-                                            <SocialPlatformIcon
-                                                icon={platform.icon}
-                                                className="size-5"
-                                            />
+                                {platforms?.map(
+                                    (
+                                        platform
+                                    ) => (
+                                        <SelectItem
+                                            key={
+                                                platform.id
+                                            }
+                                            value={String(
+                                                platform.id
+                                            )}
+                                        >
+                                            <div className="flex items-center gap-2">
+                                                <SocialPlatformIcon
+                                                    icon={
+                                                        platform.icon
+                                                    }
+                                                    className="size-5"
+                                                />
 
-                                            <span>
-                                                {platform.name}
-                                            </span>
-                                        </div>
-                                    </SelectItem>
-                                ))}
+                                                <span>
+                                                    {
+                                                        platform.name
+                                                    }
+                                                </span>
+                                            </div>
+                                        </SelectItem>
+                                    )
+                                )}
                             </SelectContent>
                         </Select>
 
-                        {form.formState.errors.social_platform_id && (
+                        {form.formState
+                            .errors
+                            .social_platform_id && (
                             <FieldError>
                                 {
-                                    form.formState.errors
-                                        .social_platform_id.message
+                                    form
+                                        .formState
+                                        .errors
+                                        .social_platform_id
+                                        .message
                                 }
                             </FieldError>
                         )}
                     </Field>
 
-                 
+                    {/* URL */}
+                    <Field>
+                        <FieldLabel>
+                            {t("url")}
+                        </FieldLabel>
 
-                {/* URL */}
-                <Field>
-                    <FieldLabel>
-                        URL
-                    </FieldLabel>
-
-                    <Input
-                        {...form.register("url", {
-                            required:
-                                "URL is required.",
-                        })}
-                        placeholder="https://instagram.com/avora"
-                        disabled={isSubmitting}
-                    />
-
-                    {form.formState.errors.url && (
-                        <FieldError>
-                            {
-                                form.formState.errors
-                                    .url.message
+                        <Input
+                            {...form.register(
+                                "url",
+                                {
+                                    required:
+                                        t(
+                                            "validation.urlRequired"
+                                        ),
+                                }
+                            )}
+                            placeholder="https://instagram.com/avora"
+                            disabled={
+                                isSubmitting
                             }
-                        </FieldError>
-                    )}
-                </Field>
+                        />
 
-                {/* Sort Order */}
-                <Field>
-                    <FieldLabel>
-                        Sort Order
-                    </FieldLabel>
-
-                    <Input
-                        type="number"
-                        {...form.register(
-                            "sort_order",
-                            {
-                                required:
-                                    "Sort order is required.",
-                                valueAsNumber: true,
-                            }
+                        {form.formState
+                            .errors.url && (
+                            <FieldError>
+                                {
+                                    form
+                                        .formState
+                                        .errors
+                                        .url.message
+                                }
+                            </FieldError>
                         )}
-                        disabled={isSubmitting}
-                    />
-                </Field>
+                    </Field>
 
-                {/* Active */}
-                <div className="flex items-center justify-between rounded-lg border p-4">
-                    <div className="space-y-1">
-                        <p className="text-sm font-medium">
-                            Active
-                        </p>
+                    {/* Sort Order */}
+                    <Field>
+                        <FieldLabel>
+                            {t("sortOrder")}
+                        </FieldLabel>
 
-                        <p className="text-sm text-muted-foreground">
-                            Show this social link
-                        </p>
+                        <Input
+                            type="number"
+                            {...form.register(
+                                "sort_order",
+                                {
+                                    required:
+                                        t(
+                                            "validation.sortOrderRequired"
+                                        ),
+                                    valueAsNumber:
+                                        true,
+                                }
+                            )}
+                            disabled={
+                                isSubmitting
+                            }
+                        />
+                    </Field>
+
+                    {/* Active */}
+                    <div className="flex items-center justify-between rounded-lg border p-4">
+                        <div className="space-y-1">
+                            <p className="text-sm font-medium">
+                                {t("active")}
+                            </p>
+
+                            <p className="text-sm text-muted-foreground">
+                                {t(
+                                    "activeDescription"
+                                )}
+                            </p>
+                        </div>
+
+                        <Switch
+                            checked={form.watch(
+                                "is_active"
+                            )}
+                            onCheckedChange={(
+                                checked
+                            ) =>
+                                form.setValue(
+                                    "is_active",
+                                    checked
+                                )
+                            }
+                            disabled={
+                                isSubmitting
+                            }
+                        />
                     </div>
 
-                    <Switch
-                        checked={form.watch(
-                            "is_active"
-                        )}
-                        onCheckedChange={(checked) =>
-                            form.setValue(
-                                "is_active",
-                                checked
-                            )
-                        }
-                        disabled={isSubmitting}
-                    />
-                </div>
+                    <DialogFooter>
+                        <Button
+                            type="button"
+                            variant="outline"
+                            onClick={() =>
+                                onOpenChange(
+                                    false
+                                )
+                            }
+                            disabled={
+                                isSubmitting
+                            }
+                        >
+                            {t("cancel")}
+                        </Button>
 
-                <DialogFooter>
-                    <Button
-                        type="button"
-                        variant="outline"
-                        onClick={() =>
-                            onOpenChange(false)
-                        }
-                        disabled={isSubmitting}
-                    >
-                        Cancel
-                    </Button>
+                        <Button
+                            type="submit"
+                            disabled={
+                                isSubmitting ||
+                                isPlatformsLoading
+                            }
+                        >
+                            {isSubmitting && (
+                                <Loader2 className="size-4 animate-spin" />
+                            )}
 
-                    <Button
-                        type="submit"
-                        disabled={
-                            isSubmitting ||
-                            isPlatformsLoading
-                        }
-                    >
-                        {isSubmitting && (
-                            <Loader2 className="size-4 animate-spin" />
-                        )}
-
-                        {isEdit
-                            ? "Update"
-                            : "Create"}
-                    </Button>
-                </DialogFooter>
-            </form>
-        </DialogContent>
-        </Dialog >
+                            {isEdit
+                                ? t("update")
+                                : t("create")}
+                        </Button>
+                    </DialogFooter>
+                </form>
+            </DialogContent>
+        </Dialog>
     );
 }

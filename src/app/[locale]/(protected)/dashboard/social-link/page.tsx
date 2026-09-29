@@ -2,15 +2,17 @@
 
 import { Plus } from "lucide-react";
 import { useState } from "react";
+import { useTranslations } from "next-intl";
 
 import { Button } from "@/components/ui/button";
-
 
 import type { SocialLink } from "@/lib/services/social-links";
 import SocialLinksTable from "../_components/social-links/social-links-table";
 import SocialLinkDialog from "../_components/social-links/social-link-dialog";
 
 export default function SocialLinkPage() {
+    const t = useTranslations("socialLinks");
+
     const [isDialogOpen, setIsDialogOpen] =
         useState(false);
 
@@ -32,17 +34,17 @@ export default function SocialLinkPage() {
             <div className="flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between">
                 <div className="space-y-1 text-start">
                     <h1 className="text-3xl font-semibold tracking-tight">
-                        Social Links
+                        {t("title")}
                     </h1>
 
                     <p className="text-sm text-muted-foreground">
-                        Manage your social links.
+                        {t("description")}
                     </p>
                 </div>
 
                 <Button onClick={handleAdd}>
                     <Plus className="size-4" />
-                    Add Social Link
+                    {t("add")}
                 </Button>
             </div>
 

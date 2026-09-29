@@ -55,6 +55,9 @@
   "breadcrumb": {
     "dashboard": "Dashboard",
     "profile": "Profile",
+    "services": "Services",
+    "gallery": "Gallery",
+    "social-link": "Social Media",
     "users": "Users",
     "roles": "Roles",
     "permissions": "Permissions",
@@ -191,6 +194,57 @@
       "edit": "Edit",
       "duplicate": "Duplicate",
       "delete": "Delete"
+    }
+  },
+  "socialLinks": {
+    "title": "Social Links",
+    "description": "Manage your social links.",
+    "add": "Add Social Link",
+    "dialog": {
+      "addTitle": "Add Social Link",
+      "editTitle": "Edit Social Link",
+      "addDescription": "Add a new social media link.",
+      "editDescription": "Update the social link details.",
+      "platform": "Platform",
+      "selectPlatform": "Select platform",
+      "url": "URL",
+      "sortOrder": "Sort Order",
+      "active": "Active",
+      "activeDescription": "Show this social link",
+      "cancel": "Cancel",
+      "create": "Create",
+      "update": "Update",
+      "validation": {
+        "urlRequired": "URL is required.",
+        "sortOrderRequired": "Sort order is required."
+      },
+      "messages": {
+        "created": "Social link created successfully.",
+        "updated": "Social link updated successfully.",
+        "error": "Something went wrong."
+      }
+    },
+    "table": {
+      "title": "Social Links",
+      "platform": "Platform",
+      "url": "URL",
+      "status": "Status",
+      "sortOrder": "Sort Order",
+      "actions": "Actions",
+      "active": "Active",
+      "inactive": "Inactive",
+      "empty": "No social links found.",
+      "messages": {
+        "deleted": "Social link deleted successfully.",
+        "deleteFailed": "Failed to delete social link."
+      },
+      "delete": {
+        "title": "Delete social link?",
+        "description": "This action cannot be undone.",
+        "cancel": "Cancel",
+        "deleting": "Deleting...",
+        "confirm": "Delete"
+      }
     }
   }
 }
