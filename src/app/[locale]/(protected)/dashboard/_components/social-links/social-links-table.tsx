@@ -129,19 +129,19 @@ export default function SocialLinksTable({
                             <Table>
                                 <TableHeader>
                                     <TableRow>
-                                        <TableHead>
+                                        <TableHead className="text-start">
                                             {t("platform")}
                                         </TableHead>
 
-                                        <TableHead>
+                                        <TableHead className="text-start">
                                             {t("url")}
                                         </TableHead>
 
-                                        <TableHead>
+                                        <TableHead className="text-start">
                                             {t("status")}
                                         </TableHead>
 
-                                        <TableHead>
+                                        <TableHead className="text-start">
                                             {t("sortOrder")}
                                         </TableHead>
 
