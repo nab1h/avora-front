@@ -58,13 +58,13 @@ export const navItems: NavItem[] = [
       },
       {
         icon: 'LayoutTemplate',
-        label: 'Layouts',
+        label: 'Services',
         // badge: 'Pro',
         badgeClassName: 'right-8',
         childItems: [
           {
-            label: 'Full Navbar',
-            href: 'https://shadcn-nextjs-admincn-full-navbar-layout-admin-template.vercel.app/',
+            label: 'Services',
+            href: '/dashboard/services',
             target: '_blank',
             permission: 'manage-roles',
           },
@@ -73,18 +73,14 @@ export const navItems: NavItem[] = [
             href: '/dashboard/gallery',
             target: '_blank',
             permission: 'manage-roles',
-          },{
+          },
+          {
             label: 'Social Link',
             href: '/dashboard/social-link',
             target: '_blank',
             permission: 'manage-roles',
           },
-          {
-            label: 'Horizontal',
-            href: 'https://shadcn-nextjs-admincn-horizontal-layout-admin-template.vercel.app/',
-            target: '_blank',
-            permission: 'manage-roles',
-          },
+          
         ]
       }
     ]
