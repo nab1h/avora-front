@@ -9,24 +9,13 @@ import {
 
 type WebsiteLayoutProps = {
 	children: React.ReactNode;
-<<<<<<< HEAD
-=======
 	params?: Promise<Record<string, string>>;
->>>>>>> cd13c45 (done content manage)
 };
 
 export default async function WebsiteLayout({
 	children
 }: WebsiteLayoutProps) {
-<<<<<<< HEAD
-	return (
-		<div className="flex min-h-screen flex-col bg-background">
-			<Header />
 
-			<main className="flex-1">{children}</main>
-
-			<Footer />
-=======
 	const [settings, socialLinks] = await Promise.all([
 		getPublicSettings(),
 		getPublicSocialLinks(),
@@ -45,7 +34,6 @@ export default async function WebsiteLayout({
 				phone={settings?.data.contact?.contact_phone}
 				whatsapp={settings?.data.contact?.contact_whatsapp}
 			/>
->>>>>>> cd13c45 (done content manage)
 		</div>
 	);
 }
