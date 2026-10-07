@@ -14,7 +14,12 @@ import {
 	SheetTrigger,
 } from "@/components/ui/sheet";
 
-export default function Header() {
+type HeaderProps = {
+	siteName: string;
+	siteLogo: string | null;
+};
+
+export default function Header({ siteName, siteLogo }: HeaderProps) {
 	const links = [
 		{  label: "Home", href: "/" },
 		{ label: "Services", href: "/services"},
@@ -26,8 +31,8 @@ export default function Header() {
 		<header className="sticky top-0 z-40 border-b bg-background/95 backdrop-blur">
 			<div className="mx-auto flex h-16 w-full max-w-6xl items-center justify-between px-4 sm:px-6">
 				<Link href="/" className="flex items-center gap-2 font-bold">
-					<Logo className="size-8" />
-					<span>AVORA</span>
+					{siteLogo ? <img src={siteLogo} alt={siteName} className="size-8 object-contain" /> : <Logo className="size-8" />}
+					<span>{siteName}</span>
 				</Link>
 
 				<nav className="hidden items-center gap-1 text-sm md:flex">
@@ -71,8 +76,8 @@ export default function Header() {
 						<SheetContent>
 							<SheetHeader>
 								<SheetTitle className="flex items-center gap-2">
-									<Logo className="size-7" />
-									AVORA
+									{siteLogo ? <img src={siteLogo} alt={siteName} className="size-7 object-contain" /> : <Logo className="size-7" />}
+									{siteName}
 								</SheetTitle>
 							</SheetHeader>
 							<nav className="flex flex-col gap-1 px-4">
