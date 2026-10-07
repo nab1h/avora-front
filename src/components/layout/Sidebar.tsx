@@ -53,7 +53,8 @@ import {
 } from '@/components/ui/sidebar'
 
 // Config Imports
-import { navItems } from '@/config/navConfig'
+import { getNavItems } from '@/config/navConfig'
+import { useGetContentPagesQuery } from '@/lib/services/contents-api'
 
 // Util Imports
 import { cn } from '@/lib/utils'
@@ -629,6 +630,14 @@ const SidebarLayout = () => {
 
   // Current authenticated user from Redux.
   const user = useAppSelector(state => state.auth.user)
+  const { data: contentPagesData } = useGetContentPagesQuery()
+
+  const pages = contentPagesData?.data ?? []
+
+  const navItems = useMemo(
+    () => getNavItems(pages),
+    [pages]
+  )
 
   // Remove this state when the nav-apps API is removed.
   // Until then, this state is used to hold the external nav-apps fetched from the API JSON.
@@ -642,7 +651,7 @@ const SidebarLayout = () => {
 
   // Nav groups rendered in the sidebar.
   // First merge external apps, then filter everything according to user permissions.
-  const navGroups = useMemo(() => {
+    const navGroups = useMemo(() => {
     const groups =
       externalApps.length > 0
         ? navItems.map(item =>
@@ -656,7 +665,7 @@ const SidebarLayout = () => {
         : navItems
 
     return filterNavItems(user, groups)
-  }, [user, externalApps])
+  }, [user, externalApps, navItems])
 
   const activeBranchKeys = useMemo(
     () => getActiveBranchKeys(navGroups, pathname, searchParams),

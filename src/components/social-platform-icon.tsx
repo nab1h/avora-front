@@ -4,6 +4,7 @@ import {
     SiLinkerd,
     SiTiktok,
     SiYoutube,
+    SiWhatsapp,
 } from "@icons-pack/react-simple-icons";
 
 interface Props {
@@ -21,6 +22,7 @@ export default function SocialPlatformIcon({
         linkedin: SiLinkerd,
         tiktok: SiTiktok,
         youtube: SiYoutube,
+        whatsapp: SiWhatsapp,
     };
 
     const Icon = icons[icon.toLowerCase()];
