@@ -1,7 +1,8 @@
 // Third-party Imports
 import type * as Icon from 'lucide-react'
-
 type IconName = keyof typeof Icon
+
+
 
 export type MenuLeafSubItem = {
   label: string
@@ -46,7 +47,7 @@ export type NavItem = {
   items: MenuItem[]
 }
 
-export const navItems: NavItem[] = [
+export const getNavItems = (pages: string[]): NavItem[] => [
   {
     groupLabel: 'Dashboard & Layouts',
     items: [
@@ -73,7 +74,7 @@ export const navItems: NavItem[] = [
             href: '/dashboard/gallery',
             target: '_blank',
             permission: 'manage-roles',
-          },{
+          }, {
             label: 'Social Link',
             href: '/dashboard/social-link',
             target: '_blank',
@@ -125,6 +126,48 @@ export const navItems: NavItem[] = [
         ],
       }
     ]
+  },
+  {
+    groupLabel: 'settings',
+    items: [
+      {
+        icon: 'Settings',
+        label: 'Settings',
+        childItems: [
+          { label: 'General', href: '/dashboard/website-settings/general', permission: 'manage-roles' },
+          { label: 'Branding', href: '/dashboard/website-settings/branding', permission: 'manage-roles' },
+          { label: 'Contact Information', href: '/dashboard/website-settings/contact', permission: 'manage-roles' },
+          { label: 'Maps', href: '/dashboard/website-settings/maps', permission: 'manage-roles' },
+        ],
+        permission: 'manage-roles',
+      },
+    ]
+  },
+  {
+    groupLabel: 'Pages & Seo',
+    items: [
+      {
+        icon: "StickyNote",
+        label: "Pages",
+        permission: "manage-settings",
+        childItems: pages.map((page) => ({
+          label: page,
+          href: `/dashboard/contents?page=${page}`,
+          permission: "manage-settings",
+        })),
+      },
+
+      {
+        icon: "SearchCheck",
+        label: "SEO Settings",
+        permission: "manage-settings",
+        childItems: pages.map((page) => ({
+          label: page,
+          href: `/dashboard/seo?page=${page}`,
+          permission: "manage-settings",
+        })),
+      },
+    ],
   },
   // {
   //   groupLabel: 'Pages',

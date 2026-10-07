@@ -1,13 +1,19 @@
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
-  images: {
+    images: {
+        unoptimized: true,
+
         remotePatterns: [
             {
-                protocol: "http",
-                hostname: "localhost",
-                port: "8000",
-                pathname: "/**",
+                protocol: 'http',
+                hostname: '**',
+                pathname: '/**',
+            },
+            {
+                protocol: 'https',
+                hostname: '**',
+                pathname: '/**',
             },
         ],
     },
