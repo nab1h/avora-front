@@ -12,6 +12,7 @@ export const api = createApi({
       if (token) {
         headers.set('Authorization', `Bearer ${token}`);
       }
+
       return headers;
     },
   }),
@@ -21,11 +22,13 @@ export const api = createApi({
         "Roles",
         "Permissions",
         "Users",
-        "Invitations",
         "User",
         "Services",
         "Gallery",
-        "SocialLinks"
+        "SocialLinks",
+        "Settings",
+        "Content",
+        "SeoPage"
     ],
   endpoints: () => ({}),
 });

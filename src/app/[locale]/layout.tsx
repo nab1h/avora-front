@@ -12,6 +12,11 @@ import { getMessages, setRequestLocale } from "next-intl/server";
 import { hasLocale } from "next-intl";
 import { notFound } from "next/navigation";
 import { routing } from "@/i18n/routing";
+import {
+  getLocalizedSiteDetails,
+  getPublicAssetUrl,
+  getPublicSettings,
+} from "@/lib/services/public-settings";
 
 const nunitoSans = Nunito_Sans({
   variable: "--font-nunito-sans",
@@ -23,10 +28,28 @@ const geistMono = Geist_Mono({
   subsets: ["latin"],
 });
 
-export const metadata: Metadata = {
-  title: "AVORA",
-  description: "AVORA Application",
-};
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ locale: string }>;
+}): Promise<Metadata> {
+  const { locale } = await params;
+  const settings = await getPublicSettings();
+  const branding = settings?.data.branding;
+  const { siteName, siteDescription } = getLocalizedSiteDetails(settings, locale);
+  const favicon = getPublicAssetUrl(branding?.site_favicon);
+  const appleIcon = getPublicAssetUrl(branding?.site_apple_icon);
+
+  return {
+    title: siteName,
+    description: siteDescription || "AVORA Application",
+    icons: {
+      icon: favicon ?? undefined,
+      apple: appleIcon ?? undefined,
+    },
+    manifest: "/manifest.webmanifest",
+  };
+}
 
 // ⭐ ضروري مع setRequestLocale عشان الـ static rendering
 export function generateStaticParams() {

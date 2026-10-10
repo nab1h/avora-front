@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import { Menu } from "lucide-react";
+import { useLocale } from "next-intl";
 
 import Logo from "@/assets/svg/logo";
 import { LanguageSwitcher } from "@/components/language-switcher";
@@ -16,16 +17,15 @@ import {
 } from "@/components/ui/sheet";
 
 type HeaderProps = {
-	locale: string;
 	siteName: string;
 	siteLogo: string | null;
 };
 
 export default function Header({
-	locale,
 	siteName,
 	siteLogo,
 }: HeaderProps) {
+	const locale = useLocale();
 	const isArabic = locale === "ar";
 
 	const links = [

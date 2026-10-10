@@ -25,14 +25,10 @@ import {
   AlertDialogHeader,
   AlertDialogTitle,
 } from '@/components/ui/alert-dialog'
-import {
-  useCreateContentMutation,
-  useDeleteContentMutation,
-  useGetContentsQuery,
-  useUpdateContentMutation,
-} from '@/lib/services/contents-api'
+
 import { useGetGalleryQuery, type Gallery } from '@/lib/services/gallery'
 import { ContentsPageSkeleton } from '@/components/contents-page-skeleton'
+import { useCreateContentMutation, useDeleteContentMutation, useGetContentsQuery, useUpdateContentMutation } from '@/lib/services/contents-api'
 
 const storageUrl = (
   process.env.NEXT_PUBLIC_STORAGE_URL ??

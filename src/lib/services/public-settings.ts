@@ -5,6 +5,8 @@ export type PublicSettingsData = {
   general?: {
     site_name?: string;
     site_description?: string;
+    site_name_ar?: string;
+    site_description_ar?: string;
   };
   branding?: {
     site_logo?: string | null;
@@ -29,6 +31,24 @@ export type PublicSettingsData = {
 type PublicSettingsResponse = {
   data: PublicSettingsData;
 };
+
+export function getLocalizedSiteDetails(
+  settings: PublicSettingsResponse | null | undefined,
+  locale: string,
+) {
+  const general = settings?.data.general;
+  const siteName = locale === 'ar'
+    ? general?.site_name_ar?.trim() || general?.site_name?.trim()
+    : general?.site_name?.trim();
+  const siteDescription = locale === 'ar'
+    ? general?.site_description_ar?.trim() || general?.site_description?.trim()
+    : general?.site_description?.trim();
+
+  return {
+    siteName: siteName || 'AVORA',
+    siteDescription: siteDescription || undefined,
+  };
+}
 
 export type PublicSocialLink = {
   id: number;
@@ -77,4 +97,3 @@ export const getPublicSocialLinks = cache(async () => {
     return [];
   }
 });
-

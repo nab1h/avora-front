@@ -3,8 +3,9 @@ import type { Metadata } from "next";
 import Logo from "@/assets/svg/logo";
 import { Badge } from "@/components/ui/badge";
 import SocialPlatformIcon from "@/components/social-platform-icon";
-import { getSeo, seoToMetadata } from "@/lib/seo";
+import { getSeoMetadata } from "@/lib/seo";
 import {
+	getLocalizedSiteDetails,
 	getPublicSettings,
 	getPublicSocialLinks,
 } from "@/lib/services/public-settings";
@@ -15,8 +16,7 @@ type ContactPageProps = {
 
 export async function generateMetadata({ params }: ContactPageProps): Promise<Metadata> {
 	const { locale } = await params;
-	const seo = await getSeo("contact", locale);
-	return seoToMetadata(seo);
+	return getSeoMetadata("contact", locale);
 }
 
 export default async function ContactPage({ params }: ContactPageProps) {
@@ -26,7 +26,7 @@ export default async function ContactPage({ params }: ContactPageProps) {
 		getPublicSettings(),
 		getPublicSocialLinks(),
 	]);
-	const siteName = settings?.data.general?.site_name || "AVORA";
+	const { siteName } = getLocalizedSiteDetails(settings, locale);
 	const contact = settings?.data.contact;
 	const maps = settings?.data.maps;
 	const mapEmbedUrl = maps?.google_maps_embed_url;
