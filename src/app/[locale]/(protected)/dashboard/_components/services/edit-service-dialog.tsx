@@ -93,6 +93,14 @@ export default function EditServiceDialog({
                 t("validation.nameMax")
             ),
 
+        name_ar: z
+            .string()
+            .max(
+                255,
+                t("validation.nameMax")
+            )
+            .optional(),
+
         slug: z
             .string()
             .min(
@@ -104,7 +112,23 @@ export default function EditServiceDialog({
                 t("validation.slugMax")
             ),
 
+        slug_ar: z
+            .string()
+            .max(
+                255,
+                t("validation.slugMax")
+            )
+            .optional(),
+
         description: z
+            .string()
+            .max(
+                5000,
+                t("validation.descriptionMax")
+            )
+            .optional(),
+
+        description_ar: z
             .string()
             .max(
                 5000,
@@ -142,8 +166,11 @@ export default function EditServiceDialog({
             ),
             defaultValues: {
                 name: "",
+                name_ar: "",
                 slug: "",
+                slug_ar: "",
                 description: "",
+                description_ar: "",
                 image: undefined,
             },
         });
@@ -154,17 +181,20 @@ export default function EditServiceDialog({
         if (open && service) {
             reset({
                 name: service.name,
+                name_ar: service.name_ar ?? "",
                 slug: service.slug,
+                slug_ar: service.slug_ar ?? "",
                 description:
                     service.description ?? "",
+                description_ar:
+                    service.description_ar ?? "",
                 image: undefined,
             });
-
-            setImagePreview(
-                getImageUrl(service.image)
-            );
         }
     }, [open, service, reset]);
+
+    const displayedImagePreview =
+        imagePreview ?? getImageUrl(service?.image);
 
     const [
         editService,
@@ -193,16 +223,29 @@ export default function EditServiceDialog({
             );
 
             formData.append(
+                "name_ar",
+                values.name_ar ?? ""
+            );
+
+            formData.append(
                 "slug",
                 values.slug
             );
 
-            if (values.description) {
-                formData.append(
-                    "description",
-                    values.description
-                );
-            }
+            formData.append(
+                "slug_ar",
+                values.slug_ar ?? ""
+            );
+
+            formData.append(
+                "description",
+                values.description ?? ""
+            );
+
+            formData.append(
+                "description_ar",
+                values.description_ar ?? ""
+            );
 
             if (values.image) {
                 formData.append(
@@ -228,10 +271,22 @@ export default function EditServiceDialog({
         }
     }
 
+    function handleOpenChange(nextOpen: boolean) {
+        if (!nextOpen) {
+            if (imagePreview?.startsWith("blob:")) {
+                URL.revokeObjectURL(imagePreview);
+            }
+
+            setImagePreview(null);
+        }
+
+        onOpenChange(nextOpen);
+    }
+
     return (
         <Dialog
             open={open}
-            onOpenChange={onOpenChange}
+            onOpenChange={handleOpenChange}
         >
             <DialogContent className="max-h-[85dvh] overflow-y-auto sm:max-h-[80vh] sm:max-w-[600px]">
                 <DialogHeader>
@@ -271,7 +326,7 @@ export default function EditServiceDialog({
                                     }
                                 >
                                     <FieldLabel>
-                                        {t("name")}
+                                        {t("nameEnglish")}
                                     </FieldLabel>
 
                                     <Input
@@ -295,6 +350,27 @@ export default function EditServiceDialog({
                             )}
                         />
 
+                        <Controller
+                            name="name_ar"
+                            control={form.control}
+                            render={({ field, fieldState }) => (
+                                <Field data-invalid={fieldState.invalid}>
+                                    <FieldLabel>
+                                        {t("nameArabic")}
+                                    </FieldLabel>
+                                    <Input
+                                        {...field}
+                                        dir="rtl"
+                                        placeholder={t("nameArabicPlaceholder")}
+                                        disabled={isLoading}
+                                    />
+                                    {fieldState.invalid && (
+                                        <FieldError errors={[fieldState.error]} />
+                                    )}
+                                </Field>
+                            )}
+                        />
+
                         {/* Slug */}
                         <Controller
                             name="slug"
@@ -311,7 +387,7 @@ export default function EditServiceDialog({
                                     }
                                 >
                                     <FieldLabel>
-                                        {t("slug")}
+                                        {t("slugEnglish")}
                                     </FieldLabel>
 
                                     <Input
@@ -334,6 +410,27 @@ export default function EditServiceDialog({
                                 </Field>
                             )}
                         />
+
+                        <Controller
+                            name="slug_ar"
+                            control={form.control}
+                            render={({ field, fieldState }) => (
+                                <Field data-invalid={fieldState.invalid}>
+                                    <FieldLabel>
+                                        {t("slugArabic")}
+                                    </FieldLabel>
+                                    <Input
+                                        {...field}
+                                        dir="rtl"
+                                        placeholder={t("slugArabicPlaceholder")}
+                                        disabled={isLoading}
+                                    />
+                                    {fieldState.invalid && (
+                                        <FieldError errors={[fieldState.error]} />
+                                    )}
+                                </Field>
+                            )}
+                        />
                     </div>
 
                     {/* Description */}
@@ -350,9 +447,7 @@ export default function EditServiceDialog({
                                 }
                             >
                                 <FieldLabel>
-                                    {t(
-                                        "descriptionField"
-                                    )}
+                                    {t("descriptionEnglish")}
                                 </FieldLabel>
 
                                 <Textarea
@@ -372,6 +467,28 @@ export default function EditServiceDialog({
                                             fieldState.error,
                                         ]}
                                     />
+                                )}
+                            </Field>
+                        )}
+                    />
+
+                    <Controller
+                        name="description_ar"
+                        control={form.control}
+                        render={({ field, fieldState }) => (
+                            <Field data-invalid={fieldState.invalid}>
+                                <FieldLabel>
+                                    {t("descriptionArabic")}
+                                </FieldLabel>
+                                <Textarea
+                                    {...field}
+                                    dir="rtl"
+                                    rows={4}
+                                    placeholder={t("descriptionArabicPlaceholder")}
+                                    disabled={isLoading}
+                                />
+                                {fieldState.invalid && (
+                                    <FieldError errors={[fieldState.error]} />
                                 )}
                             </Field>
                         )}
@@ -400,11 +517,9 @@ export default function EditServiceDialog({
 
                                 <div className="flex flex-col gap-3 sm:flex-row sm:items-center">
                                     <div className="flex size-24 shrink-0 items-center justify-center overflow-hidden rounded-md border bg-muted">
-                                        {imagePreview ? (
+                                        {displayedImagePreview ? (
                                             <img
-                                                src={
-                                                    imagePreview
-                                                }
+                                                src={displayedImagePreview}
                                                 alt={t(
                                                     "imagePreview"
                                                 )}
@@ -448,9 +563,7 @@ export default function EditServiceDialog({
                                                         ? URL.createObjectURL(
                                                               file
                                                           )
-                                                        : getImageUrl(
-                                                              service?.image
-                                                          )
+                                                        : null
                                                 );
 
                                                 onChange(
