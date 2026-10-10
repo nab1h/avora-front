@@ -46,7 +46,7 @@ import {
 import { toast } from "sonner";
 
 import EditServiceDialog from "./edit-service-dialog";
-import { useTranslations } from "next-intl";
+import { useLocale, useTranslations } from "next-intl";
 
 const storageUrl = (
     process.env.NEXT_PUBLIC_STORAGE_URL ||
@@ -139,7 +139,7 @@ export default function ServicesTable() {
             );
         }
     }
-
+    const locale = useLocale();
     return (
         <>
             <Card className="overflow-hidden">
@@ -302,30 +302,56 @@ export default function ServicesTable() {
 
                                                 {/* Name */}
                                                 <TableCell>
-                                                    <span className="font-medium">
-                                                        {
-                                                            service.name
-                                                        }
-                                                    </span>
+                                                    <div className="flex min-w-0 flex-col gap-1">
+                                                        <span className="truncate font-medium">
+                                                            {service.name}
+                                                        </span>
+                                                        {service.name_ar && (
+                                                            <span
+                                                                dir={locale === "ar" ? "rtl" : undefined}
+                                                                className="truncate text-sm text-muted-foreground"
+                                                            >
+                                                                {service.name_ar}
+                                                            </span>
+                                                        )}
+                                                    </div>
                                                 </TableCell>
 
                                                 {/* Description */}
                                                 <TableCell>
-                                                    <p className="max-w-[350px] truncate text-sm text-muted-foreground">
-                                                        {service.description ||
-                                                            t(
-                                                                "noDescription"
-                                                            )}
-                                                    </p>
+                                                    <div className="flex max-w-[350px] flex-col gap-1">
+                                                        <p className="truncate text-sm">
+                                                            {service.description ||
+                                                                t(
+                                                                    "noDescription"
+                                                                )}
+                                                        </p>
+                                                        {service.description_ar && (
+                                                            <p
+                                                                dir={locale === "ar" ? "rtl" : undefined}
+                                                                className="truncate text-xs text-muted-foreground"
+                                                            >
+                                                                {service.description_ar}
+                                                            </p>
+                                                        )}
+                                                    </div>
                                                 </TableCell>
 
                                                 {/* Slug */}
                                                 <TableCell>
-                                                    <span className="text-sm text-muted-foreground">
-                                                        {
-                                                            service.slug
-                                                        }
-                                                    </span>
+                                                    <div className="flex min-w-0 flex-col gap-1">
+                                                        <span className="truncate font-mono text-sm">
+                                                            {service.slug}
+                                                        </span>
+                                                        {service.slug_ar && (
+                                                            <span
+                                                                dir={locale === "ar" ? "rtl" : undefined}
+                                                                className="truncate font-mono text-xs text-muted-foreground"
+                                                            >
+                                                                {service.slug_ar}
+                                                            </span>
+                                                        )}
+                                                    </div>
                                                 </TableCell>
 
                                                 {/* Actions */}

@@ -67,6 +67,14 @@ export default function AddServiceDialog({
                 t("validation.nameMax")
             ),
 
+        name_ar: z
+            .string()
+            .max(
+                255,
+                t("validation.nameMax")
+            )
+            .optional(),
+
         slug: z
             .string()
             .min(1, t("validation.slugRequired"))
@@ -75,7 +83,23 @@ export default function AddServiceDialog({
                 t("validation.slugMax")
             ),
 
+        slug_ar: z
+            .string()
+            .max(
+                255,
+                t("validation.slugMax")
+            )
+            .optional(),
+
         description: z
+            .string()
+            .max(
+                5000,
+                t("validation.descriptionMax")
+            )
+            .optional(),
+
+        description_ar: z
             .string()
             .max(
                 5000,
@@ -113,8 +137,11 @@ export default function AddServiceDialog({
             ),
             defaultValues: {
                 name: "",
+                name_ar: "",
                 slug: "",
+                slug_ar: "",
                 description: "",
+                description_ar: "",
                 image: undefined,
             },
         });
@@ -155,16 +182,29 @@ export default function AddServiceDialog({
             );
 
             formData.append(
+                "name_ar",
+                values.name_ar ?? ""
+            );
+
+            formData.append(
                 "slug",
                 values.slug
             );
 
-            if (values.description) {
-                formData.append(
-                    "description",
-                    values.description
-                );
-            }
+            formData.append(
+                "slug_ar",
+                values.slug_ar ?? ""
+            );
+
+            formData.append(
+                "description",
+                values.description ?? ""
+            );
+
+            formData.append(
+                "description_ar",
+                values.description_ar ?? ""
+            );
 
             if (values.image) {
                 formData.append(
@@ -253,7 +293,7 @@ export default function AddServiceDialog({
                                 }
                             >
                                 <FieldLabel>
-                                    {t("name")}
+                                    {t("nameEnglish")}
                                 </FieldLabel>
 
                                 <Input
@@ -277,6 +317,40 @@ export default function AddServiceDialog({
                         )}
                     />
 
+                    <Controller
+                        name="name_ar"
+                        control={form.control}
+                        render={({
+                            field,
+                            fieldState,
+                        }) => (
+                            <Field
+                                data-invalid={
+                                    fieldState.invalid
+                                }
+                            >
+                                <FieldLabel>
+                                    {t("nameArabic")}
+                                </FieldLabel>
+
+                                <Input
+                                    {...field}
+                                    dir="rtl"
+                                    placeholder={t(
+                                        "nameArabicPlaceholder"
+                                    )}
+                                    disabled={isLoading}
+                                />
+
+                                {fieldState.invalid && (
+                                    <FieldError
+                                        errors={[fieldState.error]}
+                                    />
+                                )}
+                            </Field>
+                        )}
+                    />
+
                     {/* Slug */}
                     <Controller
                         name="slug"
@@ -291,7 +365,7 @@ export default function AddServiceDialog({
                                 }
                             >
                                 <FieldLabel>
-                                    {t("slug")}
+                                    {t("slugEnglish")}
                                 </FieldLabel>
 
                                 <Input
@@ -313,6 +387,40 @@ export default function AddServiceDialog({
                         )}
                     />
 
+                    <Controller
+                        name="slug_ar"
+                        control={form.control}
+                        render={({
+                            field,
+                            fieldState,
+                        }) => (
+                            <Field
+                                data-invalid={
+                                    fieldState.invalid
+                                }
+                            >
+                                <FieldLabel>
+                                    {t("slugArabic")}
+                                </FieldLabel>
+
+                                <Input
+                                    {...field}
+                                    dir="rtl"
+                                    placeholder={t(
+                                        "slugArabicPlaceholder"
+                                    )}
+                                    disabled={isLoading}
+                                />
+
+                                {fieldState.invalid && (
+                                    <FieldError
+                                        errors={[fieldState.error]}
+                                    />
+                                )}
+                            </Field>
+                        )}
+                    />
+
                     {/* Description */}
                     <Controller
                         name="description"
@@ -327,9 +435,7 @@ export default function AddServiceDialog({
                                 }
                             >
                                 <FieldLabel>
-                                    {t(
-                                        "descriptionField"
-                                    )}
+                                    {t("descriptionEnglish")}
                                 </FieldLabel>
 
                                 <Textarea
@@ -348,6 +454,41 @@ export default function AddServiceDialog({
                                         errors={[
                                             fieldState.error,
                                         ]}
+                                    />
+                                )}
+                            </Field>
+                        )}
+                    />
+
+                    <Controller
+                        name="description_ar"
+                        control={form.control}
+                        render={({
+                            field,
+                            fieldState,
+                        }) => (
+                            <Field
+                                data-invalid={
+                                    fieldState.invalid
+                                }
+                            >
+                                <FieldLabel>
+                                    {t("descriptionArabic")}
+                                </FieldLabel>
+
+                                <Textarea
+                                    {...field}
+                                    dir="rtl"
+                                    placeholder={t(
+                                        "descriptionArabicPlaceholder"
+                                    )}
+                                    className="min-h-28 resize-none"
+                                    disabled={isLoading}
+                                />
+
+                                {fieldState.invalid && (
+                                    <FieldError
+                                        errors={[fieldState.error]}
                                     />
                                 )}
                             </Field>

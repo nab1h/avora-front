@@ -4,9 +4,42 @@ type HomePageProps = {
 	params: Promise<{ locale: string }>;
 };
 
+<<<<<<< HEAD
 export default async function HomePage({ params }: HomePageProps) {
 	const { locale } = await params;
 	const isArabic = locale === "ar";
+=======
+// Content
+import { getPublicContents } from "@/lib/services/public-contents";
+
+type PageProps = {
+	params: Promise<{ locale: "ar" | "en" }>;
+};
+
+export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
+	const { locale } = await params;
+	const seo = await getSeo("home", locale);
+
+	return seoToMetadata(seo);
+}
+
+export default async function HomePage() {
+	const settings = await getPublicSettings();
+
+	const { data } = await getPublicContents("home");
+	const contents = data ?? [];
+
+	const getContent = (section: string, key: string) => {
+		return contents.find(
+			(item) =>
+				item.section === section &&
+				item.key === key
+		);
+	};
+
+	const title = getContent("hero", "title");
+	const subtitle = getContent("hero", "subtitle");
+>>>>>>> dfc30d2 (finish finish)
 
 	return (
 		<section className="mx-auto flex min-h-[calc(100vh-9rem)] w-full max-w-6xl items-center px-4 py-16 sm:px-6">
