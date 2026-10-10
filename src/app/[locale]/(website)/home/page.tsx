@@ -2,10 +2,11 @@ import Link from "next/link";
 
 // SEO
 import type { Metadata } from "next";
-import { getSeo, seoToMetadata } from "@/lib/seo";
+import { getSeoMetadata } from "@/lib/seo";
 
 // Content
 import { getPublicContents } from "@/lib/services/public-contents";
+import { getLocalizedSiteDetails, getPublicSettings } from "@/lib/services/public-settings";
 
 type PageProps = {
 	params: Promise<{ locale: "ar" | "en" }>;
@@ -13,9 +14,7 @@ type PageProps = {
 
 export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
 	const { locale } = await params;
-	const seo = await getSeo("home", locale);
-
-	return seoToMetadata(seo);
+	return getSeoMetadata("home", locale);
 }
 
 export default async function HomePage({
@@ -24,7 +23,11 @@ export default async function HomePage({
 	params: Promise<{ locale: string }>;
 }) {
 	const { locale } = await params;
-	const { data } = await getPublicContents("home");
+	const [settings, { data }] = await Promise.all([
+		getPublicSettings(),
+		getPublicContents("home"),
+	]);
+	const { siteName } = getLocalizedSiteDetails(settings, locale);
 	const contents = data ?? [];
 	
 	const getContent = (section: string, key: string) => {
@@ -46,7 +49,7 @@ export default async function HomePage({
 		<section className="mx-auto flex min-h-[calc(100vh-9rem)] w-full max-w-6xl items-center px-4 py-16 sm:px-6">
 			<div className="max-w-2xl">
 				<p className="mb-4 text-sm font-medium uppercase tracking-wider text-muted-foreground">
-					Avora
+					{siteName}
 				</p>
 
 				<h1 className="text-4xl font-bold tracking-tight sm:text-6xl">

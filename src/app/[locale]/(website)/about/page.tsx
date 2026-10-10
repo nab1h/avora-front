@@ -4,18 +4,22 @@ import Logo from "@/assets/svg/logo";
 import { Badge } from "@/components/ui/badge";
 import {
 	getPublicAssetUrl,
+	getLocalizedSiteDetails,
 	getPublicSettings,
 } from "@/lib/services/public-settings";
 
 // ====== seo ======
 import type { Metadata } from "next";
-import { getSeo, seoToMetadata } from "@/lib/seo";
+import { getSeoMetadata } from "@/lib/seo";
 import { getPublicContents } from "@/lib/services/public-contents";
 
-export async function generateMetadata(): Promise<Metadata> {
-	const seo = await getSeo("about", "en");
-
-	return seoToMetadata(seo);
+export async function generateMetadata({
+	params,
+}: {
+	params: Promise<{ locale: string }>;
+}): Promise<Metadata> {
+	const { locale } = await params;
+	return getSeoMetadata("about", locale);
 }
 
 export default async function AboutPage({
@@ -25,7 +29,7 @@ export default async function AboutPage({
 }) {
 	const { locale } = await params;
 	const settings = await getPublicSettings();
-	const siteName = settings?.data.general?.site_name || "AVORA";
+	const { siteName } = getLocalizedSiteDetails(settings, locale);
 
 	const { data } = await getPublicContents("about");
 	const contents = data ?? [];

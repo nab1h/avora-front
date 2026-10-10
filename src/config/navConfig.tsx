@@ -1,7 +1,8 @@
 // Third-party Imports
 import type * as Icon from 'lucide-react'
-
 type IconName = keyof typeof Icon
+
+
 
 export type MenuLeafSubItem = {
   label: string
@@ -50,35 +51,20 @@ export type NavItem = {
   items: MenuItem[]
 }
 
-export const navItems: NavItem[] = [
+export const getNavItems = (pages: string[]): NavItem[] => [
   {
     groupLabel: 'Dashboard & Layouts',
     groupTranslationKey: 'dashboardLayouts',
     items: [
       {
-        icon: 'House',
-        label: 'Dashboard',
-        translationKey: 'dashboard',
-        href: '/dashboard',
-        permission: 'manage-roles',
-      },
-      {
-        icon: 'User',
-        label: 'Profile',
-        translationKey: 'profile',
+        icon: 'Package',
+        label: 'Orders',
+        translationKey: 'orders',
         href: '/dashboard/profile',
         permission: 'manage-roles',
       },
       {
-        icon: 'Mail',
-        label: 'Invitations',
-        translationKey: 'invitations',
-        href: '/dashboard/invitations',
-        permission: 'manage-roles',
-      },
-      {
         icon: 'LayoutTemplate',
-
         label: 'services',
         translationKey: 'services',
         badgeClassName: 'right-8',
@@ -96,7 +82,7 @@ export const navItems: NavItem[] = [
             translationKey: 'gallery',
             target: '_blank',
             permission: 'manage-roles',
-          },{
+          }, {
             label: 'Social Link',
             href: '/dashboard/social-link',
             translationKey: 'social',

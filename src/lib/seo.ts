@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { getLocalizedSiteDetails, getPublicSettings } from "@/lib/services/public-settings";
 
 type SeoPage = {
   id: number;
@@ -86,5 +87,29 @@ export function seoToMetadata(seo: SeoPage | null): Metadata {
           ]
         : undefined,
     },
+  };
+}
+
+export async function getSeoMetadata(page: string, locale: string): Promise<Metadata> {
+  const [seo, settings] = await Promise.all([
+    getSeo(page, locale),
+    getPublicSettings(),
+  ]);
+  const metadata = seoToMetadata(seo);
+  const { siteName, siteDescription } = getLocalizedSiteDetails(settings, locale);
+  const title = metadata.title ?? siteName;
+  const description = metadata.description ?? siteDescription ?? 'AVORA Application';
+
+  return {
+    ...metadata,
+    title,
+    description,
+    ...(metadata.openGraph && {
+      openGraph: {
+        ...metadata.openGraph,
+        title: metadata.openGraph.title ?? title,
+        description: metadata.openGraph.description ?? description,
+      },
+    }),
   };
 }

@@ -4,8 +4,9 @@
 import { type ComponentType } from 'react'
 import { useCallback, useEffect, useMemo, useState } from 'react'
 
-import { useSearchParams } from 'next/navigation'
-import { Link, usePathname } from '@/i18n/navigation'
+// Next Imports
+import Link from 'next/link'
+import { usePathname, useSearchParams } from 'next/navigation'
 
 // Third-party Imports
 import * as Icon from 'lucide-react'
@@ -52,7 +53,8 @@ import {
 } from '@/components/ui/sidebar'
 
 // Config Imports
-import { navItems } from '@/config/navConfig'
+import { getNavItems } from '@/config/navConfig'
+
 
 // Util Imports
 import { cn } from '@/lib/utils'
@@ -60,6 +62,7 @@ import { useAppSelector } from '@/lib/hooks'
 import { filterNavItems } from '@/lib/utils/permissions'
 import { useTranslations } from 'next-intl'
 import { useLocale } from 'next-intl'
+import { useGetContentPagesQuery } from '@/lib/services/contents-api'
 
 const isSubGroup = (item: MenuSubItem): item is MenuGroupSubItem => 'childItems' in item
 
@@ -144,7 +147,7 @@ const FlyoutMenuLink = ({
   <DropdownMenuItem
     className={cn(
       'justify-between gap-2',
-      isActive && 'bg-primary/10 ms-auto rounded-full px-1.5 text-xs font-normal'
+      isActive && 'bg-primary/10 text-accent-foreground font-medium'
     )}
     render={<Link href={item.href} target={getLinkTarget(item.href, item.target)} />}
   >
@@ -199,11 +202,11 @@ const FlyoutMenuItem = ({
         >
           {Tag && <Tag />}
           <span className='min-w-0 flex-1 truncate'>{translateLabel(item)}</span>
-          <ChevronRightIcon className={cn('ms-auto', isRtl && 'rotate-180')} />
+          <ChevronRightIcon className={cn('ml-auto', isRtl && 'rotate-180')} />
         </DropdownMenuTrigger>
 
         <DropdownMenuContent
-          side={isRtl ? 'left' : 'right'}
+          side='right'
           align='start'
           sideOffset={12}
           className='w-auto min-w-52'
@@ -401,7 +404,7 @@ const SidebarGroupedMenuItems = ({
 
                     <ChevronRightIcon
                       className={cn(
-                        'ms-auto transition-transform duration-200',
+                        'ml-auto transition-transform duration-200',
                         isRtl && 'rotate-180',
                         'group-data-open/collapsible:rotate-90'
                       )}
@@ -625,11 +628,17 @@ const SidebarLayout = () => {
   const pathname = usePathname()
   const searchParams = useSearchParams()
   const { state, isMobile } = useSidebar()
-   const locale = useLocale()
-  const isRtl = locale === 'ar'
 
   // Current authenticated user from Redux.
   const user = useAppSelector(state => state.auth.user)
+  const { data: contentPagesData } = useGetContentPagesQuery()
+
+  const pages = contentPagesData?.data ?? []
+
+  const navItems = useMemo(
+    () => getNavItems(pages),
+    [pages]
+  )
 
   // Remove this state when the nav-apps API is removed.
   // Until then, this state is used to hold the external nav-apps fetched from the API JSON.
@@ -643,7 +652,7 @@ const SidebarLayout = () => {
 
   // Nav groups rendered in the sidebar.
   // First merge external apps, then filter everything according to user permissions.
-  const navGroups = useMemo(() => {
+    const navGroups = useMemo(() => {
     const groups =
       externalApps.length > 0
         ? navItems.map(item =>
@@ -657,7 +666,7 @@ const SidebarLayout = () => {
         : navItems
 
     return filterNavItems(user, groups)
-  }, [user, externalApps])
+  }, [user, externalApps, navItems])
 
   const activeBranchKeys = useMemo(
     () => getActiveBranchKeys(navGroups, pathname, searchParams),
