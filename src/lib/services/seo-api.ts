@@ -3,6 +3,7 @@ import { api } from './api'
 export type SeoPage = {
   id: number
   page: string
+  locale: 'ar' | 'en'
   title: string | null
   description: string | null
   keywords: string | null
@@ -17,6 +18,7 @@ export type SeoPage = {
 
 export type SeoPageInput = {
   page: string
+  locale: 'ar' | 'en'
   title: string
   description: string
   keywords: string
@@ -39,6 +41,7 @@ function toFormData(data: SeoPageInput) {
   const formData = new FormData()
 
   formData.append('page', data.page)
+  formData.append('locale', data.locale)
   formData.append('title', data.title)
   formData.append('description', data.description)
   formData.append('keywords', data.keywords)

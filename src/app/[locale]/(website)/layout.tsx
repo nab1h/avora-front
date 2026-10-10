@@ -9,13 +9,14 @@ import {
 
 type WebsiteLayoutProps = {
 	children: React.ReactNode;
-	params?: Promise<Record<string, string>>;
+	params: Promise<{ locale: string }>;
 };
 
 export default async function WebsiteLayout({
 	children,
 	params,
 }: WebsiteLayoutProps) {
+	const { locale } = await params;
 	const [settings, socialLinks] = await Promise.all([
 		getPublicSettings(),
 		getPublicSocialLinks(),
@@ -25,11 +26,11 @@ export default async function WebsiteLayout({
 
 	return (
 		<div className="flex min-h-screen flex-col bg-background">
-			<Header siteName={siteName} siteLogo={siteLogo} />
+			<Header locale={locale} siteName={siteName} siteLogo={siteLogo} />
 
 			<main className="flex-1">{children}</main>
 
-			<Footer settings={settings?.data ?? null} siteLogo={siteLogo} socialLinks={socialLinks} />
+			<Footer locale={locale} settings={settings?.data ?? null} siteLogo={siteLogo} socialLinks={socialLinks} />
 			<FloatingContactButtons
 				phone={settings?.data.contact?.contact_phone}
 				whatsapp={settings?.data.contact?.contact_whatsapp}

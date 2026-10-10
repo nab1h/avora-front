@@ -7,17 +7,26 @@ import { getSeo, seoToMetadata } from "@/lib/seo";
 // Content
 import { getPublicContents } from "@/lib/services/public-contents";
 
-export async function generateMetadata(): Promise<Metadata> {
-	const seo = await getSeo("home");
+type PageProps = {
+	params: Promise<{ locale: "ar" | "en" }>;
+};
+
+export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
+	const { locale } = await params;
+	const seo = await getSeo("home", locale);
 
 	return seoToMetadata(seo);
 }
 
-export default async function HomePage() {
-
+export default async function HomePage({
+	params,
+}: {
+	params: Promise<{ locale: string }>;
+}) {
+	const { locale } = await params;
 	const { data } = await getPublicContents("home");
 	const contents = data ?? [];
-
+	
 	const getContent = (section: string, key: string) => {
 		return contents.find(
 			(item) =>
@@ -28,6 +37,10 @@ export default async function HomePage() {
 
 	const title = getContent("hero", "title");
 	const subtitle = getContent("hero", "subtitle");
+	const title_ar = getContent("hero", "title_ar");
+	const subtitle_ar = getContent("hero", "subtitle_ar");
+	const pageTitle = locale === "ar" ? title_ar?.value ?? title?.value : title?.value;
+	const pageSubtitle = locale === "ar" ? subtitle_ar?.value ?? subtitle?.value : subtitle?.value;
 
 	return (
 		<section className="mx-auto flex min-h-[calc(100vh-9rem)] w-full max-w-6xl items-center px-4 py-16 sm:px-6">
@@ -37,11 +50,11 @@ export default async function HomePage() {
 				</p>
 
 				<h1 className="text-4xl font-bold tracking-tight sm:text-6xl">
-					{title?.value ?? "fix"}
+					{pageTitle}
 				</h1>
 
 				<p className="mt-6 max-w-xl text-lg text-muted-foreground">
-					{subtitle?.value ?? "fix"}
+					{pageSubtitle}
 				</p>
 
 				<Link

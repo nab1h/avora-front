@@ -41,6 +41,13 @@ const contactFields = [
     icon: MapPin,
     type: 'textarea',
   },
+  {
+    key: 'contact_address_ar',
+    label: 'addressAr',
+    description: 'addressDescription',
+    icon: MapPin,
+    type: 'textarea',
+  },
 ] as const;
 
 export default function ContactSettingsPage() {
@@ -60,6 +67,7 @@ export default function ContactSettingsPage() {
   const phone = contact.find((item) => item.key === 'contact_phone')?.value ?? '';
   const whatsapp = contact.find((item) => item.key === 'contact_whatsapp')?.value ?? '';
   const address = contact.find((item) => item.key === 'contact_address')?.value ?? '';
+  const addressAr = contact.find((item) => item.key === 'contact_address_ar')?.value ?? '';
 
   const [values, setValues] = useState<Record<string, string>>({});
 
@@ -69,8 +77,9 @@ export default function ContactSettingsPage() {
       contact_phone: phone,
       contact_whatsapp: whatsapp,
       contact_address: address,
+      contact_address_ar: addressAr,
     });
-  }, [email, phone, whatsapp, address]);
+  }, [email, phone, whatsapp, address, addressAr]);
 
   const handleSave = async () => {
     if (!siteName) {
@@ -86,6 +95,7 @@ export default function ContactSettingsPage() {
           contact_phone: values.contact_phone ?? '',
           contact_whatsapp: values.contact_whatsapp ?? '',
           contact_address: values.contact_address ?? '',
+          contact_address_ar: values.contact_address_ar ?? '',
         },
       }).unwrap();
 

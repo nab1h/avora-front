@@ -18,7 +18,12 @@ export async function generateMetadata(): Promise<Metadata> {
 	return seoToMetadata(seo);
 }
 
-export default async function AboutPage() {
+export default async function AboutPage({
+	params,
+}: {
+	params: Promise<{ locale: string }>;
+}) {
+	const { locale } = await params;
 	const settings = await getPublicSettings();
 	const siteName = settings?.data.general?.site_name || "AVORA";
 
@@ -33,9 +38,14 @@ export default async function AboutPage() {
 		);
 	};
 
-	const title = getContent("section", "title");
-	const subtitle = getContent("section", "subtitle");
-	const image = getContent("section", "image");
+	const title = getContent("general", "title");
+	const title_ar = getContent("general", "title_ar");
+	const subtitle = getContent("general", "subtitle");
+	const subtitle_ar = getContent("general", "subtitle_ar");
+	const image = getContent("general", "image");
+	const pageTitle = locale === "ar" ? title_ar?.value ?? title?.value : title?.value;
+	const pageSubtitle = locale === "ar" ? subtitle_ar?.value ?? subtitle?.value : subtitle?.value;
+
 
 	return (
 		<main className="mx-auto w-full max-w-6xl px-4 py-16 sm:px-6 sm:py-24">
@@ -46,10 +56,10 @@ export default async function AboutPage() {
 						About {siteName}
 					</Badge>
 					<h1 className="text-4xl font-bold leading-tight sm:text-5xl">
-						{title?.value ?? "fix"}
+						{pageTitle ?? "fix"}
 					</h1>
 					<p className="mt-6 max-w-xl text-lg leading-8 text-muted-foreground">
-						{subtitle?.value ?? `About ${siteName}`}
+						{pageSubtitle ?? `About ${siteName}`}
 					</p>
 				</div>
 				<div className="mx-auto flex size-40 items-center justify-center rounded-2xl border bg-muted/50 sm:size-52">

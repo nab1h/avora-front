@@ -3,6 +3,7 @@ import type { Metadata } from "next";
 type SeoPage = {
   id: number;
   page: string;
+  locale: string;
   title: string | null;
   description: string | null;
   keywords: string | null;
@@ -17,10 +18,15 @@ type SeoResponse = {
   data: SeoPage;
 };
 
-export async function getSeo(page: string): Promise<SeoPage | null> {
+export async function getSeo(page: string, locale: string): Promise<SeoPage | null> {
+  const apiUrl = process.env.NEXT_PUBLIC_API_URL?.replace(/\/+$/, "");
+  if (!apiUrl) {
+    return null;
+  }
+
   try {
     const response = await fetch(
-      `${process.env.NEXT_PUBLIC_API_URL}/seo/${page}`,
+      `${apiUrl}/seo/${encodeURIComponent(page)}?locale=${encodeURIComponent(locale)}`,
       {
         next: {
           revalidate: 60,

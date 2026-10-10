@@ -3,8 +3,11 @@ import { api } from "./api";
 export interface Service {
     id: number;
     name: string;
+    name_ar: string | null;
     slug: string;
+    slug_ar: string | null;
     description: string | null;
+    description_ar: string | null;
     image: string | null;
     is_active: boolean;
     sort_order: number;

@@ -8,8 +8,13 @@ import { getSeo, seoToMetadata } from "@/lib/seo";
 // Content
 import { getPublicContents } from "@/lib/services/public-contents";
 
-export async function generateMetadata(): Promise<Metadata> {
-	const seo = await getSeo("home");
+type PageProps = {
+	params: Promise<{ locale: "ar" | "en" }>;
+};
+
+export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
+	const { locale } = await params;
+	const seo = await getSeo("home", locale);
 
 	return seoToMetadata(seo);
 }

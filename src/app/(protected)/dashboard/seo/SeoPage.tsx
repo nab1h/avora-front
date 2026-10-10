@@ -1,18 +1,14 @@
 'use client'
 
 import { useEffect, useState } from 'react'
-import { FileImage, Save, Trash2, Upload, X } from 'lucide-react'
+import { FileImage, Save, Upload, X } from 'lucide-react'
 import Image from 'next/image'
 import { toast } from 'sonner'
-import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle } from '@/components/ui/alert-dialog'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Textarea } from '@/components/ui/textarea'
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select'
 import {
-    useCreateSeoPageMutation,
-    useDeleteSeoPageMutation,
-    useGetSeoPageQuery,
     useGetSeoPagesQuery,
     useUpdateSeoPageMutation,
     type SeoPage as SeoPageRecord,
@@ -31,9 +27,10 @@ const storageUrl = (
     `${process.env.NEXT_PUBLIC_API_URL?.replace(/\/api\/?$/, '') ?? 'http://localhost:8000'}/storage`
 ).replace(/\/+$/, '')
 
-function createEmptyForm(page: string): SeoFormValues {
+function createEmptyForm(page: string, locale: 'ar' | 'en'): SeoFormValues {
     return {
         page,
+        locale,
         title: '',
         description: '',
         keywords: '',
@@ -76,6 +73,7 @@ function getErrorMessage(error: unknown, fallback: string) {
 function toFormValues(record: SeoPageRecord): SeoFormValues {
     return {
         page: record.page,
+        locale: record.locale,
         title: record.title ?? '',
         description: record.description ?? '',
         keywords: record.keywords ?? '',
@@ -87,22 +85,14 @@ function toFormValues(record: SeoPageRecord): SeoFormValues {
 }
 
 export default function SeoPage({ page }: Props) {
+    const [selectedLocale, setSelectedLocale] = useState<'ar' | 'en'>('en')
     const { data: pagesResponse, isLoading: isPagesLoading, isError: isPagesError } = useGetSeoPagesQuery()
-    const seoPageFromList = pagesResponse?.data.find((item) => item.page === page)
-    const {
-        currentData: pageResponse,
-        isLoading: isPageLoading,
-        isError: isPageError,
-    } = useGetSeoPageQuery(seoPageFromList?.id ?? 0, { skip: !seoPageFromList })
-    const seoPage = pageResponse?.data ?? seoPageFromList
-    const [createSeoPage, { isLoading: isCreating }] = useCreateSeoPageMutation()
+    const seoPage = pagesResponse?.data.find((item) => item.page === page && item.locale === selectedLocale)
     const [updateSeoPage, { isLoading: isUpdating }] = useUpdateSeoPageMutation()
-    const [deleteSeoPage, { isLoading: isDeleting }] = useDeleteSeoPageMutation()
-    const [draft, setDraft] = useState<{ page: string; values: Partial<SeoFormValues> }>({ page, values: {} })
-    const [selectedImage, setSelectedImage] = useState<{ page: string; file: File } | null>(null)
-    const [imagePreview, setImagePreview] = useState<{ page: string; url: string } | null>(null)
-    const [createMode, setCreateMode] = useState<{ page: string; active: boolean }>({ page, active: false })
-    const [isDeleteDialogOpen, setIsDeleteDialogOpen] = useState(false)
+    const recordKey = `${page}:${selectedLocale}`
+    const [draft, setDraft] = useState<{ key: string; values: Partial<SeoFormValues> }>({ key: '', values: {} })
+    const [selectedImage, setSelectedImage] = useState<{ key: string; file: File } | null>(null)
+    const [imagePreview, setImagePreview] = useState<{ key: string; url: string } | null>(null)
 
     useEffect(() => {
         const previewUrl = imagePreview?.url
@@ -111,20 +101,18 @@ export default function SeoPage({ page }: Props) {
         }
     }, [imagePreview])
 
-    const isBusy = isCreating || isUpdating || isDeleting
-    const isPageNotFound = !isPagesLoading && !isPagesError && !seoPage
-    const isCreateMode = createMode.page === page && createMode.active
+    const isBusy = isUpdating
     const displayPage = page.replace(/[-_]/g, ' ')
-    const initialForm = seoPage ? toFormValues(seoPage) : createEmptyForm(page)
-    const form = draft.page === page ? { ...initialForm, ...draft.values } : initialForm
-    const ogImageFile = selectedImage?.page === page ? selectedImage.file : null
-    const localImagePreview = imagePreview?.page === page ? imagePreview.url : null
+    const initialForm = seoPage ? toFormValues(seoPage) : createEmptyForm(page, selectedLocale)
+    const form = draft.key === recordKey ? { ...initialForm, ...draft.values } : initialForm
+    const ogImageFile = selectedImage?.key === recordKey ? selectedImage.file : null
+    const localImagePreview = imagePreview?.key === recordKey ? imagePreview.url : null
 
     const updateField = <K extends keyof SeoFormValues>(field: K, value: SeoFormValues[K]) => {
         setDraft((current) => ({
-            page,
+            key: recordKey,
             values: {
-                ...(current.page === page ? current.values : {}),
+                ...(current.key === recordKey ? current.values : {}),
                 [field]: value,
             },
         }))
@@ -132,59 +120,31 @@ export default function SeoPage({ page }: Props) {
 
     const submit = async (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault()
+        if (!seoPage || isBusy || !event.currentTarget.reportValidity()) return
 
         const payload: SeoPageInput = {
             ...form,
-            page,
+            page: seoPage.page,
+            locale: seoPage.locale,
             og_image: ogImageFile,
         }
 
         try {
-            if (seoPage) {
-                await updateSeoPage({ id: seoPage.id, data: payload }).unwrap()
-                toast.success('SEO settings updated successfully.')
-                setSelectedImage(null)
-                setImagePreview(null)
-            } else {
-                await createSeoPage(payload).unwrap()
-                toast.success('SEO settings created successfully.')
-                setSelectedImage(null)
-                setImagePreview(null)
-            }
+            await updateSeoPage({ id: seoPage.id, data: payload }).unwrap()
+            toast.success('SEO settings updated successfully.')
+            setSelectedImage(null)
+            setImagePreview(null)
         } catch (error) {
             toast.error(getErrorMessage(error, 'Could not save SEO settings.'))
         }
     }
 
-    const handleDelete = async () => {
-        if (!seoPage) return
-
-        try {
-            await deleteSeoPage(seoPage.id).unwrap()
-            toast.success('SEO settings deleted successfully.')
-            setIsDeleteDialogOpen(false)
-        } catch (error) {
-            toast.error(getErrorMessage(error, 'Could not delete SEO settings.'))
-        }
-    }
-
-    if (isPagesLoading || (seoPageFromList && isPageLoading)) {
+    if (isPagesLoading) {
         return <SeoPageSkeleton page={page} />
     }
 
-    if (isPagesError || isPageError) {
+    if (isPagesError) {
         return <div role='alert' className='m-4 rounded-lg border border-destructive/30 bg-destructive/5 p-6 text-sm text-destructive'>Could not load SEO settings. Refresh the page and try again.</div>
-    }
-
-    if (isPageNotFound && !isCreateMode) {
-        return (
-            <div className='m-4 flex min-h-64 flex-col items-center justify-center rounded-lg border border-dashed bg-card px-6 text-center'>
-                <FileImage className='size-8 text-muted-foreground' />
-                <h1 className='mt-4 text-lg font-semibold capitalize'>SEO settings not found for {displayPage}.</h1>
-                <p className='mt-1 text-sm text-muted-foreground'>Create SEO settings for this page to manage its metadata.</p>
-                <Button className='mt-5' onClick={() => setCreateMode({ page, active: true })}>Create SEO settings</Button>
-            </div>
-        )
     }
 
     return (
@@ -195,20 +155,19 @@ export default function SeoPage({ page }: Props) {
                     <h1 className='mt-1 text-2xl font-semibold capitalize'>SEO settings · {displayPage}</h1>
                 </div>
                 <div className='flex w-full min-w-0 flex-wrap items-center gap-2 sm:w-auto'>
-                    {seoPage && (
-                        <Button type='button' variant='outline' className='text-destructive hover:text-destructive' onClick={() => setIsDeleteDialogOpen(true)} disabled={isBusy}>
-                            <Trash2 className='mr-2 size-4' />
-                            Delete
-                        </Button>
-                    )}
-                    <Button type='submit' form='seo-settings-form' disabled={isBusy}>
+                    {seoPage && <Button type='submit' form='seo-settings-form' disabled={isBusy}>
                         <Save className='mr-2 size-4' />
-                        {isCreating ? 'Creating...' : isUpdating ? 'Saving...' : seoPage ? 'Save changes' : 'Create SEO settings'}
-                    </Button>
+                        {isUpdating ? 'Saving...' : 'Save changes'}
+                    </Button>}
                 </div>
             </header>
 
-            <form id='seo-settings-form' onSubmit={submit} className='space-y-6'>
+            <div aria-label='SEO language' className='flex gap-2 border-b'>
+                <Button type='button' aria-pressed={selectedLocale === 'ar'} variant={selectedLocale === 'ar' ? 'default' : 'outline'} onClick={() => setSelectedLocale('ar')}>العربية</Button>
+                <Button type='button' aria-pressed={selectedLocale === 'en'} variant={selectedLocale === 'en' ? 'default' : 'outline'} onClick={() => setSelectedLocale('en')}>English</Button>
+            </div>
+
+            {seoPage ? <form id='seo-settings-form' onSubmit={submit} className='space-y-6'>
                 <section className='min-w-0 overflow-hidden rounded-lg border bg-card'>
                     <div className='border-b bg-muted/30 px-4 py-3.5'>
                         <h2 className='text-sm font-semibold'>Search metadata</h2>
@@ -217,6 +176,10 @@ export default function SeoPage({ page }: Props) {
                         <label className='space-y-1.5 text-xs font-medium text-muted-foreground'>
                             Page
                             <Input value={displayPage} readOnly disabled className='capitalize text-sm text-foreground' />
+                        </label>
+                        <label className='space-y-1.5 text-xs font-medium text-muted-foreground'>
+                            Locale
+                            <Input value={selectedLocale} readOnly disabled className='text-sm text-foreground' />
                         </label>
                         <label className='space-y-1.5 text-xs font-medium text-muted-foreground'>
                             Title
@@ -260,8 +223,8 @@ export default function SeoPage({ page }: Props) {
                                     className='sr-only'
                                     onChange={(event) => {
                                         const file = event.target.files?.[0] ?? null
-                                        setSelectedImage(file ? { page, file } : null)
-                                        setImagePreview(file ? { page, url: URL.createObjectURL(file) } : null)
+                                        setSelectedImage(file ? { key: recordKey, file } : null)
+                                        setImagePreview(file ? { key: recordKey, url: URL.createObjectURL(file) } : null)
                                     }}
                                 />
                             </label>
@@ -317,32 +280,12 @@ export default function SeoPage({ page }: Props) {
                         </label>
                     </div>
                 </section>
-            </form>
-
-            <AlertDialog open={isDeleteDialogOpen} onOpenChange={setIsDeleteDialogOpen}>
-                <AlertDialogContent>
-                    <AlertDialogHeader>
-                        <AlertDialogTitle>Delete SEO settings?</AlertDialogTitle>
-                        <AlertDialogDescription>
-                            This removes SEO settings for {displayPage}. It does not delete the page or its content.
-                        </AlertDialogDescription>
-                    </AlertDialogHeader>
-                    <AlertDialogFooter>
-                        <AlertDialogCancel disabled={isDeleting}>Cancel</AlertDialogCancel>
-                        <AlertDialogAction
-                            variant='destructive'
-                            disabled={isDeleting}
-                            onClick={(event) => {
-                                event.preventDefault()
-                                void handleDelete()
-                            }}
-                        >
-                            <Trash2 className='mr-2 size-4' />
-                            {isDeleting ? 'Deleting...' : 'Delete SEO settings'}
-                        </AlertDialogAction>
-                    </AlertDialogFooter>
-                </AlertDialogContent>
-            </AlertDialog>
+            </form> : (
+                <div className='flex min-h-64 flex-col items-center justify-center rounded-lg border border-dashed px-6 text-center'>
+                    <FileImage className='size-8 text-muted-foreground' />
+                    <p className='mt-4 text-sm text-muted-foreground'>SEO settings are not available for this language.</p>
+                </div>
+            )}
         </div>
     )
 }

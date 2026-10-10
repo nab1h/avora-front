@@ -31,19 +31,19 @@ export default function Header({
 	const links = [
 		{
 			label: isArabic ? "الرئيسية" : "Home",
-			href: `/${locale}`,
+			href: `/${locale}/home`,
 		},
 		{
 			label: isArabic ? "خدماتنا" : "Services",
-			href: `/${locale}#services`,
+			href: `/${locale}/services`,
 		},
 		{
 			label: isArabic ? "من نحن" : "About us",
-			href: `/${locale}#about`,
+			href: `/${locale}/about`,
 		},
 		{
 			label: isArabic ? "تواصل معنا" : "Contact",
-			href: `/${locale}#contact`,
+			href: `/${locale}/contact`,
 		},
 	];
 
