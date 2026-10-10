@@ -1,4 +1,5 @@
 import { Skeleton } from '@/components/ui/skeleton'
+import { useTranslations } from 'next-intl'
 import { Plus } from 'lucide-react'
 
 function ContentCardSkeleton({ variant = 'text' }: { variant?: 'text' | 'image' }) {
@@ -81,15 +82,21 @@ function AddContentFormSkeleton() {
 }
 
 export function ContentsPageSkeleton({ page }: { page?: string }) {
+  const t = useTranslations('contents')
+  const pageNameKey = page?.trim().toLowerCase().replace(/[\s-]+/g, '_')
+  const displayPage = page && pageNameKey && t.has(`pageNames.${pageNameKey}`)
+    ? t(`pageNames.${pageNameKey}`)
+    : page?.replace(/[-_]/g, ' ')
+
   return (
     <div role='status' aria-busy='true' className='space-y-6 p-3 md:p-6'>
-      <span className='sr-only'>Loading content...</span>
+      <span className='sr-only'>{t('loading')}</span>
 
       {/* Header */}
       <header className='flex flex-col justify-between gap-4 border-b pb-5 sm:flex-row sm:items-end'>
         {/* العنوان بيجي من props فمش محتاج سكيلتون */}
-        {page ? (
-          <h1 className='mt-1 text-2xl font-semibold capitalize'>{page}</h1>
+        {displayPage ? (
+          <h1 className='mt-1 text-2xl font-semibold'>{displayPage}</h1>
         ) : (
           <Skeleton className='h-8 w-44' />
         )}

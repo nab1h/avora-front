@@ -1,4 +1,5 @@
 import type { ReactNode } from 'react'
+import { useTranslations } from 'next-intl'
 import { Skeleton } from '@/components/ui/skeleton'
 import { Input } from '@/components/ui/input'
 
@@ -32,17 +33,21 @@ function TextareaFieldSkeleton({ className }: { className?: string }) {
 }
 
 export function SeoPageSkeleton({ page }: { page?: string }) {
-  const displayPage = page?.replace(/[-_]/g, ' ')
+  const t = useTranslations('seo')
+  const pageNameKey = page?.trim().toLowerCase().replace(/[\s-]+/g, '_')
+  const displayPage = page && pageNameKey && t.has(`pageNames.${pageNameKey}`)
+    ? t(`pageNames.${pageNameKey}`)
+    : page?.replace(/[-_]/g, ' ')
 
   return (
     <div role='status' aria-busy='true' className='w-full min-w-0 max-w-full space-y-6 overflow-x-clip p-3 md:p-6'>
-      <span className='sr-only'>Loading SEO settings...</span>
+      <span className='sr-only'>{t('loading')}</span>
 
       <header className='flex flex-col justify-between gap-4 border-b pb-5 sm:flex-row sm:flex-wrap sm:items-end'>
         <div className='min-w-0 flex-1'>
-          <p className='text-xs font-semibold uppercase text-muted-foreground'>Search appearance</p>
+          <p className='text-xs font-semibold uppercase text-muted-foreground'>{t('searchAppearance')}</p>
           {displayPage ? (
-            <h1 className='mt-1 text-2xl font-semibold capitalize'>SEO settings · {displayPage}</h1>
+            <h1 className='mt-1 text-2xl font-semibold'>{t('title', { page: displayPage })}</h1>
           ) : (
             <Skeleton className='mt-1 h-8 w-72' />
           )}
@@ -55,9 +60,9 @@ export function SeoPageSkeleton({ page }: { page?: string }) {
       </header>
 
       <div className='space-y-6'>
-        <SeoSectionSkeleton title='Search metadata'>
+        <SeoSectionSkeleton title={t('searchMetadata')}>
           <label className='space-y-1.5 text-xs font-medium text-muted-foreground'>
-            Page
+            {t('page')}
             <Input value={displayPage} readOnly disabled className='capitalize text-sm text-foreground' />
           </label>
           <FieldSkeleton />
@@ -65,7 +70,7 @@ export function SeoPageSkeleton({ page }: { page?: string }) {
           <FieldSkeleton className='md:col-span-2' />
         </SeoSectionSkeleton>
 
-        <SeoSectionSkeleton title='Social sharing'>
+        <SeoSectionSkeleton title={t('socialSharing')}>
           <FieldSkeleton className='md:col-span-2' />
           <TextareaFieldSkeleton className='md:col-span-2' />
           <div className='min-w-0 space-y-2 md:col-span-2'>
@@ -75,7 +80,7 @@ export function SeoPageSkeleton({ page }: { page?: string }) {
           </div>
         </SeoSectionSkeleton>
 
-        <SeoSectionSkeleton title='Indexing and canonical URL'>
+        <SeoSectionSkeleton title={t('indexingCanonical')}>
           <FieldSkeleton />
           <FieldSkeleton />
         </SeoSectionSkeleton>

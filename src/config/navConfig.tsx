@@ -137,15 +137,17 @@ export const getNavItems = (pages: string[]): NavItem[] => [
   },
   {
     groupLabel: 'settings',
+    groupTranslationKey: 'settingsGroup',
     items: [
       {
         icon: 'Settings',
         label: 'Settings',
+        translationKey: 'websiteSettings',
         childItems: [
-          { label: 'General', href: '/dashboard/website-settings/general', permission: 'manage-roles' },
-          { label: 'Branding', href: '/dashboard/website-settings/branding', permission: 'manage-roles' },
-          { label: 'Contact Information', href: '/dashboard/website-settings/contact', permission: 'manage-roles' },
-          { label: 'Maps', href: '/dashboard/website-settings/maps', permission: 'manage-roles' },
+          { label: 'General', translationKey: 'general', href: '/dashboard/website-settings/general', permission: 'manage-roles' },
+          { label: 'Branding', translationKey: 'branding', href: '/dashboard/website-settings/branding', permission: 'manage-roles' },
+          { label: 'Contact Information', translationKey: 'contactInformation', href: '/dashboard/website-settings/contact', permission: 'manage-roles' },
+          { label: 'Maps', translationKey: 'maps', href: '/dashboard/website-settings/maps', permission: 'manage-roles' },
         ],
         permission: 'manage-roles',
       },
@@ -153,13 +155,16 @@ export const getNavItems = (pages: string[]): NavItem[] => [
   },
   {
     groupLabel: 'Pages & Seo',
+    groupTranslationKey: 'pagesSeo',
     items: [
       {
         icon: "StickyNote",
         label: "Pages",
+        translationKey: 'pages',
         permission: "manage-settings",
         childItems: pages.map((page) => ({
           label: page,
+          translationKey: `page_${page.trim().toLowerCase().replace(/[^a-z0-9]+/g, '_')}`,
           href: `/dashboard/contents?page=${page}`,
           permission: "manage-settings",
         })),
@@ -168,9 +173,11 @@ export const getNavItems = (pages: string[]): NavItem[] => [
       {
         icon: "SearchCheck",
         label: "SEO Settings",
+        translationKey: 'seoSettings',
         permission: "manage-settings",
         childItems: pages.map((page) => ({
           label: page,
+          translationKey: `page_${page.trim().toLowerCase().replace(/[^a-z0-9]+/g, '_')}`,
           href: `/dashboard/seo?page=${page}`,
           permission: "manage-settings",
         })),
