@@ -78,8 +78,12 @@
   },
   "sidebar": {
     "dashboardLayouts": "لوحة التحكم والتخطيطات",
+    "contentManagement": "إدارة المحتوى",
+    "administration": "الإدارة",
+    "account": "الحساب",
     "apps": "التطبيقات",
     "profile": "حسابي",
+    "password": "تغيير كلمة المرور",
     "invitations": "الدعوات",
     "dashboard": "لوحة التحكم",
     "layouts": "التخطيطات",
@@ -325,7 +329,7 @@
   },
   "profile": {
     "myAccount": "حسابي",
-    "settings": "الإعدادات",
+    "settings": "تغير كلمه السر",
     "signOut": "تسجيل الخروج",
     "user": "مستخدم",
     "title": "الملف الشخصي",
@@ -402,7 +406,9 @@
     "login": "تسجيل الدخول",
     "register": "إنشاء حساب",
     "forgot-password": "نسيت كلمة المرور",
-    "reset-password": "إعادة تعيين كلمة المرور"
+    "reset-password": "إعادة تعيين كلمة المرور",
+    "password":"تغيير كلمة المرور"
+
   },
   "users": {
     "Users": "المستخدمون",

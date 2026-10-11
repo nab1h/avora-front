@@ -78,8 +78,12 @@
   },
   "sidebar": {
     "dashboardLayouts": "Dashboard & Layouts",
+    "contentManagement": "Content Management",
+    "administration": "Administration",
+    "account": "Account",
     "apps": "Apps",
     "profile": "Profile",
+    "password": "Change Password",
     "invitations": "Invitations",
     "dashboard": "Dashboard",
     "layouts": "Layouts",

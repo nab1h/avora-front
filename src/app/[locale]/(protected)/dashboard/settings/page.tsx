@@ -1,7 +1,7 @@
 import { useTranslations } from "next-intl";
 import { ChangePasswordForm } from "../_components/change-password-form";
 
-export default function ProfilePage() {
+export default function SettingsPage() {
   const t = useTranslations("settings");
 
   return (
