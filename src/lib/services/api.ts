@@ -28,7 +28,8 @@ export const api = createApi({
         "SocialLinks",
         "Settings",
         "Content",
-        "SeoPage"
+        "SeoPage",
+        "Invitations"
     ],
   endpoints: () => ({}),
 });
