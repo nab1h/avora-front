@@ -94,9 +94,6 @@
     "view": "View",
     "rolesPermissions": "Roles & Permissions",
     "roles": "Roles",
-<<<<<<< HEAD
-    "permissions": "Permissions"
-=======
     "permissions": "Permissions",
     "settingsGroup": "Settings",
     "websiteSettings": "Website Settings",
@@ -325,7 +322,6 @@
       "selectImage": "Select gallery image {id}",
       "imageAlt": "Gallery image {id}"
     }
->>>>>>> e14a1ba (finish finish)
   },
   "profile": {
     "myAccount": "My Account",
@@ -385,13 +381,13 @@
   },
   "breadcrumb": {
     "dashboard": "Dashboard",
+    "website-settings": "Website Settings",
     "profile": "Profile",
     "invitations": "Invitations",
     "services": "Services",
     "gallery": "Gallery",
     "social-link": "Social Media",
-<<<<<<< HEAD
-=======
+
     "general": "General",
     "branding": "Branding",
     "contactInformation": "Contact Information",
@@ -399,7 +395,6 @@
     "maps": "Maps",
     "pages": "Pages",
     "seo": "SEO",
->>>>>>> e14a1ba (finish finish)
     "users": "Users",
     "roles": "Roles",
     "permissions": "Permissions",

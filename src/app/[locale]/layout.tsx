@@ -51,7 +51,7 @@ export async function generateMetadata({
   };
 }
 
-// ⭐ ضروري مع setRequestLocale عشان الـ static rendering
+
 export function generateStaticParams() {
   return routing.locales.map((locale) => ({ locale }));
 }

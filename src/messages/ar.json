@@ -94,9 +94,6 @@
     "view": "عرض",
     "rolesPermissions": "الأدوار والصلاحيات",
     "roles": "الأدوار",
-<<<<<<< HEAD
-    "permissions": "الصلاحيات"
-=======
     "permissions": "الصلاحيات",
     "settingsGroup": "الإعدادات",
     "websiteSettings": "إعدادات الموقع",
@@ -325,7 +322,6 @@
       "selectImage": "اختيار صورة المعرض {id}",
       "imageAlt": "صورة المعرض {id}"
     }
->>>>>>> e14a1ba (finish finish)
   },
   "profile": {
     "myAccount": "حسابي",
@@ -390,6 +386,16 @@
     "services": "الخدمات",
     "gallery": "المعرض",
     "social-link": "مواقع التواصل الإجتماعي",
+    "general": "عام",
+    "branding": "الهوية البصرية",
+    "contactInformation": "معلومات التواصل",
+    "maps": "الخرائط",
+    "pages": "الصفحات",
+    "website-settings": "إعدادات الموقع",
+    "websiteSettings": "إعدادات الموقع",
+    "seo": "تحسين محركات البحث",
+    "contact": "معلومات التواصل",
+    "mapsSettings": "إعدادات الخرائط",
     "users": "المستخدمون",
     "roles": "الأدوار",
     "permissions": "الصلاحيات",
