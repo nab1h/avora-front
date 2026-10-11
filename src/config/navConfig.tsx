@@ -53,52 +53,49 @@ export type NavItem = {
 
 export const getNavItems = (pages: string[]): NavItem[] => [
   {
-    groupLabel: 'Dashboard & Layouts',
-    groupTranslationKey: 'dashboardLayouts',
+    groupLabel: 'Content Management',
+    groupTranslationKey: 'contentManagement',
     items: [
       {
-        icon: 'Package',
-        label: 'Orders',
-        translationKey: 'orders',
-        href: '/dashboard/profile',
+        icon: 'BriefcaseBusiness',
+        label: 'Services',
+        translationKey: 'services',
+        href: '/dashboard/services',
+        target: '_blank',
         permission: 'manage-roles',
       },
       {
-        icon: 'LayoutTemplate',
-        label: 'services',
-        translationKey: 'services',
-        badgeClassName: 'right-8',
-        childItems: [
-          {
-            label: 'Services',
-            href: '/dashboard/services',
-            translationKey: 'services',
-            target: '_blank',
-            permission: 'manage-roles',
-          },
-          {
-            label: 'Gallery',
-            href: '/dashboard/gallery',
-            translationKey: 'gallery',
-            target: '_blank',
-            permission: 'manage-roles',
-          }, {
-            label: 'Social Link',
-            href: '/dashboard/social-link',
-            translationKey: 'social',
-            target: '_blank',
-            permission: 'manage-roles',
-          },
-        ]
-      }
-    ]
+        icon: 'Images',
+        label: 'Gallery',
+        translationKey: 'gallery',
+        href: '/dashboard/gallery',
+        target: '_blank',
+        permission: 'manage-roles',
+      },
+      {
+        icon: 'Share2',
+        label: 'Social Media',
+        translationKey: 'social',
+        href: '/dashboard/social-link',
+        target: '_blank',
+        permission: 'manage-roles',
+      },
+    ],
   },
   {
-    groupLabel: 'Apps',
-    groupTranslationKey: 'apps',
+    groupLabel: 'Administration',
+    groupTranslationKey: 'administration',
     items: [
       {
-        icon: 'UsersIcon',
+        icon: 'MailPlus',
+        label: 'Invitations',
+        translationKey: 'invitations',
+        href: '/dashboard/invitations',
+        target: '_blank',
+        permission: 'manage-roles',
+      },
+      {
+        icon: 'UsersRound',
         label: 'Users',
         translationKey: 'users',
         childItems: [
@@ -108,29 +105,13 @@ export const getNavItems = (pages: string[]): NavItem[] => [
         permission: 'manage-roles',
       },
       {
-        icon: 'ShieldCheckIcon',
+        icon: 'ShieldCheck',
         label: 'Roles & Permissions',
         translationKey: 'rolesPermissions',
-        // badge: 'Pro',
-        badgeClassName: 'right-8',
         permission: 'manage-roles',
         childItems: [
-          {
-            label: 'Roles',
-            translationKey: 'roles',
-            href: '/dashboard/roles',
-            permission: 'manage-roles',
-
-
-          },
-          {
-            label: 'Permissions',
-            translationKey: 'permissions',
-            href: '/dashboard/permissions',
-            permission: 'manage-roles',
-
-          },
-
+          { label: 'Roles', translationKey: 'roles', href: '/dashboard/roles', permission: 'manage-roles' },
+          { label: 'Permissions', translationKey: 'permissions', href: '/dashboard/permissions', permission: 'manage-roles' },
         ],
       }
     ]
@@ -181,6 +162,26 @@ export const getNavItems = (pages: string[]): NavItem[] => [
           href: `/dashboard/seo?page=${page}`,
           permission: "manage-settings",
         })),
+      },
+    ],
+  },
+  {
+    groupLabel: 'Account',
+    groupTranslationKey: 'account',
+    items: [
+      {
+        icon: 'UserRound',
+        label: 'Profile',
+        translationKey: 'profile',
+        href: '/dashboard/profile',
+        permission: 'manage-roles',
+      },
+      {
+        icon: 'KeyRound',
+        label: 'Change Password',
+        translationKey: 'password',
+        href: '/dashboard/settings',
+        permission: 'manage-roles',
       },
     ],
   },

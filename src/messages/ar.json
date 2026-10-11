@@ -77,9 +77,11 @@
     }
   },
   "sidebar": {
+    "account": "الحساب",
     "dashboardLayouts": "لوحة التحكم والتخطيطات",
     "apps": "التطبيقات",
     "profile": "حسابي",
+    "password": "تغيير كلمة المرور",
     "invitations": "الدعوات",
     "dashboard": "لوحة التحكم",
     "layouts": "التخطيطات",
@@ -365,6 +367,10 @@
       "passwordsMismatch": "كلمتا المرور غير متطابقتين"
     }
   },
+  "settings": {
+    "title": "الإعدادات",
+    "description": "غيّر كلمة المرور وأدر إعدادات حسابك."
+  },
   "breadcrumb": {
     "dashboard": "لوحة التحكم",
     "profile": "الملف الشخصي",
@@ -390,7 +396,8 @@
     "login": "تسجيل الدخول",
     "register": "إنشاء حساب",
     "forgot-password": "نسيت كلمة المرور",
-    "reset-password": "إعادة تعيين كلمة المرور"
+    "reset-password": "إعادة تعيين كلمة المرور",
+    "password":"تغيير كلمة المرور"
   },
   "users": {
     "Users": "المستخدمون",
