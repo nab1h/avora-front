@@ -87,14 +87,6 @@ export const getNavItems = (pages: string[]): NavItem[] => [
     groupTranslationKey: 'administration',
     items: [
       {
-        icon: 'MailPlus',
-        label: 'Invitations',
-        translationKey: 'invitations',
-        href: '/dashboard/invitations',
-        target: '_blank',
-        permission: 'manage-roles',
-      },
-      {
         icon: 'UsersRound',
         label: 'Users',
         translationKey: 'users',
