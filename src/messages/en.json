@@ -8,8 +8,14 @@
     "cancel": "Cancel"
   },
   "sidebar": {
+    "account": "Account",
     "dashboardLayouts": "Dashboard & Layouts",
     "apps": "Apps",
+    "profile": "Profile",
+    "password": "Change Password",
+    "invitations": "Invitations",
+    "dashboard": "Dashboard",
+    "layouts": "Layouts",
     "orders": "Orders",
     "services": "Services",
     "gallery": "Gallery",
@@ -275,6 +281,10 @@
       "confirmPasswordRequired": "Please confirm your password",
       "passwordsMismatch": "Passwords do not match"
     }
+  },
+  "settings": {
+    "title": "Settings",
+    "description": "Change your password and manage your account settings."
   },
   "breadcrumb": {
     "dashboard": "Dashboard",
