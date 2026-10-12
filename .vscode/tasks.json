@@ -1,0 +1,12 @@
+{
+	"version": "2.0.0",
+	"tasks": [
+		{
+			"label": "Create SiteScripts directories",
+			"type": "shell",
+			"command": "mkdir 'src/app/(protected)/dashboard/_components/site-scripts'; mkdir 'src/app/(protected)/dashboard/site-scripts'",
+			"isBackground": false,
+			"problemMatcher": []
+		}
+	]
+}
