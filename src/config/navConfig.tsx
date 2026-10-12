@@ -138,6 +138,7 @@ export const getNavItems = (pages: string[]): NavItem[] => [
           { label: 'Branding', href: '/dashboard/website-settings/branding', permission: 'manage-roles' },
           { label: 'Contact Information', href: '/dashboard/website-settings/contact', permission: 'manage-roles' },
           { label: 'Maps', href: '/dashboard/website-settings/maps', permission: 'manage-roles' },
+          { label: 'Site Scripts', href: '/dashboard/site-scripts', permission: 'manage-settings' },
         ],
         permission: 'manage-roles',
       },
