@@ -18,6 +18,7 @@
     "layouts": "التخطيطات",
     "orders": "الطلبات",
     "services": "الخدمات",
+    "siteScripts": "أكواد الموقع",
     "gallery": "المعرض",
     "social": "مواقع التواصل الإجتماعي",
     "fullNavbar": "شريط التنقل الكامل",
@@ -71,6 +72,9 @@
     "general": {
       "title": "الإعدادات العامة",
       "description": "أدر اسم الموقع ووصفه.",
+      "websiteNameAr": "اسم الموقع بالعربية",
+      "websiteDescriptionAr": "وصف الموقع بالعربية",
+      "descriptionPlaceholderAr": "اكتب وصف الموقع باللغة العربية",
       "websiteDetails": "تفاصيل الموقع",
       "apiDescription": "تُحمّل هذه القيم من /admin/settings.",
       "loading": "جارٍ التحميل...",
@@ -291,6 +295,7 @@
     "profile": "الملف الشخصي",
     "services": "الخدمات",
     "gallery": "المعرض",
+    "site-scripts": "أكواد الموقع",
     "social-link": "مواقع التواصل الإجتماعي",
     "general": "عام",
     "branding": "الهوية البصرية",
@@ -440,6 +445,142 @@
       "edit": "تعديل",
       "duplicate": "نسخ",
       "delete": "حذف"
+    }
+  },
+  "siteScripts": {
+    "title": "أكواد الموقع",
+    "description": "إدارة أكواد التتبع والتحقق والأكواد المخصصة التي تعمل على الموقع العام.",
+    "add": "إضافة كود",
+    "table": {
+      "search": "البحث في الأكواد",
+      "add": "إضافة كود",
+      "columns": {
+        "name": "الاسم",
+        "type": "النوع",
+        "placement": "الموضع",
+        "loading": "التحميل",
+        "status": "الحالة",
+        "sort": "الترتيب",
+        "actions": "الإجراءات"
+      },
+      "types": {
+        "analytics": "تحليلات",
+        "pixel": "بكسل تتبع",
+        "verification": "تحقق",
+        "custom": "مخصص"
+      },
+      "placements": {
+        "head": "الرأس",
+        "body_start": "بداية المحتوى",
+        "body_end": "نهاية المحتوى"
+      },
+      "strategies": {
+        "beforeInteractive": "قبل التفاعل",
+        "afterInteractive": "بعد التفاعل",
+        "lazyOnload": "عند التحميل الكسول"
+      },
+      "tryAgain": "حاول مرة أخرى",
+      "empty": {
+        "title": "لا توجد أكواد بعد",
+        "description": "أضف أول كود للموقع للبدء.",
+        "addFirst": "إضافة أول كود"
+      },
+      "inlineCode": "كود مضمن",
+      "status": {
+        "active": "مفعّل",
+        "inactive": "معطّل"
+      },
+      "actions": {
+        "forScript": "إجراءات {name}",
+        "edit": "تعديل",
+        "disable": "تعطيل",
+        "enable": "تفعيل",
+        "delete": "حذف"
+      },
+      "pagination": {
+        "page": "الصفحة {page} من {totalPages}",
+        "previous": "السابق",
+        "next": "التالي"
+      },
+      "messages": {
+        "disabled": "تم تعطيل الكود بنجاح.",
+        "enabled": "تم تفعيل الكود بنجاح.",
+        "updateFailed": "تعذر تحديث حالة الكود. حاول مرة أخرى.",
+        "deleted": "تم حذف الكود بنجاح.",
+        "deleteFailed": "تعذر حذف الكود. حاول مرة أخرى.",
+        "loadFailed": "تعذر تحميل الأكواد."
+      },
+      "delete": {
+        "title": "حذف الكود؟",
+        "description": "سيؤدي ذلك إلى إزالة {name} من الموقع العام. لا يمكن التراجع عن هذا الإجراء.",
+        "thisScript": "هذا الكود",
+        "cancel": "إلغاء",
+        "deleting": "جارٍ الحذف...",
+        "confirm": "حذف"
+      }
+    },
+    "dialog": {
+      "addTitle": "إضافة كود",
+      "editTitle": "تعديل الكود",
+      "createDescription": "أنشئ كودًا جديدًا للموقع العام.",
+      "editDescription": "تحديث {name}.",
+      "thisScript": "هذا الكود",
+      "fields": {
+        "name": "الاسم",
+        "type": "النوع",
+        "url": "الرابط",
+        "code": "كود مخصص",
+        "placement": "الموضع",
+        "strategy": "طريقة التحميل",
+        "sortOrder": "ترتيب العرض",
+        "active": "مفعّل"
+      },
+      "placeholders": {
+        "name": "Google Tag Manager",
+        "type": "اختر النوع",
+        "url": "https://example.com/script.js",
+        "code": "ألصق كود JavaScript هنا",
+        "placement": "اختر الموضع",
+        "strategy": "اختر طريقة التحميل"
+      },
+      "types": {
+        "analytics": "تحليلات",
+        "pixel": "بكسل تتبع",
+        "verification": "تحقق",
+        "custom": "مخصص"
+      },
+      "placements": {
+        "head": "الرأس",
+        "body_start": "بداية المحتوى",
+        "body_end": "نهاية المحتوى"
+      },
+      "strategies": {
+        "beforeInteractive": "قبل التفاعل",
+        "afterInteractive": "بعد التفاعل",
+        "lazyOnload": "عند التحميل الكسول"
+      },
+      "activeDescription": "تفعيل الكود على الموقع العام.",
+      "toggleActive": "تبديل حالة تفعيل الكود",
+      "cancel": "إلغاء",
+      "submit": {
+        "creating": "جارٍ الإنشاء...",
+        "create": "إنشاء الكود",
+        "saving": "جارٍ الحفظ...",
+        "save": "حفظ التغييرات"
+      },
+      "validation": {
+        "nameRequired": "اسم الكود مطلوب.",
+        "nameTooLong": "يجب ألا يتجاوز اسم الكود 255 حرفًا.",
+        "sortOrder": "يجب أن يكون ترتيب العرض صفرًا أو أكثر.",
+        "urlOrCodeRequired": "أدخل رابطًا أو كودًا واحدًا على الأقل.",
+        "invalidUrl": "أدخل رابطًا صالحًا.",
+        "fixFields": "يرجى تصحيح الحقول المحددة."
+      },
+      "messages": {
+        "created": "تم إنشاء الكود بنجاح.",
+        "updated": "تم تحديث الكود بنجاح.",
+        "saveFailed": "تعذر حفظ الكود. حاول مرة أخرى."
+      }
     }
   },
   "socialLinks": {

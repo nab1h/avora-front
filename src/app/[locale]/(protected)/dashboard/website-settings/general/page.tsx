@@ -1,11 +1,14 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { useTranslations } from 'next-intl';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
+import { Label } from '@/components/ui/label';
+import { Textarea } from '@/components/ui/textarea';
 import {
+  type SiteSettingKey,
   useGetWebsiteSettingsQuery,
   useUpdateWebsiteSettingMutation,
 } from '@/lib/services/settings-api';
@@ -24,22 +27,28 @@ export default function GeneralSettingsPage() {
   ];
   const siteNameField = settings.find((item) => item.key === 'site_name');
   const siteDescriptionField = settings.find((item) => item.key === 'site_description');
+  const siteNameArField = settings.find((item) => item.key === 'site_name_ar');
+  const siteDescriptionArField = settings.find((item) => item.key === 'site_description_ar');
 
-  const [siteName, setSiteName] = useState('');
-  const [siteDescription, setSiteDescription] = useState('');
-
-  useEffect(() => {
-    if (siteNameField) setSiteName(siteNameField.value ?? '');
-    if (siteDescriptionField) setSiteDescription(siteDescriptionField.value ?? '');
-  }, [siteNameField, siteDescriptionField]);
+  const [siteName, setSiteName] = useState<string>();
+  const [siteDescription, setSiteDescription] = useState<string>();
+  const [siteNameAr, setSiteNameAr] = useState<string>();
+  const [siteDescriptionAr, setSiteDescriptionAr] = useState<string>();
+  const siteNameValue = siteName ?? siteNameField?.value ?? '';
+  const siteDescriptionValue = siteDescription ?? siteDescriptionField?.value ?? '';
+  const siteNameArValue = siteNameAr ?? siteNameArField?.value ?? '';
+  const siteDescriptionArValue = siteDescriptionAr ?? siteDescriptionArField?.value ?? '';
 
   const handleSave = async () => {
     try {
+      const values = {
+        site_name: siteNameValue,
+        site_description: siteDescriptionValue,
+        site_name_ar: siteNameArValue,
+        site_description_ar: siteDescriptionArValue,
+      } satisfies Record<SiteSettingKey, string | null>;
       await updateWebsiteSetting({
-        values: {
-          site_name: siteName,
-          site_description: siteDescription,
-        },
+        values,
       }).unwrap();
       toast.success(t('saveSuccess'));
     } catch {
@@ -70,21 +79,48 @@ export default function GeneralSettingsPage() {
           ) : (
             <>
               <div className="space-y-2">
-                <label className="text-sm font-medium">{t('websiteName')}</label>
+                <Label htmlFor="site-name">{t('websiteName')}</Label>
                 <Input
-                  value={siteName}
+                  id="site-name"
+                  dir="ltr"
+                  value={siteNameValue}
                   onChange={(e) => setSiteName(e.target.value)}
                   placeholder="AVORA"
                 />
               </div>
 
               <div className="space-y-2">
-                <label className="text-sm font-medium">{t('websiteDescription')}</label>
-                <textarea
-                  value={siteDescription}
+                <Label htmlFor="site-description">{t('websiteDescription')}</Label>
+                <Textarea
+                  id="site-description"
+                  dir="ltr"
+                  value={siteDescriptionValue}
                   onChange={(e) => setSiteDescription(e.target.value)}
-                  className="min-h-28 w-full rounded-lg border border-input bg-background px-3 py-2 text-sm text-foreground outline-none"
+                  className="min-h-28"
                   placeholder={t('descriptionPlaceholder')}
+                />
+              </div>
+
+              <div className="space-y-2">
+                <Label htmlFor="site-name-ar">{t('websiteNameAr')}</Label>
+                <Input
+                  id="site-name-ar"
+                  dir="rtl"
+                  value={siteNameArValue}
+                  onChange={(e) => setSiteNameAr(e.target.value)}
+                  placeholder="أفورا"
+                />
+              </div>
+
+              <div className="space-y-2">
+                <Label htmlFor="site-description-ar">{t('websiteDescriptionAr')}</Label>
+                <Textarea
+                  id="site-description-ar"
+                  dir="rtl"
+                  value={siteDescriptionArValue}
+                  onChange={(e) => setSiteDescriptionAr(e.target.value)}
+                  className="min-h-28"
+                  placeholder={t('descriptionPlaceholderAr')}
                 />
               </div>
 

@@ -437,6 +437,142 @@
       "delete": "Delete"
     }
   },
+  "siteScripts": {
+    "title": "Site Scripts",
+    "description": "Manage tracking, verification, and custom scripts that run on the public website.",
+    "add": "Add Script",
+    "table": {
+      "search": "Search scripts",
+      "add": "Add Script",
+      "columns": {
+        "name": "Name",
+        "type": "Type",
+        "placement": "Placement",
+        "loading": "Loading",
+        "status": "Status",
+        "sort": "Sort",
+        "actions": "Actions"
+      },
+      "types": {
+        "analytics": "Analytics",
+        "pixel": "Pixel",
+        "verification": "Verification",
+        "custom": "Custom"
+      },
+      "placements": {
+        "head": "Head",
+        "body_start": "Body start",
+        "body_end": "Body end"
+      },
+      "strategies": {
+        "beforeInteractive": "Before interactive",
+        "afterInteractive": "After interactive",
+        "lazyOnload": "Lazy on load"
+      },
+      "tryAgain": "Try again",
+      "empty": {
+        "title": "No scripts yet",
+        "description": "Create your first website script to get started.",
+        "addFirst": "Add first script"
+      },
+      "inlineCode": "Inline code script",
+      "status": {
+        "active": "Active",
+        "inactive": "Inactive"
+      },
+      "actions": {
+        "forScript": "Actions for {name}",
+        "edit": "Edit",
+        "disable": "Disable",
+        "enable": "Enable",
+        "delete": "Delete"
+      },
+      "pagination": {
+        "page": "Page {page} of {totalPages}",
+        "previous": "Previous",
+        "next": "Next"
+      },
+      "messages": {
+        "disabled": "Script disabled successfully.",
+        "enabled": "Script enabled successfully.",
+        "updateFailed": "Failed to update script state. Please try again.",
+        "deleted": "Script deleted successfully.",
+        "deleteFailed": "Failed to delete script. Please try again.",
+        "loadFailed": "Scripts could not be loaded."
+      },
+      "delete": {
+        "title": "Delete script?",
+        "description": "This will remove {name} from the public website. This action cannot be undone.",
+        "thisScript": "this script",
+        "cancel": "Cancel",
+        "deleting": "Deleting...",
+        "confirm": "Delete"
+      }
+    },
+    "dialog": {
+      "addTitle": "Add Script",
+      "editTitle": "Edit Script",
+      "createDescription": "Create a new script for the public website.",
+      "editDescription": "Update {name}.",
+      "thisScript": "this script",
+      "fields": {
+        "name": "Name",
+        "type": "Type",
+        "url": "URL",
+        "code": "Custom Code",
+        "placement": "Placement",
+        "strategy": "Loading Strategy",
+        "sortOrder": "Sort Order",
+        "active": "Active"
+      },
+      "placeholders": {
+        "name": "Google Tag Manager",
+        "type": "Select type",
+        "url": "https://example.com/script.js",
+        "code": "Paste inline JavaScript here",
+        "placement": "Select placement",
+        "strategy": "Select strategy"
+      },
+      "types": {
+        "analytics": "Analytics",
+        "pixel": "Pixel",
+        "verification": "Verification",
+        "custom": "Custom"
+      },
+      "placements": {
+        "head": "Head",
+        "body_start": "Body start",
+        "body_end": "Body end"
+      },
+      "strategies": {
+        "beforeInteractive": "Before interactive",
+        "afterInteractive": "After interactive",
+        "lazyOnload": "Lazy on load"
+      },
+      "activeDescription": "Enable script on the public site.",
+      "toggleActive": "Toggle script active state",
+      "cancel": "Cancel",
+      "submit": {
+        "creating": "Creating...",
+        "create": "Create Script",
+        "saving": "Saving...",
+        "save": "Save Changes"
+      },
+      "validation": {
+        "nameRequired": "Script name is required.",
+        "nameTooLong": "Script name must not exceed 255 characters.",
+        "sortOrder": "Sort order must be zero or greater.",
+        "urlOrCodeRequired": "At least one of URL or code is required.",
+        "invalidUrl": "Please enter a valid URL.",
+        "fixFields": "Please fix the highlighted fields."
+      },
+      "messages": {
+        "created": "Script created successfully.",
+        "updated": "Script updated successfully.",
+        "saveFailed": "Failed to save script. Please try again."
+      }
+    }
+  },
   "socialLinks": {
     "title": "Social Links",
     "description": "Manage your social links.",

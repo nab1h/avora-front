@@ -1,6 +1,12 @@
 import { api } from './api';
 import type { RootState } from '../store';
 
+export type SiteSettingKey =
+  | 'site_name'
+  | 'site_description'
+  | 'site_name_ar'
+  | 'site_description_ar';
+  
 export type SettingField = {
   key: string;
   value: string | null;

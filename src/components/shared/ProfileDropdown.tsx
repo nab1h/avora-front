@@ -77,7 +77,7 @@ const ProfileDropdown = () => {
             <UserIcon />
             <span>{t('myAccount')}</span>
           </DropdownMenuItem>
-          <DropdownMenuItem render={<Link href='/pages/user-settings?setting=general' />}>
+          <DropdownMenuItem render={<Link href='/dashboard/settings' />}>
             <SettingsIcon />
             <span>{t('settings')}</span>
           </DropdownMenuItem>

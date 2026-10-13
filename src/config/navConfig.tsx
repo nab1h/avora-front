@@ -57,6 +57,14 @@ export const getNavItems = (pages: string[]): NavItem[] => [
     groupTranslationKey: 'contentManagement',
     items: [
       {
+        icon: 'Gauge',
+        label: 'Dashboard',
+        translationKey: 'dashboard',
+        href: '/dashboard',
+        target: '_blank',
+        permission: 'manage-roles',
+      },
+      {
         icon: 'BriefcaseBusiness',
         label: 'Services',
         translationKey: 'services',
@@ -117,18 +125,12 @@ export const getNavItems = (pages: string[]): NavItem[] => [
         label: 'Settings',
         translationKey: 'websiteSettings',
         childItems: [
-<<<<<<< HEAD
+
           { label: 'General', translationKey: 'general', href: '/dashboard/website-settings/general', permission: 'manage-roles' },
           { label: 'Branding', translationKey: 'branding', href: '/dashboard/website-settings/branding', permission: 'manage-roles' },
           { label: 'Contact Information', translationKey: 'contactInformation', href: '/dashboard/website-settings/contact', permission: 'manage-roles' },
           { label: 'Maps', translationKey: 'maps', href: '/dashboard/website-settings/maps', permission: 'manage-roles' },
-=======
-          { label: 'General', href: '/dashboard/website-settings/general', permission: 'manage-roles' },
-          { label: 'Branding', href: '/dashboard/website-settings/branding', permission: 'manage-roles' },
-          { label: 'Contact Information', href: '/dashboard/website-settings/contact', permission: 'manage-roles' },
-          { label: 'Maps', href: '/dashboard/website-settings/maps', permission: 'manage-roles' },
-          { label: 'Site Scripts', href: '/dashboard/site-scripts', permission: 'manage-settings' },
->>>>>>> 7660d52 (done scripts)
+          { label: 'Site Scripts', translationKey: 'siteScripts', href: '/dashboard/site-scripts', permission: 'manage-settings' },
         ],
         permission: 'manage-roles',
       },
