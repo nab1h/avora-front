@@ -57,6 +57,14 @@ export const getNavItems = (pages: string[]): NavItem[] => [
     groupTranslationKey: 'contentManagement',
     items: [
       {
+        icon: 'Gauge',
+        label: 'Dashboard',
+        translationKey: 'dashboard',
+        href: '/dashboard',
+        target: '_blank',
+        permission: 'manage-roles',
+      },
+      {
         icon: 'BriefcaseBusiness',
         label: 'Services',
         translationKey: 'services',
@@ -129,6 +137,7 @@ export const getNavItems = (pages: string[]): NavItem[] => [
           { label: 'Branding', translationKey: 'branding', href: '/dashboard/website-settings/branding', permission: 'manage-roles' },
           { label: 'Contact Information', translationKey: 'contactInformation', href: '/dashboard/website-settings/contact', permission: 'manage-roles' },
           { label: 'Maps', translationKey: 'maps', href: '/dashboard/website-settings/maps', permission: 'manage-roles' },
+          { label: 'Site Scripts', translationKey: 'siteScripts', href: '/dashboard/site-scripts', permission: 'manage-settings' },
         ],
         permission: 'manage-roles',
       },

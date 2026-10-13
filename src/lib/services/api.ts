@@ -23,6 +23,7 @@ export const api = createApi({
     "Roles",
     "Permissions",
     "Users",
+    "User",
     "Services",
     "Gallery",
     "SocialLinks",
