@@ -49,72 +49,48 @@
 }
 
 :root {
-  --background: oklch(1 0 0);
-  --foreground: oklch(0.145 0 0);
-  --card: oklch(1 0 0);
-  --card-foreground: oklch(0.145 0 0);
-  --popover: oklch(1 0 0);
-  --popover-foreground: oklch(0.145 0 0);
-  --primary: oklch(0.205 0 0);
-  --primary-foreground: oklch(0.985 0 0);
-  --secondary: oklch(0.97 0 0);
-  --secondary-foreground: oklch(0.205 0 0);
-  --muted: oklch(0.97 0 0);
-  --muted-foreground: oklch(0.556 0 0);
-  --accent: oklch(0.97 0 0);
-  --accent-foreground: oklch(0.205 0 0);
-  --destructive: oklch(0.577 0.245 27.325);
-  --border: oklch(0.922 0 0);
-  --input: oklch(0.922 0 0);
-  --ring: oklch(0.708 0 0);
-  --chart-1: oklch(0.87 0 0);
-  --chart-2: oklch(0.556 0 0);
-  --chart-3: oklch(0.439 0 0);
-  --chart-4: oklch(0.371 0 0);
-  --chart-5: oklch(0.269 0 0);
-  --radius: 0.625rem;
-  --sidebar: oklch(0.985 0 0);
-  --sidebar-foreground: oklch(0.145 0 0);
-  --sidebar-primary: oklch(0.205 0 0);
-  --sidebar-primary-foreground: oklch(0.985 0 0);
-  --sidebar-accent: oklch(0.97 0 0);
-  --sidebar-accent-foreground: oklch(0.205 0 0);
-  --sidebar-border: oklch(0.922 0 0);
-  --sidebar-ring: oklch(0.708 0 0);
+  --background: 45 29% 97%;        /* warm white  #FAF9F6 */
+  --foreground: 45 18% 10%;        /* warm charcoal */
+  --card: 0 0% 100%;
+  --card-foreground: 45 18% 10%;
+  --popover: 0 0% 100%;
+  --popover-foreground: 45 18% 10%;
+  --primary: 48 100% 48%;          /* brand yellow #F5C400 */
+  --primary-foreground: 45 18% 10%;
+  --secondary: 45 16% 92%;
+  --secondary-foreground: 45 18% 10%;
+  --muted: 45 16% 92%;
+  --muted-foreground: 45 6% 42%;
+  --accent: 45 16% 92%;
+  --accent-foreground: 45 18% 10%;
+  --destructive: 0 72% 45%;
+  --border: 45 12% 87%;
+  --input: 45 12% 84%;
+  --ring: 48 100% 48%;
+  --radius: 0.5rem;
+
+  /* Theme-independent dark surface for hero / editorial sections */
+  --dark: 45 15% 7%;               /* #131109-ish */
 }
 
 .dark {
-  --background: oklch(0.145 0 0);
-  --foreground: oklch(0.985 0 0);
-  --card: oklch(0.205 0 0);
-  --card-foreground: oklch(0.985 0 0);
-  --popover: oklch(0.205 0 0);
-  --popover-foreground: oklch(0.985 0 0);
-  --primary: oklch(0.922 0 0);
-  --primary-foreground: oklch(0.205 0 0);
-  --secondary: oklch(0.269 0 0);
-  --secondary-foreground: oklch(0.985 0 0);
-  --muted: oklch(0.269 0 0);
-  --muted-foreground: oklch(0.708 0 0);
-  --accent: oklch(0.269 0 0);
-  --accent-foreground: oklch(0.985 0 0);
-  --destructive: oklch(0.704 0.191 22.216);
-  --border: oklch(1 0 0 / 10%);
-  --input: oklch(1 0 0 / 15%);
-  --ring: oklch(0.556 0 0);
-  --chart-1: oklch(0.87 0 0);
-  --chart-2: oklch(0.556 0 0);
-  --chart-3: oklch(0.439 0 0);
-  --chart-4: oklch(0.371 0 0);
-  --chart-5: oklch(0.269 0 0);
-  --sidebar: oklch(0.205 0 0);
-  --sidebar-foreground: oklch(0.985 0 0);
-  --sidebar-primary: oklch(0.488 0.243 264.376);
-  --sidebar-primary-foreground: oklch(0.985 0 0);
-  --sidebar-accent: oklch(0.269 0 0);
-  --sidebar-accent-foreground: oklch(0.985 0 0);
-  --sidebar-border: oklch(1 0 0 / 10%);
-  --sidebar-ring: oklch(0.556 0 0);
+  --background: 45 11% 7%;
+  --foreground: 45 25% 95%;
+  --card: 45 9% 10%;
+  --card-foreground: 45 25% 95%;
+  --popover: 45 9% 10%;
+  --popover-foreground: 45 25% 95%;
+  --primary: 48 100% 50%;
+  --primary-foreground: 45 18% 10%;
+  --secondary: 45 7% 15%;
+  --secondary-foreground: 45 25% 95%;
+  --muted: 45 7% 15%;
+  --muted-foreground: 45 8% 62%;
+  --accent: 45 7% 15%;
+  --accent-foreground: 45 25% 95%;
+  --border: 45 7% 19%;
+  --input: 45 7% 22%;
+  --ring: 48 100% 50%;
 }
 
 @layer base {
@@ -173,5 +149,56 @@
 
   .shimmer::after {
     animation: none;
+  }
+}
+
+
+
+
+
+html {
+  scroll-behavior: smooth;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+}
+
+@keyframes reveal-up {
+  from {
+    opacity: 0;
+    transform: translateY(24px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@keyframes reveal-img {
+  from {
+    clip-path: inset(0 0 100% 0);
+    transform: scale(1.06);
+  }
+  to {
+    clip-path: inset(0 0 0 0);
+    transform: scale(1);
+  }
+}
+
+@supports (animation-timeline: view()) {
+  @media (prefers-reduced-motion: no-preference) {
+    .reveal {
+      animation: reveal-up ease-out both;
+      animation-timeline: view();
+      animation-range: entry 5% entry 35%;
+    }
+    .reveal-img {
+      animation: reveal-img ease-out both;
+      animation-timeline: view();
+      animation-range: entry 0% entry 30%;
+    }
   }
 }
