@@ -42,7 +42,7 @@ export function TopPagesTable({ pages }: { pages: TopPage[] }) {
   }, []);
 
   return (
-    <Card className="animate-in fade-in duration-300">
+    <Card className="animate-in fade-in duration-300 motion-reduce:animate-none">
       <CardHeader>
         <CardTitle>{t("title")}</CardTitle>
         <CardDescription>{t("description")}</CardDescription>

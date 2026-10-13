@@ -33,9 +33,9 @@ export default function Footer({
 	const homeHref = `/${locale}`;
 
 	return (
-		<footer className="bg-foreground text-background">
-			<div className="mx-auto w-full max-w-6xl px-4 py-14 sm:px-6 lg:py-16">
-				<div className="grid gap-10 sm:grid-cols-2 lg:grid-cols-3">
+		<footer className="bg-[#111111] text-[#faf9f6]">
+			<div className="mx-auto w-full max-w-7xl px-5 py-16 sm:px-8 lg:py-24">
+				<div className="grid gap-12 sm:grid-cols-2 lg:grid-cols-[1.3fr_0.7fr_1fr]">
 					{/* Brand */}
 					<div className="max-w-xs">
 						<Link

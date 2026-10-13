@@ -48,22 +48,22 @@ export default async function AboutPage({
 
 
 	return (
-		<main className="mx-auto w-full max-w-6xl px-4 py-16 sm:px-6 sm:py-24">
-			<section className="grid items-center gap-12 md:grid-cols-[1fr_auto]">
+		<main className="mx-auto w-full max-w-7xl px-5 py-20 sm:px-8 sm:py-28">
+			<section className="grid items-center gap-14 md:grid-cols-[1fr_0.8fr]">
 				<div className="max-w-2xl">
 					<Badge variant="secondary" className="mb-5 gap-2 px-3 py-1">
 						<Logo aria-hidden="true" className="size-4" />
 						About {siteName}
 					</Badge>
-					<h1 className="text-4xl font-bold leading-tight sm:text-5xl">
+					<h1 className="text-5xl font-semibold leading-[1.02] tracking-tight sm:text-7xl">
 						{pageTitle ?? "fix"}
 					</h1>
 					<p className="mt-6 max-w-xl text-lg leading-8 text-muted-foreground">
 						{pageSubtitle ?? `About ${siteName}`}
 					</p>
 				</div>
-				<div className="mx-auto flex size-40 items-center justify-center rounded-2xl border bg-muted/50 sm:size-52">
-					<div className="relative mx-auto flex size-40 items-center justify-center overflow-hidden rounded-2xl border bg-muted/50 sm:size-52">
+				<div className="mx-auto flex min-h-[360px] w-full items-center justify-center rounded-none border bg-muted/50 sm:min-h-[480px]">
+					<div className="relative mx-auto flex size-40 items-center justify-center overflow-hidden rounded-none border bg-muted/50 sm:min-h-[480px]">
 						<Image
 							src={getPublicAssetUrl(image?.value) ?? "/images/illustrations/undraw_rocket.svg"}
 							alt="Illustration"

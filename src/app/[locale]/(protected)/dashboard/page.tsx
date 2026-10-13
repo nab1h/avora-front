@@ -1,6 +1,5 @@
 "use client";
 
-import { useEffect, useState } from "react";
 import { useLocale, useTranslations } from "next-intl";
 import { Link } from "@/i18n/navigation";
 import {
@@ -41,25 +40,19 @@ const PERIODS = [
 export default function Dashboard() {
   const t = useTranslations("analytics");
   const locale = useLocale();
-  const { data, isLoading, isFetching, isError, isSuccess, requestId, refetch } =
+  const { data, isLoading, isFetching, isError, fulfilledTimeStamp, refetch } =
     useGetAnalyticsQuery();
 
   const analytics = data?.data;
   const hasData = Boolean(analytics);
   const showSkeletons = isLoading && !hasData;
 
-  // Small "Updated HH:MM" indicator; null on first render avoids hydration issues.
-  const [updatedAt, setUpdatedAt] = useState<string | null>(null);
-  useEffect(() => {
-    if (isSuccess) {
-      setUpdatedAt(
-        new Date().toLocaleTimeString(locale, {
-          hour: "2-digit",
-          minute: "2-digit",
-        })
-      );
-    }
-  }, [isSuccess, locale, requestId]);
+  const updatedAt = fulfilledTimeStamp
+    ? new Date(fulfilledTimeStamp).toLocaleTimeString(locale, {
+        hour: "2-digit",
+        minute: "2-digit",
+      })
+    : null;
 
   const stats: StatCardProps[] = [
     {
@@ -99,7 +92,7 @@ export default function Dashboard() {
       <main className="min-h-screen w-full bg-background p-4 sm:p-6 lg:p-8">
         <div className="mx-auto max-w-7xl space-y-6 sm:space-y-8">
           {/* Header */}
-          <header className="animate-in fade-in slide-in-from-bottom-2 fill-mode-both duration-500 space-y-4">
+          <header className="animate-in fade-in slide-in-from-bottom-2 fill-mode-both duration-500 motion-reduce:animate-none space-y-4">
             <nav
               aria-label={t("breadcrumb")}
               className="flex items-center gap-1.5 text-sm text-muted-foreground"
@@ -149,6 +142,7 @@ export default function Dashboard() {
                       <Tooltip key={period.value}>
                         <TooltipTrigger
                           render={<span />}
+                          tabIndex={0}
                           className="rounded-md outline-none focus-visible:ring-2 focus-visible:ring-ring"
                         >
                           {trigger}
@@ -227,7 +221,7 @@ export default function Dashboard() {
             </Card>
           )}
 
-          {hasData && analytics && (
+          {(showSkeletons || hasData) && (
             <>
               {/* Statistics */}
               <section
@@ -249,7 +243,7 @@ export default function Dashboard() {
                 {showSkeletons ? (
                   <AnalyticsChartSkeleton />
                 ) : (
-                  <AnalyticsChart data={analytics.daily_views} />
+                  <AnalyticsChart data={analytics?.daily_views ?? []} />
                 )}
               </section>
 
@@ -258,7 +252,7 @@ export default function Dashboard() {
                 {showSkeletons ? (
                   <TopPagesTableSkeleton />
                 ) : (
-                  <TopPagesTable pages={analytics.top_pages} />
+                  <TopPagesTable pages={analytics?.top_pages ?? []} />
                 )}
               </section>
             </>

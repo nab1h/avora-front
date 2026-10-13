@@ -76,7 +76,7 @@ export function AnalyticsChart({ data }: { data: DailyViewPoint[] }) {
   }));
 
   return (
-    <Card className="animate-in fade-in duration-300">
+    <Card className="animate-in fade-in duration-300 motion-reduce:animate-none">
       <CardHeader>
         <CardTitle>{t("title")}</CardTitle>
         <CardDescription>{t("description")}</CardDescription>
@@ -100,15 +100,15 @@ export function AnalyticsChart({ data }: { data: DailyViewPoint[] }) {
               <AreaChart data={chartData} margin={{ top: 12, right: 8, left: 0, bottom: 0 }}>
                 <defs>
                   <linearGradient id="dailyViewsGradient" x1="0" y1="0" x2="0" y2="1">
-                    <stop offset="0%" stopColor="hsl(var(--primary))" stopOpacity={0.25} />
-                    <stop offset="100%" stopColor="hsl(var(--primary))" stopOpacity={0} />
+                    <stop offset="0%" stopColor="var(--primary)" stopOpacity={0.25} />
+                    <stop offset="100%" stopColor="var(--primary)" stopOpacity={0} />
                   </linearGradient>
                 </defs>
 
                 <CartesianGrid
                   strokeDasharray="3 3"
                   vertical={false}
-                  stroke="hsl(var(--border))"
+                  stroke="var(--border)"
                 />
 
                 <XAxis
@@ -116,7 +116,7 @@ export function AnalyticsChart({ data }: { data: DailyViewPoint[] }) {
                   tickLine={false}
                   axisLine={false}
                   tickMargin={10}
-                  tick={{ fill: "hsl(var(--muted-foreground))", fontSize: 12 }}
+                  tick={{ fill: "var(--muted-foreground)", fontSize: 12 }}
                 />
                 <YAxis
                   width={44}
@@ -124,14 +124,14 @@ export function AnalyticsChart({ data }: { data: DailyViewPoint[] }) {
                   axisLine={false}
                   tickMargin={4}
                   allowDecimals={false}
-                  tick={{ fill: "hsl(var(--muted-foreground))", fontSize: 12 }}
+                  tick={{ fill: "var(--muted-foreground)", fontSize: 12 }}
                   tickFormatter={(value: number) => compactFormatter.format(value)}
                 />
 
                 <Tooltip
                   content={<ChartTooltip />}
                   cursor={{
-                    stroke: "hsl(var(--muted-foreground))",
+                    stroke: "var(--muted-foreground)",
                     strokeOpacity: 0.25,
                     strokeDasharray: "3 3",
                   }}
@@ -140,11 +140,11 @@ export function AnalyticsChart({ data }: { data: DailyViewPoint[] }) {
                 <Area
                   type="monotone"
                   dataKey="views"
-                  stroke="hsl(var(--primary))"
+                  stroke="var(--primary)"
                   strokeWidth={2}
                   fill="url(#dailyViewsGradient)"
                   dot={false}
-                  activeDot={{ r: 4, strokeWidth: 2, stroke: "hsl(var(--background))" }}
+                  activeDot={{ r: 4, strokeWidth: 2, stroke: "var(--background)" }}
                   isAnimationActive={!prefersReducedMotion}
                   animationDuration={800}
                 />

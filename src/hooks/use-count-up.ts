@@ -20,19 +20,15 @@ export function useCountUp(target: number, duration = 900): number {
       isFirstRunRef.current && !reducedMotion ? 0 : displayedRef.current;
     isFirstRunRef.current = false;
 
-    if (from === target) return;
-
-    if (reducedMotion) {
-      displayedRef.current = target;
-      setValue(target);
-      return;
-    }
+    if (from === target && !reducedMotion) return;
 
     let frame = 0;
     const start = performance.now();
 
     const tick = (now: number) => {
-      const progress = Math.min((now - start) / duration, 1);
+      const progress = reducedMotion || duration <= 0
+        ? 1
+        : Math.min((now - start) / duration, 1);
       const next = from + (target - from) * easeOutCubic(progress);
       displayedRef.current = next;
       setValue(next);
@@ -43,5 +39,5 @@ export function useCountUp(target: number, duration = 900): number {
     return () => cancelAnimationFrame(frame);
   }, [target, duration, reducedMotion]);
 
-  return value;
+  return reducedMotion ? target : value;
 }

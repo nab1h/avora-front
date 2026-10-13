@@ -167,6 +167,10 @@
 }
 
 @media (prefers-reduced-motion: reduce) {
+  [data-slot="skeleton"] {
+    animation: none;
+  }
+
   .shimmer::after {
     animation: none;
   }
