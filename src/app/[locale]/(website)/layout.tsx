@@ -8,6 +8,7 @@ import {
 	getPublicSocialLinks,
 } from "@/lib/services/public-settings";
 import { getPublicSiteScripts } from "@/lib/services/public-site-scripts";
+import AnalyticsTracker from "./_components/analytics-tracker";
 
 type WebsiteLayoutProps = {
 	children: React.ReactNode;
@@ -31,6 +32,7 @@ export default async function WebsiteLayout({
 
 	return (
 		<div className="flex min-h-screen flex-col bg-background">
+			<AnalyticsTracker />
 			<SiteScriptsLoader scripts={siteScripts} placement="head" />
 
 			<Header locale={locale} siteName={siteName} siteLogo={siteLogo} />
