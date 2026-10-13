@@ -726,5 +726,70 @@
       "deleted": "Images deleted successfully.",
       "deleteFailed": "Failed to delete images."
     }
+  },
+  "analytics": {
+    "breadcrumb": "Breadcrumb",
+    "dashboard": "Dashboard",
+    "title": "Analytics Dashboard",
+    "description": "Track your website traffic and visitor activity",
+    "updated": "Updated {time}",
+    "periods": {
+      "today": "Today",
+      "7d": "7 Days",
+      "30d": "30 Days"
+    },
+    "periodFilteringUnavailable": "Period filtering needs support from the API first.",
+    "refresh": "Refresh",
+    "refreshing": "Refreshing…",
+    "loadFailed": "Failed to load analytics",
+    "loadFailedDescription": "Check your API URL, authentication and permissions, then try again.",
+    "tryAgain": "Try again",
+    "empty": {
+      "title": "No analytics available yet",
+      "description": "Statistics will appear once your API returns data."
+    },
+    "statsSection": "Key statistics",
+    "stats": {
+      "totalViews": {
+        "title": "Total Views",
+        "description": "All recorded page views"
+      },
+      "uniqueVisitors": {
+        "title": "Unique Visitors",
+        "description": "Distinct visitors recorded"
+      },
+      "totalSessions": {
+        "title": "Total Sessions",
+        "description": "Recorded visitor sessions"
+      },
+      "todayViews": {
+        "title": "Today's Views",
+        "description": "Page views since midnight"
+      },
+      "todayVisitors": {
+        "title": "Today's Visitors",
+        "description": "Distinct visitors today"
+      }
+    },
+    "chart": {
+      "title": "Daily Page Views",
+      "description": "Website views over the last 7 days.",
+      "tooltipViews": "{count} views",
+      "empty": {
+        "title": "No page views recorded yet",
+        "description": "Data will appear here as soon as tracking starts."
+      }
+    },
+    "topPages": {
+      "title": "Top Pages",
+      "description": "The most visited pages on your website.",
+      "empty": {
+        "title": "No page data available yet",
+        "description": "Visited pages will be ranked here."
+      },
+      "pagePath": "Page path",
+      "views": "Views",
+      "shareOfTopPage": "Share of top page"
+    }
   }
 }
