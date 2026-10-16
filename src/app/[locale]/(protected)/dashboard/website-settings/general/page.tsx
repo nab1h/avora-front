@@ -68,7 +68,7 @@ export default function GeneralSettingsPage() {
       <Card>
         <CardHeader>
           <CardTitle>{t('websiteDetails')}</CardTitle>
-          <CardDescription>{t('apiDescription')}</CardDescription>
+          
         </CardHeader>
 
         <CardContent className="space-y-5">

@@ -3,38 +3,27 @@
 import { Languages } from "lucide-react";
 import { useLocale } from "next-intl";
 import { usePathname, useRouter } from "@/i18n/navigation";
-import { routing } from "@/i18n/routing";
 
+/** Compact language toggle that switches directly to the other supported locale. */
 export function LanguageSwitcher() {
   const locale = useLocale();
   const router = useRouter();
   const pathname = usePathname();
+  const isArabic = locale === "ar";
 
-  const changeLanguage = (newLocale: "ar" | "en") => {
-    if (newLocale === locale) return;
-
-    router.replace(pathname, {
-      locale: newLocale,
-    });
-  };
+  function changeLanguage() {
+    router.replace(pathname, { locale: isArabic ? "en" : "ar" });
+  }
 
   return (
-    <div className="flex items-center gap-1 rounded-lg border bg-background p-1">
-      {routing.locales.map((item) => (
-        <button
-          key={item}
-          type="button"
-          onClick={() => changeLanguage(item)}
-          disabled={item === locale}
-          className={`rounded-md px-3 py-1.5 text-sm transition-colors ${
-            item === locale
-              ? "bg-primary text-primary-foreground"
-              : "text-muted-foreground hover:bg-muted hover:text-foreground"
-          }`}
-        >
-          {item === "ar" ? "عربي" : "EN"}
-        </button>
-      ))}
-    </div>
+    <button
+      type="button"
+      onClick={changeLanguage}
+      aria-label={isArabic ? "تغيير اللغة إلى الإنجليزية" : "Switch language to Arabic"}
+      title={isArabic ? "English" : "العربية"}
+      className="inline-flex size-9 items-center justify-center rounded-md text-muted-foreground transition-colors hover:bg-muted hover:text-foreground focus-visible:ring-2 focus-visible:ring-ring"
+    >
+      <Languages className="size-[18px]" aria-hidden="true" />
+    </button>
   );
 }

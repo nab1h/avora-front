@@ -13,15 +13,15 @@ const layouts = [
   "md:col-span-8 md:col-start-3 aspect-[16/9]",
 ];
 
-export function CategoryShowcase({ categories }: { categories: Category[] }) {
+export function CategoryShowcase({ categories ,categoryShowcaseTitleValue, categoryShowcaseDescription }: { categories: Category[]; categoryShowcaseTitleValue?: string; categoryShowcaseDescription?: string }) {
   return (
     <section id="categories" className="mx-auto max-w-7xl px-4 py-24 sm:px-6 lg:px-8">
       <Reveal>
         <SectionHeading
           index="01"
           eyebrow="Collections"
-          title="Three disciplines, one standard"
-          description="Placeholder copy — summarize the three real product families here."
+          title={categoryShowcaseTitleValue ?? "Collections"}
+          description={categoryShowcaseDescription}
         />
       </Reveal>
 

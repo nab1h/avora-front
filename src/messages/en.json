@@ -40,8 +40,12 @@
     "page_home": "Home",
     "page_about": "About",
     "page_contact": "Contact",
+    "page_categories": "Categories",
+    "page_products": "Products",
     "page_services": "Services",
-    "page_gallery": "Gallery"
+    "page_gallery": "Gallery",
+    "page_editorialbanner": "Editorial banner",
+    "page_editorial_banner": "Editorial banner"
   },
   "websiteSettings": {
     "branding": {
@@ -126,6 +130,8 @@
   },
   "seo": {
     "pageNames": {
+      "editorial_banner": "Editorial banner",
+      "editorialbanner": "Editorial banner",
       "home": "Home",
       "about": "About",
       "contact": "Contact",
@@ -185,6 +191,8 @@
   },
   "contents": {
     "pageNames": {
+      "editorial_banner": "Editorial banner",
+      "editorialbanner": "Editorial banner",
       "home": "Home",
       "about": "About",
       "contact": "Contact",

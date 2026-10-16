@@ -3,7 +3,6 @@ import Link from "next/link";
 
 import { Button } from "@/components/ui/button";
 import { getCategories } from "@/lib/catalog/data";
-import { siteConfig } from "@/lib/site/config";
 import { siteImages } from "@/lib/site/images";
 
 const enter = (delay: number) => ({
@@ -12,7 +11,7 @@ const enter = (delay: number) => ({
   style: { animationDelay: `${delay}ms` },
 });
 
-export function Hero() {
+export function Hero({title, subtitle,proButton,cateButton}: {title?: string, subtitle?: string, proButton?: string, cateButton?: string}) {
   const categories = getCategories();
 
   return (
@@ -34,16 +33,16 @@ export function Hero() {
           className="flex items-center gap-3 text-[11px] font-medium uppercase tracking-[0.28em] text-white/60"
         >
           <span aria-hidden="true" className="block size-2 bg-primary" />
-          {siteConfig.tagline}
+
         </p>
 
         <h1
           {...enter(120)}
           className="mt-6 max-w-4xl text-5xl font-semibold leading-[1.04] tracking-tight sm:text-6xl lg:text-7xl"
         >
-          Light that shapes
+          {title ?? "Designing and building"}
           <span className="block">
-            every space<span className="text-primary">.</span>
+            {title ?? "Designing and building"}<span className="text-primary">.</span>
           </span>
         </h1>
 
@@ -51,19 +50,19 @@ export function Hero() {
           {...enter(240)}
           className="mt-6 max-w-xl text-sm leading-relaxed text-white/70 sm:text-base"
         >
-          {siteConfig.description}
+          {subtitle ?? "We are a team of designers and developers that create beautiful, functional, and user-friendly websites."}
         </p>
 
         <div {...enter(360)} className="mt-9 flex flex-wrap items-center gap-3">
           <Button size="lg" className="bg-primary text-primary-foreground hover:bg-primary/90">
-            <Link href="/products">Explore Products</Link>
+            <Link href="/products">{proButton ?? "Explore Products"}</Link>
           </Button>
           <Button
             size="lg"
             variant="outline"
             className="border-white/30 bg-transparent text-white hover:bg-white/10 hover:text-white"
           >
-            <Link href="/#categories">Discover Our Collection</Link>
+            <Link href="/#categories">{cateButton ?? "Discover Our Collection"}</Link>
           </Button>
         </div>
 

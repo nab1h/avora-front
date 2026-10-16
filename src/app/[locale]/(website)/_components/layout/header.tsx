@@ -31,11 +31,19 @@ export default function Header({
 	const links = [
 		{
 			label: isArabic ? "الرئيسية" : "Home",
-			href: `/${locale}/home`,
+			href: `/${locale}/`,
+		},
+		{
+			label: isArabic ? "التصنيفات" : "Categories",
+			href: `/${locale}/categories`,
 		},
 		{
 			label: isArabic ? "خدماتنا" : "Services",
 			href: `/${locale}/services`,
+		},
+		{
+			label: isArabic ? "المنتجات" : "products",
+			href: `/${locale}/products`,
 		},
 		{
 			label: isArabic ? "من نحن" : "About us",
@@ -58,13 +66,11 @@ export default function Header({
 						<img
 							src={siteLogo}
 							alt={siteName}
-							className="size-8 object-contain"
+							className="size-17 object-contain"
 						/>
 					) : (
 						<Logo className="size-8" />
 					)}
-
-					<span>{siteName}</span>
 				</Link>
 
 				<nav className="hidden items-center gap-1 text-sm md:flex">
@@ -82,20 +88,6 @@ export default function Header({
 				<div className="hidden items-center gap-2 md:flex">
 					<LanguageSwitcher />
 					<ModeToggle />
-
-					<Link
-						href={`/${locale}/auth/login`}
-						className="rounded-md px-3 py-2 text-sm text-muted-foreground transition-colors hover:bg-muted hover:text-foreground"
-					>
-						{isArabic ? "دخول" : "Login"}
-					</Link>
-
-					<Link
-						href={`/${locale}/auth/register`}
-						className="rounded-md bg-primary px-3 py-2 text-sm text-primary-foreground transition-opacity hover:opacity-90"
-					>
-						{isArabic ? "إنشاء حساب" : "Get started"}
-					</Link>
 				</div>
 
 				<div className="flex items-center gap-1 md:hidden">
@@ -156,25 +148,8 @@ export default function Header({
 									</span>
 
 									<LanguageSwitcher />
+									<ModeToggle />
 								</div>
-
-								<Link
-									href={`/${locale}/auth/login`}
-									className="rounded-md border px-3 py-2 text-center text-sm transition-colors hover:bg-muted"
-								>
-									{isArabic
-										? "تسجيل الدخول"
-										: "Login"}
-								</Link>
-
-								<Link
-									href={`/${locale}/auth/register`}
-									className="rounded-md bg-primary px-3 py-2 text-center text-sm text-primary-foreground transition-opacity hover:opacity-90"
-								>
-									{isArabic
-										? "إنشاء حساب"
-										: "Get started"}
-								</Link>
 							</div>
 						</SheetContent>
 					</Sheet>

@@ -1,6 +1,6 @@
 // app/products/loading.tsx
 import { Skeleton } from "@/components/ui/skeleton";
-import { ProductCardSkeletonGrid } from "@/components/catalog/product-card";
+import { ProductCardSkeletonGrid } from "@/components/site/catalog/product-card";
 
 export default function Loading() {
   return (

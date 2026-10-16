@@ -5,24 +5,30 @@ import { ArrowRight } from "lucide-react";
 
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { SectionHeading } from "@/components/shared/section-heading";
-import { ProductCard } from "@/components/catalog/product-card";
+import { ProductCard } from "@/components/site/catalog/product-card";
 import type { Category, Product } from "@/lib/catalog/types";
 
 export function FeaturedProducts({
   products,
   categories,
+  title = "Selected products",
+  description = "A cross-section of the catalog — fixtures, outdoor solutions, and electrical essentials.",
+  eyebrow = "Featured",
 }: {
   products: Product[];
   categories: Category[];
+  title?: string;
+  description?: string;
+  eyebrow?: string;
 }) {
   return (
     <section className="border-t bg-muted/40">
       <div className="mx-auto max-w-7xl px-4 py-24 sm:px-6 lg:px-8">
         <SectionHeading
           index="02"
-          eyebrow="Featured"
-          title="Selected products"
-          description="A cross-section of the catalog — fixtures, outdoor solutions, and electrical essentials."
+          eyebrow={eyebrow}
+          title={title}
+          description={description}
           action={
             <Link
               href="/products"
@@ -38,7 +44,7 @@ export function FeaturedProducts({
         />
 
         <Tabs defaultValue="all">
-          <TabsList className="h-auto flex-wrap">
+          <TabsList className="mx-auto h-auto max-w-full flex-wrap group-data-horizontal/tabs:h-auto">
             <TabsTrigger value="all">All</TabsTrigger>
             {categories.map((category) => (
               <TabsTrigger key={category.slug} value={category.slug}>

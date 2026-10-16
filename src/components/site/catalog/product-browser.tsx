@@ -12,7 +12,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { ProductCard } from "@/components/catalog/product-card";
+import { ProductCard } from "@/components/site/catalog/product-card";
 import type { Category, Product } from "@/lib/catalog/types";
 
 const PAGE_SIZE = 8;

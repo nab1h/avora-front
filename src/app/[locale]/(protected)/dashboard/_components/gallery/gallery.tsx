@@ -16,12 +16,12 @@ import { toast } from "sonner";
 import { Skeleton } from "@/components/ui/skeleton";
 import { useTranslations } from "next-intl";
 
-const storageUrl = (
+export const storageUrl = (
     process.env.NEXT_PUBLIC_STORAGE_URL ||
     "http://localhost:8000/storage"
 ).replace(/\/+$/, "");
 
-function getGalleryImageUrl(image: string) {
+export function getGalleryImageUrl(image: string) {
     if (/^https?:\/\//i.test(image)) {
         return image;
     }

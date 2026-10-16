@@ -39,6 +39,11 @@
   --color-popover: var(--popover);
   --color-card-foreground: var(--card-foreground);
   --color-card: var(--card);
+  --color-brand-yellow: var(--brand-yellow);
+  --color-brand-amber: var(--brand-amber);
+  --color-brand-charcoal: var(--brand-charcoal);
+  --color-brand-white: var(--brand-white);
+  --color-brand-ink: var(--brand-ink);
   --radius-sm: calc(var(--radius) * 0.6);
   --radius-md: calc(var(--radius) * 0.8);
   --radius-lg: var(--radius);
@@ -49,59 +54,116 @@
 }
 
 :root {
-  --background: 45 29% 97%;        /* warm white  #FAF9F6 */
-  --foreground: 45 18% 10%;        /* warm charcoal */
-  --card: 0 0% 100%;
-  --card-foreground: 45 18% 10%;
-  --popover: 0 0% 100%;
-  --popover-foreground: 45 18% 10%;
-  --primary: 48 100% 48%;          /* brand yellow #F5C400 */
-  --primary-foreground: 45 18% 10%;
-  --secondary: 45 16% 92%;
-  --secondary-foreground: 45 18% 10%;
-  --muted: 45 16% 92%;
-  --muted-foreground: 45 6% 42%;
-  --accent: 45 16% 92%;
-  --accent-foreground: 45 18% 10%;
-  --destructive: 0 72% 45%;
-  --border: 45 12% 87%;
-  --input: 45 12% 84%;
-  --ring: 48 100% 48%;
-  --radius: 0.5rem;
+  /* CORE LIGHTING reference: charcoal, white, and yellow-to-amber accents. */
+  --brand-yellow: #ffcc00;
+  --brand-amber: #f5ad19;
+  --brand-charcoal: #333333;
+  --brand-white: #ffffff;
+  --brand-ink: #222222;
+  /* Channel format retained for existing hsl(var(--dark)) consumers. */
+  --dark: 0 0% 20%;
 
-  /* Theme-independent dark surface for hero / editorial sections */
-  --dark: 45 15% 7%;               /* #131109-ish */
+  --background: #fafafa;
+  --foreground: var(--brand-charcoal);
+  --card: var(--brand-white);
+  --card-foreground: var(--brand-charcoal);
+  --popover: var(--brand-white);
+  --popover-foreground: var(--brand-charcoal);
+  --primary: var(--brand-yellow);
+  --primary-foreground: var(--brand-ink);
+  --secondary: #eeeeee;
+  --secondary-foreground: var(--brand-charcoal);
+  --muted: #f0f0f0;
+  --muted-foreground: #626262;
+  --accent: #fff3c4;
+  --accent-foreground: var(--brand-ink);
+  --destructive: #ba2929;
+  --border: #dddddd;
+  --input: #cccccc;
+  --ring: #8a6500;
+  --chart-1: var(--brand-yellow);
+  --chart-2: var(--brand-amber);
+  --chart-3: #a87500;
+  --chart-4: #626262;
+  --chart-5: var(--brand-charcoal);
+  --radius: 0.625rem;
+  --sidebar: #f4f4f4;
+  --sidebar-foreground: var(--foreground);
+  --sidebar-primary: var(--primary);
+  --sidebar-primary-foreground: var(--primary-foreground);
+  --sidebar-accent: var(--accent);
+  --sidebar-accent-foreground: var(--accent-foreground);
+  --sidebar-border: var(--border);
+  --sidebar-ring: var(--ring);
 }
 
 .dark {
-  --background: 45 11% 7%;
-  --foreground: 45 25% 95%;
-  --card: 45 9% 10%;
-  --card-foreground: 45 25% 95%;
-  --popover: 45 9% 10%;
-  --popover-foreground: 45 25% 95%;
-  --primary: 48 100% 50%;
-  --primary-foreground: 45 18% 10%;
-  --secondary: 45 7% 15%;
-  --secondary-foreground: 45 25% 95%;
-  --muted: 45 7% 15%;
-  --muted-foreground: 45 8% 62%;
-  --accent: 45 7% 15%;
-  --accent-foreground: 45 25% 95%;
-  --border: 45 7% 19%;
-  --input: 45 7% 22%;
-  --ring: 48 100% 50%;
+  --background: var(--brand-charcoal);
+  --foreground: #fafafa;
+  --card: #3b3b3b;
+  --card-foreground: #fafafa;
+  --popover: #3b3b3b;
+  --popover-foreground: #fafafa;
+  --primary: var(--brand-yellow);
+  --primary-foreground: var(--brand-ink);
+  --secondary: #444444;
+  --secondary-foreground: #fafafa;
+  --muted: #3d3d3d;
+  --muted-foreground: #c0c0c0;
+  --accent: #4a422b;
+  --accent-foreground: var(--brand-yellow);
+  --destructive: #ff8787;
+  --border: #535353;
+  --input: #707070;
+  --ring: var(--brand-yellow);
+  --chart-3: #ffe680;
+  --chart-4: #b3b3b3;
+  --chart-5: #ededed;
+  --sidebar: #2c2c2c;
 }
-
 @layer base {
   * {
     @apply border-border outline-ring/50;
   }
   body {
     @apply bg-background text-foreground;
+    font-feature-settings: "ss01" 1, "cv11" 1;
   }
   html {
     @apply font-sans;
+  }
+
+  ::selection {
+    background: var(--primary);
+    color: var(--primary-foreground);
+  }
+
+  :focus-visible {
+    outline: 2px solid var(--ring);
+    outline-offset: 3px;
+  }
+}
+
+@layer components {
+  /* Shared lighting-brand surfaces for editorial sections and product media. */
+  .lighting-surface {
+    background:
+      radial-gradient(circle at 80% 0%, color-mix(in srgb, var(--primary) 12%, transparent), transparent 34%),
+      var(--card);
+  }
+
+  .lighting-dark-surface {
+    background-color: hsl(var(--dark));
+    color: var(--brand-white);
+  }
+
+  .lighting-eyebrow {
+    color: var(--primary);
+    font-size: 0.7rem;
+    font-weight: 700;
+    letter-spacing: 0.22em;
+    line-height: 1.4;
+    text-transform: uppercase;
   }
 }
 

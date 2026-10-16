@@ -51,6 +51,14 @@ export type NavItem = {
   items: MenuItem[]
 }
 
+export const siteNav: NavItem[] = [
+  {
+    items: [
+      { icon: 'House', label: 'Home', href: '/' },
+    ],
+  },
+]
+
 export const getNavItems = (pages: string[]): NavItem[] => [
   {
     groupLabel: 'Content Management',
@@ -62,7 +70,7 @@ export const getNavItems = (pages: string[]): NavItem[] => [
         translationKey: 'dashboard',
         href: '/dashboard',
         target: '_blank',
-        permission: 'manage-roles',
+        permission: 'manage-settings',
       },
       {
         icon: 'BriefcaseBusiness',
@@ -70,7 +78,7 @@ export const getNavItems = (pages: string[]): NavItem[] => [
         translationKey: 'services',
         href: '/dashboard/services',
         target: '_blank',
-        permission: 'manage-roles',
+        permission: 'manage-settings',
       },
       {
         icon: 'Images',
@@ -78,7 +86,7 @@ export const getNavItems = (pages: string[]): NavItem[] => [
         translationKey: 'gallery',
         href: '/dashboard/gallery',
         target: '_blank',
-        permission: 'manage-roles',
+        permission: 'manage-settings',
       },
       {
         icon: 'Share2',
@@ -86,7 +94,7 @@ export const getNavItems = (pages: string[]): NavItem[] => [
         translationKey: 'social',
         href: '/dashboard/social-link',
         target: '_blank',
-        permission: 'manage-roles',
+        permission: 'manage-settings',
       },
     ],
   },
@@ -99,19 +107,19 @@ export const getNavItems = (pages: string[]): NavItem[] => [
         label: 'Users',
         translationKey: 'users',
         childItems: [
-          { label: 'List', translationKey: 'list', href: '/dashboard/users', permission: 'manage-roles' },
-          { label: 'View', translationKey: 'view', href: '/apps/users/view', permission: 'manage-roles' }
+          { label: 'List', translationKey: 'list', href: '/dashboard/users', permission: 'manage-settings' },
+          { label: 'View', translationKey: 'view', href: '/apps/users/view', permission: 'manage-settings' }
         ],
-        permission: 'manage-roles',
+        permission: 'manage-settings',
       },
       {
         icon: 'ShieldCheck',
         label: 'Roles & Permissions',
         translationKey: 'rolesPermissions',
-        permission: 'manage-roles',
+        permission: 'manage-settings',
         childItems: [
-          { label: 'Roles', translationKey: 'roles', href: '/dashboard/roles', permission: 'manage-roles' },
-          { label: 'Permissions', translationKey: 'permissions', href: '/dashboard/permissions', permission: 'manage-roles' },
+          { label: 'Roles', translationKey: 'roles', href: '/dashboard/roles', permission: 'manage-settings' },
+          { label: 'Permissions', translationKey: 'permissions', href: '/dashboard/permissions', permission: 'manage-settings' },
         ],
       }
     ]
@@ -126,13 +134,13 @@ export const getNavItems = (pages: string[]): NavItem[] => [
         translationKey: 'websiteSettings',
         childItems: [
 
-          { label: 'General', translationKey: 'general', href: '/dashboard/website-settings/general', permission: 'manage-roles' },
-          { label: 'Branding', translationKey: 'branding', href: '/dashboard/website-settings/branding', permission: 'manage-roles' },
-          { label: 'Contact Information', translationKey: 'contactInformation', href: '/dashboard/website-settings/contact', permission: 'manage-roles' },
-          { label: 'Maps', translationKey: 'maps', href: '/dashboard/website-settings/maps', permission: 'manage-roles' },
+          { label: 'General', translationKey: 'general', href: '/dashboard/website-settings/general', permission: 'manage-settings' },
+          { label: 'Branding', translationKey: 'branding', href: '/dashboard/website-settings/branding', permission: 'manage-settings' },
+          { label: 'Contact Information', translationKey: 'contactInformation', href: '/dashboard/website-settings/contact', permission: 'manage-settings' },
+          { label: 'Maps', translationKey: 'maps', href: '/dashboard/website-settings/maps', permission: 'manage-settings' },
           { label: 'Site Scripts', translationKey: 'siteScripts', href: '/dashboard/site-scripts', permission: 'manage-settings' },
         ],
-        permission: 'manage-roles',
+        permission: 'manage-settings',
       },
     ]
   },
@@ -176,14 +184,14 @@ export const getNavItems = (pages: string[]): NavItem[] => [
         label: 'Profile',
         translationKey: 'profile',
         href: '/dashboard/profile',
-        permission: 'manage-roles',
+        permission: 'manage-settings',
       },
       {
         icon: 'KeyRound',
         label: 'Change Password',
         translationKey: 'password',
         href: '/dashboard/settings',
-        permission: 'manage-roles',
+        permission: 'manage-settings',
       },
     ],
   },

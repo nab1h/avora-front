@@ -16,6 +16,7 @@
     "invitations": "الدعوات",
     "dashboard": "لوحة التحكم",
     "layouts": "التخطيطات",
+    "products": "المنتجات",
     "orders": "الطلبات",
     "services": "الخدمات",
     "siteScripts": "أكواد الموقع",
@@ -41,8 +42,15 @@
     "page_home": "الرئيسية",
     "page_about": "من نحن",
     "page_contact": "اتصل بنا",
+    "page_categories": "التصنيفات",
+    "page_products": "المنتجات",
     "page_services": "الخدمات",
-    "page_gallery": "المعرض"
+    "page_why": "لماذا نحن",
+    "page_gallery": "المعرض",
+    "page_editorial_banner": "اللافتة التحريرية",
+    "page_cta": "دعوة لاتخاذ إجراء"
+    
+
   },
   "websiteSettings": {
     "branding": {
@@ -130,11 +138,15 @@
   },
   "seo": {
     "pageNames": {
+      "editorial_banner": "اللافتة التحريرية",
+      "editorialbanner": "اللافتة التحريرية",
       "home": "الرئيسية",
       "about": "من نحن",
       "contact": "تواصل معنا",
+      "categories": "التصنيفات",
       "services": "الخدمات",
-      "gallery": "المعرض"
+      "gallery": "المعرض",
+      "products": "المنتجات"
     },
     "searchAppearance": "مظهر نتائج البحث",
     "arabicLocale": "العربية",
@@ -189,11 +201,15 @@
   },
   "contents": {
     "pageNames": {
+      "editorial_banner": "اللافتة التحريرية",
+      "editorialbanner": "اللافتة التحريرية",
       "home": "الرئيسية",
       "about": "من نحن",
       "contact": "تواصل معنا",
       "services": "الخدمات",
-      "gallery": "المعرض"
+      "categories": "التصنيفات",
+      "gallery": "المعرض",
+      "products": "المنتجات"
     },
     "loading": "جارٍ تحميل المحتوى...",
     "items": "عناصر",
@@ -306,16 +322,18 @@
     "websiteSettings": "إعدادات الموقع",
     "seo": "تحسين محركات البحث",
     "contact": "معلومات التواصل",
+    "contents": "المحتوى",
     "mapsSettings": "إعدادات الخرائط",
     "settings": "الإعدادات",
     "users": "المستخدمون",
     "roles": "الأدوار",
+    "products": "المنتجات",
     "permissions": "الصلاحيات",
     "login": "تسجيل الدخول",
     "register": "إنشاء حساب",
     "forgot-password": "نسيت كلمة المرور",
     "reset-password": "إعادة تعيين كلمة المرور",
-    "password":"تغيير كلمة المرور"
+    "password": "تغيير كلمة المرور"
   },
   "users": {
     "Users": "المستخدمون",

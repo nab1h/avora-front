@@ -14,37 +14,56 @@ import {
 } from "@/components/ui/breadcrumb";
 import { buttonVariants } from "@/components/ui/button";
 import { SectionHeading } from "@/components/shared/section-heading";
-import { ProductCard } from "@/components/catalog/product-card";
-import { ProductGallery } from "@/components/catalog/product-gallery";
+import { ProductCard } from "@/components/site/catalog/product-card";
+import { ProductGallery } from "@/components/site/catalog/product-gallery";
 import {
   formatPrice,
-  getAllProducts,
   getCategoryName,
   getProductBySlug,
   getRelatedProducts,
   getCategories,
 } from "@/lib/catalog/data";
-import { siteConfig } from "@/lib/site/config";
+import { getPublicSettings } from "@/lib/services/public-settings";
+import { getPublicContents } from "@/lib/services/public-contents";
+
+type ProductPageProps = {
+  params: Promise<{ slug: string; locale: string }>;
+};
 
 export async function generateMetadata({
   params,
-}: {
-  params: Promise<{ slug: string }>;
-}): Promise<Metadata> {
+}: ProductPageProps): Promise<Metadata> {
   const { slug } = await params;
   const product = getProductBySlug(slug);
-  return { title: product ? `${product.name} — ${siteConfig.name}` : "Product not found" };
+  return { title: product ? product.name : "Product not found" };
 }
 
 export default async function ProductPage({
   params,
-}: {
-  params: Promise<{ slug: string }>; // Next ≤14: plain object, remove `await`
-}) {
-  const { slug } = await params;
+}: ProductPageProps) {
+  const { slug, locale } = await params;
   const product = getProductBySlug(slug);
   if (!product) notFound();
 
+  const [siteConfig, { data: contents }] = await Promise.all([
+    getPublicSettings(),
+    getPublicContents("products"),
+  ]);
+  const isArabic = locale === "ar";
+  const getContent = (section: string, key: string, fallback: string) => {
+    const getValue = (field: string) =>
+      contents?.find((item) => item.section === section && item.key === field)?.value;
+    return (isArabic ? getValue(`${key}-ar`) ?? getValue(key) : getValue(key)) ?? fallback;
+  };
+  const homeLabel = getContent("breadcrumb", "home", isArabic ? "الرئيسية" : "Home");
+  const productsLabel = getContent("breadcrumb", "products", isArabic ? "المنتجات" : "Products");
+  const inquiryLabel = getContent("product-details", "inquiry-button", isArabic ? "استفسر عن هذا المنتج" : "Inquire About This Product");
+  const inquirySubject = getContent("product-details", "inquiry-subject", isArabic ? "استفسار عن المنتج" : "Product inquiry");
+  const pricingNote = getContent("product-details", "pricing-note", isArabic ? "الأسعار والتوفر حسب الكتالوج — تواصل معنا للكميات الخاصة بالمشاريع." : "Pricing and availability shown from the catalog — contact us for project quantities.");
+  const relatedEyebrow = getContent("related-products", "eyebrow", isArabic ? "منتجات ذات صلة" : "Related");
+  const relatedTitle = getContent("related-products", "title", isArabic ? "قد تحتاج أيضًا" : "You may also need");
+  const relatedDescription = getContent("related-products", "desc", "");
+  const contactEmail = siteConfig?.data.contact?.contact_email;
   const categories = getCategories();
   const related = getRelatedProducts(product);
 
@@ -53,14 +72,14 @@ export default async function ProductPage({
       <Breadcrumb>
         <BreadcrumbList>
           <BreadcrumbItem>
-            <BreadcrumbLink render={<Link href="/" />}>
-                Home
+            <BreadcrumbLink render={<Link href={`/${locale}`} />}>
+                {homeLabel}
             </BreadcrumbLink>
           </BreadcrumbItem>
           <BreadcrumbSeparator />
           <BreadcrumbItem>
-            <BreadcrumbLink render={<Link href="/products" />}>
-                Products
+            <BreadcrumbLink render={<Link href={`/${locale}/products`} />}>
+                {productsLabel}
             </BreadcrumbLink>
           </BreadcrumbItem>
           <BreadcrumbSeparator />
@@ -92,7 +111,9 @@ export default async function ProductPage({
               )}
               {product.inStock !== undefined && (
                 <Badge variant={product.inStock ? "secondary" : "outline"}>
-                  {product.inStock ? "In stock" : "Out of stock"}
+                  {product.inStock
+                    ? getContent("product-details", "in-stock", isArabic ? "متوفر" : "In stock")
+                    : getContent("product-details", "out-of-stock", isArabic ? "غير متوفر" : "Out of stock")}
                 </Badge>
               )}
             </div>
@@ -117,30 +138,29 @@ export default async function ProductPage({
 
           {product.sku && (
             <p className="mt-5 text-xs tracking-wide text-muted-foreground">
-              SKU · {product.sku}
+              {getContent("product-details", "sku-label", isArabic ? "رمز المنتج" : "SKU")} · {product.sku}
             </p>
           )}
 
           <div className="mt-9 flex flex-wrap gap-3">
             <a
-              href={`mailto:${siteConfig.contact.email}?subject=${encodeURIComponent(
-                `Product inquiry — ${product.name}`
-              )}`}
+              href={contactEmail
+                ? `mailto:${contactEmail}?subject=${encodeURIComponent(`${inquirySubject} — ${product.name}`)}`
+                : `/${locale}/contact`}
               className={buttonVariants({ size: "lg" })}
             >
-              Inquire About This Product
+              {inquiryLabel}
             </a>
           </div>
           <p className="mt-3 text-xs text-muted-foreground">
-            Pricing and availability shown from the catalog — contact us for
-            project quantities.
+            {pricingNote}
           </p>
         </div>
       </div>
 
       {related.length > 0 && (
         <section className="mt-28">
-          <SectionHeading eyebrow="Related" title="You may also need" />
+          <SectionHeading eyebrow={relatedEyebrow} title={relatedTitle} description={relatedDescription || undefined} />
           <div className="grid grid-cols-2 gap-x-4 gap-y-10 lg:grid-cols-4">
             {related.map((item) => (
               <ProductCard key={item.id} product={item} categories={categories} />
