@@ -1,4 +1,11 @@
 {
+  "heroMotion": {
+    "eyebrow": "The art of lighting",
+    "phrase1": "Lighting That Inspires.",
+    "phrase2": "Illuminate Your World.",
+    "phrase3": "Designed to Shine.",
+    "phrase4": "The Art of Lighting."
+  },
   "common": {
     "dashboard": "Dashboard",
     "settings": "Settings",

@@ -2,6 +2,7 @@
 import Link from "next/link";
 import { buttonVariants } from "@/components/ui/button";
 import { getPublicContents } from "@/lib/services/public-contents";
+import { Reveal } from "@/components/shared/reveal";
 
   type PageProps = {
     params: Promise<{ locale: "ar" | "en" }>;
@@ -28,7 +29,7 @@ import { getPublicContents } from "@/lib/services/public-contents";
   
   return (
     <section className="border-t border-white/10 bg-[hsl(var(--dark))] text-white">
-      <div className="mx-auto flex max-w-7xl flex-col gap-8 px-4 py-20 sm:px-6 md:flex-row md:items-center md:justify-between lg:px-8">
+      <Reveal variant="fade-up" className="mx-auto flex max-w-7xl flex-col gap-8 px-4 py-20 sm:px-6 md:flex-row md:items-center md:justify-between lg:px-8">
         <div>
           <h2 className="text-3xl font-semibold tracking-tight sm:text-4xl">
             {title} {locale == "ar" ? <span className="text-primary">؟</span> : <span className="text-primary">?</span>}
@@ -43,7 +44,7 @@ import { getPublicContents } from "@/lib/services/public-contents";
         >
           {button}
         </Link>
-      </div>
+      </Reveal>
     </section>
   );
 }

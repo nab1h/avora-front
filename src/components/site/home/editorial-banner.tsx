@@ -31,15 +31,17 @@ export async function EditorialBanner({params}:PageProps) {
         const buttonSc = locale == "ar" ? getContent("button", "button-sc-ar")?.value : getContent("button", "button-sc")?.value;
     return (
         <section className="relative">
-            <div className="relative h-[70svh] min-h-[460px] w-full overflow-hidden">
+            <div className="editorial-motion relative h-[70svh] min-h-[460px] w-full overflow-hidden">
                 {imageUrl && (
+                    <Reveal image variant="fade-in" duration={1100} className="absolute inset-0">
                     <Image
                         src={imageUrl}
                         alt=""
                         fill
                         sizes="100vw"
-                        className="object-cover"
+                        className="editorial-parallax object-cover"
                     />
+                    </Reveal>
                 )}
                 <div className="absolute inset-0 bg-[hsl(var(--dark))]/70" />
                 <div className="absolute inset-x-0 bottom-0 h-40 bg-gradient-to-t from-[hsl(var(--dark))] to-transparent" />

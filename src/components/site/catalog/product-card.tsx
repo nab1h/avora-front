@@ -6,28 +6,32 @@ import { Skeleton } from "@/components/ui/skeleton";
 import { formatPrice, getCategoryName } from "@/lib/catalog/data";
 import type { Category, Product } from "@/lib/catalog/types";
 import { cn } from "@/lib/utils";
+import { Reveal } from "@/components/shared/reveal";
 
 export function ProductCard({
   product,
   categories,
   className,
+  motionIndex = 0,
 }: {
   product: Product;
   categories: Category[];
   className?: string;
+  motionIndex?: number;
 }) {
   return (
+    <Reveal variant="fade-up" duration={650} delay={(motionIndex % 4) * 65} className="min-w-0">
     <Link
       href={`/products/${product.slug}`}
-      className={cn("group block focus-visible:outline-none", className)}
+      className={cn("product-motion group block focus-visible:outline-none", className)}
     >
-      <div className="relative aspect-[4/5] overflow-hidden rounded-md border bg-muted">
+      <div className="product-media relative aspect-[4/5] overflow-hidden rounded-md border bg-muted">
         <Image
           src={product.images[0]}
           alt={product.name}
           fill
           sizes="(min-width: 1280px) 25vw, (min-width: 1024px) 33vw, (min-width: 640px) 50vw, 50vw"
-          className="object-cover transition-transform duration-700 ease-out group-hover:scale-[1.04]"
+          className="product-image object-cover"
         />
         {product.inStock === false && (
           <span className="absolute left-3 top-3 rounded-sm bg-background/90 px-2 py-1 text-[11px] font-medium text-foreground">
@@ -50,11 +54,12 @@ export function ProductCard({
         )}
       </div>
 
-      <p className="mt-2 flex items-center gap-1.5 text-xs text-muted-foreground opacity-0 transition-opacity duration-300 group-hover:opacity-100 group-focus-visible:opacity-100">
+      <p className="product-details mt-2 flex items-center gap-1.5 text-xs text-muted-foreground">
         View details
-        <ArrowUpRight className="size-3.5" aria-hidden="true" />
+        <ArrowUpRight className="product-arrow size-3.5 rtl:-rotate-90" aria-hidden="true" />
       </p>
     </Link>
+    </Reveal>
   );
 }
 

@@ -31,7 +31,7 @@ export default async function WebsiteLayout({
 	const siteLogo = getPublicAssetUrl(settings?.data.branding?.site_logo);
 
 	return (
-		<div className="flex min-h-screen flex-col bg-background">
+		<div className="site-motion flex min-h-screen flex-col bg-background">
 			<AnalyticsTracker />
 			<SiteScriptsLoader scripts={siteScripts} placement="head" />
 

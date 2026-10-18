@@ -162,8 +162,8 @@ export default async function ProductPage({
         <section className="mt-28">
           <SectionHeading eyebrow={relatedEyebrow} title={relatedTitle} description={relatedDescription || undefined} />
           <div className="grid grid-cols-2 gap-x-4 gap-y-10 lg:grid-cols-4">
-            {related.map((item) => (
-              <ProductCard key={item.id} product={item} categories={categories} />
+            {related.map((item, index) => (
+              <ProductCard key={item.id} product={item} categories={categories} motionIndex={index} />
             ))}
           </div>
         </section>

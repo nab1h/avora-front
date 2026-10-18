@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import { useEffect, useRef } from "react";
 import { Menu } from "lucide-react";
 
 import Logo from "@/assets/svg/logo";
@@ -27,6 +28,19 @@ export default function Header({
 	siteLogo,
 }: HeaderProps) {
 	const isArabic = locale === "ar";
+	const headerRef = useRef<HTMLElement>(null);
+
+	useEffect(() => {
+		const header = headerRef.current;
+		if (!header) return;
+		const update = () => {
+			const scrolled = String(window.scrollY > 16);
+			if (header.dataset.scrolled !== scrolled) header.dataset.scrolled = scrolled;
+		};
+		update();
+		window.addEventListener("scroll", update, { passive: true });
+		return () => window.removeEventListener("scroll", update);
+	}, []);
 
 	const links = [
 		{
@@ -56,7 +70,7 @@ export default function Header({
 	];
 
 	return (
-		<header className="sticky top-0 z-40 border-b border-border/60 bg-background/90 backdrop-blur-xl">
+		<header ref={headerRef} className="site-header sticky top-0 z-40 border-b border-border/60 bg-background/90 backdrop-blur-xl">
 			<div className="mx-auto flex h-[4.5rem] w-full max-w-7xl items-center justify-between px-5 sm:px-8">
 				<Link
 					href={`/${locale}`}
@@ -78,7 +92,7 @@ export default function Header({
 						<Link
 							key={link.href}
 							href={link.href}
-							className="relative rounded-md px-3 py-2 text-muted-foreground transition-colors after:absolute after:inset-x-3 after:-bottom-1 after:h-px after:origin-left after:scale-x-0 after:bg-primary after:transition-transform hover:text-foreground hover:after:scale-x-100"
+							className="relative rounded-md px-3 py-2 text-muted-foreground transition-colors after:absolute after:inset-x-3 after:-bottom-1 after:h-px after:origin-left after:scale-x-0 after:bg-primary after:transition-transform hover:text-foreground hover:after:scale-x-100 focus-visible:after:scale-x-100 rtl:after:origin-right"
 						>
 							{link.label}
 						</Link>
@@ -110,7 +124,7 @@ export default function Header({
 							<Menu className="size-5" />
 						</SheetTrigger>
 
-						<SheetContent side={isArabic ? "left" : "right"}>
+						<SheetContent className="site-mobile-menu" side={isArabic ? "left" : "right"}>
 							<SheetHeader>
 								<SheetTitle className="flex items-center gap-2">
 									{siteLogo ? (

@@ -5,6 +5,7 @@ import { ArrowRight } from "lucide-react";
 
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { SectionHeading } from "@/components/shared/section-heading";
+import { Reveal } from "@/components/shared/reveal";
 import { ProductCard } from "@/components/site/catalog/product-card";
 import type { Category, Product } from "@/lib/catalog/types";
 
@@ -24,6 +25,7 @@ export function FeaturedProducts({
   return (
     <section className="border-t bg-muted/40">
       <div className="mx-auto max-w-7xl px-4 py-24 sm:px-6 lg:px-8">
+        <Reveal>
         <SectionHeading
           index="02"
           eyebrow={eyebrow}
@@ -42,6 +44,7 @@ export function FeaturedProducts({
             </Link>
           }
         />
+        </Reveal>
 
         <Tabs defaultValue="all">
           <TabsList className="mx-auto h-auto max-w-full flex-wrap group-data-horizontal/tabs:h-auto">
@@ -84,8 +87,8 @@ function Grid({
 }) {
   return (
     <div className="grid grid-cols-2 gap-x-4 gap-y-10 lg:grid-cols-3 xl:grid-cols-4">
-      {products.map((product) => (
-        <ProductCard key={product.id} product={product} categories={categories} />
+      {products.map((product, index) => (
+        <ProductCard key={product.id} product={product} categories={categories} motionIndex={index} />
       ))}
     </div>
   );

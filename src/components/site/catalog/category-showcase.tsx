@@ -27,10 +27,10 @@ export function CategoryShowcase({ categories ,categoryShowcaseTitleValue, categ
 
       <div className="grid grid-cols-1 gap-4 md:grid-cols-12 md:gap-6">
         {categories.map((category, index) => (
-          <Reveal key={category.slug} image className={cn(layouts[index])}>
+          <Reveal key={category.slug} image delay={Math.min(index, 3) * 80} className={cn(layouts[index])}>
             <Link
               href={`/products?category=${category.slug}`}
-              className="group relative block h-full w-full overflow-hidden rounded-md focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
+              className="category-motion group relative block h-full w-full overflow-hidden rounded-md focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
             >
               <Image
                 src={category.image}
@@ -39,7 +39,7 @@ export function CategoryShowcase({ categories ,categoryShowcaseTitleValue, categ
                 sizes="(min-width: 768px) 58vw, 100vw"
                 className="object-cover transition-transform duration-700 ease-out group-hover:scale-105"
               />
-              <div className="absolute inset-0 bg-gradient-to-t from-black/75 via-black/10 to-transparent" />
+              <div className="category-overlay absolute inset-0 bg-gradient-to-t from-black/75 via-black/10 to-transparent" />
               <span className="absolute right-5 top-5 text-xs font-medium tracking-[0.25em] text-white/70">
                 0{index + 1}
               </span>

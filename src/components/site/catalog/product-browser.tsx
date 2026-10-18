@@ -119,11 +119,12 @@ export function ProductBrowser({
 
       {shown.length > 0 ? (
         <div className="mt-6 grid grid-cols-2 gap-x-4 gap-y-10 lg:grid-cols-3 xl:grid-cols-4">
-          {shown.map((product) => (
+          {shown.map((product, index) => (
             <ProductCard
               key={product.id}
               product={product}
               categories={categories}
+              motionIndex={index}
             />
           ))}
         </div>
