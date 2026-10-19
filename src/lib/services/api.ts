@@ -31,6 +31,7 @@ export const api = createApi({
     "SeoPage",
     "SiteScripts",
     "Analytics",
+    "Categories",
   ],
 
   endpoints: (builder) => ({

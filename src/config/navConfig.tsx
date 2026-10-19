@@ -81,6 +81,14 @@ export const getNavItems = (pages: string[]): NavItem[] => [
         permission: 'manage-settings',
       },
       {
+        icon: 'Tags',
+        label: 'Categories',
+        translationKey: 'categories',
+        href: '/dashboard/categories',
+        target: '_blank',
+        permission: 'manage-settings',
+      },
+      {
         icon: 'Images',
         label: 'Gallery',
         translationKey: 'gallery',
