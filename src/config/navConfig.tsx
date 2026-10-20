@@ -88,6 +88,16 @@ export const getNavItems = (pages: string[]): NavItem[] => [
         target: '_blank',
         permission: 'manage-settings',
       },
+
+      {
+        icon: 'SlidersHorizontal',
+        label: 'Specifications',
+        translationKey: 'specifications',
+        href: '/dashboard/specifications',
+        target: '_blank',
+        permission: 'manage-settings',
+      },
+
       {
         icon: 'Images',
         label: 'Gallery',

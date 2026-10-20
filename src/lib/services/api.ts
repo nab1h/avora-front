@@ -32,6 +32,7 @@ export const api = createApi({
     "SiteScripts",
     "Analytics",
     "Categories",
+    "Specifications"
   ],
 
   endpoints: (builder) => ({

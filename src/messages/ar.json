@@ -27,6 +27,7 @@
     "orders": "الطلبات",
     "services": "الخدمات",
     "categories": "الأصناف",
+    "specifications": "الخصائص والمواصفات",
     "siteScripts": "أكواد الموقع",
     "gallery": "المعرض",
     "social": "مواقع التواصل الإجتماعي",
@@ -320,6 +321,7 @@
     "services": "الخدمات",
     "gallery": "المعرض",
     "categories": "الأصناف",
+    "specifications": "الخصائص والمواصفات",
     "site-scripts": "أكواد الموقع",
     "social-link": "مواقع التواصل الإجتماعي",
     "general": "عام",
@@ -931,5 +933,80 @@
       "views": "المشاهدات",
       "shareOfTopPage": "النسبة من الصفحة الأكثر زيارة"
     }
+  },
+  
+"specifications": {
+  "title": "الخصائص والمواصفات",
+  "description": "إدارة الخصائص الفنية للمنتجات.",
+  "add": "إضافة خاصية",
+
+  "dialog": {
+    "title": "إضافة خاصية جديدة",
+    "description": "إنشاء خاصية فنية جديدة.",
+    "editTitle": "تعديل الخاصية",
+    "editDescription": "تعديل بيانات الخاصية الفنية.",
+    "specKey": "مفتاح الخاصية",
+    "specKeyPlaceholder": "مثال: luminous_flux",
+    "nameArabic": "الاسم بالعربية",
+    "nameArabicPlaceholder": "أدخل اسم الخاصية بالعربية",
+    "nameEnglish": "الاسم بالإنجليزية",
+    "nameEnglishPlaceholder": "أدخل اسم الخاصية بالإنجليزية",
+    "unit": "وحدة القياس",
+    "unitPlaceholder": "مثال: lm أو W أو cm",
+    "sortOrder": "ترتيب العرض",
+    "status": "الحالة",
+    "active": "نشطة",
+    "inactive": "غير نشطة",
+    "cancel": "إلغاء",
+    "create": "إنشاء الخاصية",
+    "creating": "جاري الإنشاء...",
+    "saving": "جاري الحفظ...",
+    "saveChanges": "حفظ التغييرات",
+
+    "validation": {
+      "specKeyFormat": "استخدم حروفًا إنجليزية صغيرة وأرقامًا وشرطة سفلية، ويجب أن يبدأ المفتاح بحرف."
+    },
+
+    "messages": {
+      "created": "تم إنشاء الخاصية بنجاح.",
+      "createFailed": "فشل إنشاء الخاصية. حاول مرة أخرى.",
+      "updated": "تم تحديث الخاصية بنجاح.",
+      "updateFailed": "فشل تحديث الخاصية. حاول مرة أخرى."
+    }
+  },
+
+  "table": {
+    "id": "المعرّف",
+    "key": "مفتاح الخاصية",
+    "nameArabic": "الاسم بالعربية",
+    "nameEnglish": "الاسم بالإنجليزية",
+    "unit": "وحدة القياس",
+    "sortOrder": "الترتيب",
+    "status": "الحالة",
+    "active": "نشطة",
+    "inactive": "غير نشطة",
+    "noUnit": "بدون وحدة",
+    "loadFailed": "تعذر تحميل الخصائص.",
+    "tryAgain": "حاول مرة أخرى",
+    "emptyTitle": "لا توجد خصائص حتى الآن",
+    "emptyDescription": "أضف خاصية جديدة لعرضها هنا.",
+    "editSpecification": "تعديل الخاصية",
+    "deleteSpecification": "حذف الخاصية",
+    "actions": "الإجراءات",
+
+    "messages": {
+      "deleted": "تم حذف الخاصية بنجاح.",
+      "deleteFailed": "فشل حذف الخاصية. حاول مرة أخرى."
+    },
+
+    "deleteDialog": {
+      "title": "حذف الخاصية؟",
+      "description": "هل أنت متأكد أنك تريد حذف {name}؟ قد يؤدي ذلك إلى حذف قيمها المرتبطة بالمنتجات.",
+      "cancel": "إلغاء",
+      "deleting": "جاري الحذف...",
+      "confirm": "حذف الخاصية"
+    }
   }
+}
+
 }

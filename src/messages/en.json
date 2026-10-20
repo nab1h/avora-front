@@ -26,6 +26,7 @@
     "orders": "Orders",
     "services": "Services",
     "gallery": "Gallery",
+    "specifications": "Specifications",
     "social": "Social Media",
     "fullNavbar": "Full Navbar",
     "horizontal": "Horizontal",
@@ -311,6 +312,7 @@
     "branding": "Branding",
     "contactInformation": "Contact Information",
     "websiteSettings": "Website Settings",
+    "specifications": "Specifications",
     "maps": "Maps",
     "pages": "Pages",
     "seo": "SEO",
@@ -909,5 +911,80 @@
       "views": "Views",
       "shareOfTopPage": "Share of top page"
     }
+  },
+  
+"specifications": {
+  "title": "Specifications",
+  "description": "Manage product technical specifications.",
+  "add": "Add Specification",
+
+  "dialog": {
+    "title": "Add Specification",
+    "description": "Create a new technical specification.",
+    "editTitle": "Edit Specification",
+    "editDescription": "Update the technical specification details.",
+    "specKey": "Specification Key",
+    "specKeyPlaceholder": "Example: luminous_flux",
+    "nameArabic": "Arabic Name",
+    "nameArabicPlaceholder": "Enter the Arabic specification name",
+    "nameEnglish": "English Name",
+    "nameEnglishPlaceholder": "Enter the English specification name",
+    "unit": "Unit",
+    "unitPlaceholder": "Example: lm, W, or cm",
+    "sortOrder": "Sort Order",
+    "status": "Status",
+    "active": "Active",
+    "inactive": "Inactive",
+    "cancel": "Cancel",
+    "create": "Create Specification",
+    "creating": "Creating...",
+    "saving": "Saving...",
+    "saveChanges": "Save Changes",
+
+    "validation": {
+      "specKeyFormat": "Use lowercase English letters, numbers, and underscores. The key must start with a letter."
+    },
+
+    "messages": {
+      "created": "Specification created successfully.",
+      "createFailed": "Failed to create specification. Please try again.",
+      "updated": "Specification updated successfully.",
+      "updateFailed": "Failed to update specification. Please try again."
+    }
+  },
+
+  "table": {
+    "id": "ID",
+    "key": "Specification Key",
+    "nameArabic": "Arabic Name",
+    "nameEnglish": "English Name",
+    "unit": "Unit",
+    "sortOrder": "Sort Order",
+    "status": "Status",
+    "active": "Active",
+    "inactive": "Inactive",
+    "noUnit": "No Unit",
+    "loadFailed": "Failed to load specifications.",
+    "tryAgain": "Try Again",
+    "emptyTitle": "No Specifications Yet",
+    "emptyDescription": "Add a new specification to display it here.",
+    "editSpecification": "Edit Specification",
+    "deleteSpecification": "Delete Specification",
+    "actions": "Actions",
+
+    "messages": {
+      "deleted": "Specification deleted successfully.",
+      "deleteFailed": "Failed to delete specification. Please try again."
+    },
+
+    "deleteDialog": {
+      "title": "Delete Specification?",
+      "description": "Are you sure you want to delete {name}? Its values associated with products may also be deleted.",
+      "cancel": "Cancel",
+      "deleting": "Deleting...",
+      "confirm": "Delete Specification"
+    }
   }
+}
+
 }
