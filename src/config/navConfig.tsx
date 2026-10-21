@@ -90,10 +90,27 @@ export const getNavItems = (pages: string[]): NavItem[] => [
       },
 
       {
+        icon: 'Palette',
+        label: 'Colors',
+        translationKey: 'colors',
+        href: '/dashboard/colors',
+        target: '_blank',
+        permission: 'manage-settings',
+      },
+
+      {
         icon: 'SlidersHorizontal',
         label: 'Specifications',
         translationKey: 'specifications',
         href: '/dashboard/specifications',
+        target: '_blank',
+        permission: 'manage-settings',
+      },
+      {
+        icon: 'Package',
+        label: 'Products',
+        translationKey: 'products',
+        href: '/dashboard/products',
         target: '_blank',
         permission: 'manage-settings',
       },

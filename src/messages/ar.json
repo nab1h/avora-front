@@ -25,6 +25,7 @@
     "layouts": "التخطيطات",
     "products": "المنتجات",
     "orders": "الطلبات",
+    "colors": "الألوان",
     "services": "الخدمات",
     "categories": "الأصناف",
     "specifications": "الخصائص والمواصفات",
@@ -58,8 +59,6 @@
     "page_gallery": "المعرض",
     "page_editorial_banner": "اللافتة التحريرية",
     "page_cta": "دعوة لاتخاذ إجراء"
-    
-
   },
   "websiteSettings": {
     "branding": {
@@ -321,6 +320,7 @@
     "services": "الخدمات",
     "gallery": "المعرض",
     "categories": "الأصناف",
+    "colors": "الألوان",
     "specifications": "الخصائص والمواصفات",
     "site-scripts": "أكواد الموقع",
     "social-link": "مواقع التواصل الإجتماعي",
@@ -760,7 +760,7 @@
       }
     }
   },
-   "categories": {
+  "categories": {
     "title": "الأصناف",
     "description": "إدارة الأصناف.",
     "add": "إضافة صنف",
@@ -934,79 +934,282 @@
       "shareOfTopPage": "النسبة من الصفحة الأكثر زيارة"
     }
   },
-  
-"specifications": {
-  "title": "الخصائص والمواصفات",
-  "description": "إدارة الخصائص الفنية للمنتجات.",
-  "add": "إضافة خاصية",
-
-  "dialog": {
-    "title": "إضافة خاصية جديدة",
-    "description": "إنشاء خاصية فنية جديدة.",
-    "editTitle": "تعديل الخاصية",
-    "editDescription": "تعديل بيانات الخاصية الفنية.",
-    "specKey": "مفتاح الخاصية",
-    "specKeyPlaceholder": "مثال: luminous_flux",
-    "nameArabic": "الاسم بالعربية",
-    "nameArabicPlaceholder": "أدخل اسم الخاصية بالعربية",
-    "nameEnglish": "الاسم بالإنجليزية",
-    "nameEnglishPlaceholder": "أدخل اسم الخاصية بالإنجليزية",
-    "unit": "وحدة القياس",
-    "unitPlaceholder": "مثال: lm أو W أو cm",
-    "sortOrder": "ترتيب العرض",
-    "status": "الحالة",
-    "active": "نشطة",
-    "inactive": "غير نشطة",
-    "cancel": "إلغاء",
-    "create": "إنشاء الخاصية",
-    "creating": "جاري الإنشاء...",
-    "saving": "جاري الحفظ...",
-    "saveChanges": "حفظ التغييرات",
-
-    "validation": {
-      "specKeyFormat": "استخدم حروفًا إنجليزية صغيرة وأرقامًا وشرطة سفلية، ويجب أن يبدأ المفتاح بحرف."
+  "specifications": {
+    "title": "الخصائص والمواصفات",
+    "description": "إدارة الخصائص الفنية للمنتجات.",
+    "add": "إضافة خاصية",
+    "dialog": {
+      "title": "إضافة خاصية جديدة",
+      "description": "إنشاء خاصية فنية جديدة.",
+      "editTitle": "تعديل الخاصية",
+      "editDescription": "تعديل بيانات الخاصية الفنية.",
+      "specKey": "مفتاح الخاصية",
+      "specKeyPlaceholder": "مثال: luminous_flux",
+      "nameArabic": "الاسم بالعربية",
+      "nameArabicPlaceholder": "أدخل اسم الخاصية بالعربية",
+      "nameEnglish": "الاسم بالإنجليزية",
+      "nameEnglishPlaceholder": "أدخل اسم الخاصية بالإنجليزية",
+      "unit": "وحدة القياس",
+      "unitPlaceholder": "مثال: lm أو W أو cm",
+      "sortOrder": "ترتيب العرض",
+      "status": "الحالة",
+      "active": "نشطة",
+      "inactive": "غير نشطة",
+      "cancel": "إلغاء",
+      "create": "إنشاء الخاصية",
+      "creating": "جاري الإنشاء...",
+      "saving": "جاري الحفظ...",
+      "saveChanges": "حفظ التغييرات",
+      "validation": {
+        "specKeyFormat": "استخدم حروفًا إنجليزية صغيرة وأرقامًا وشرطة سفلية، ويجب أن يبدأ المفتاح بحرف."
+      },
+      "messages": {
+        "created": "تم إنشاء الخاصية بنجاح.",
+        "createFailed": "فشل إنشاء الخاصية. حاول مرة أخرى.",
+        "updated": "تم تحديث الخاصية بنجاح.",
+        "updateFailed": "فشل تحديث الخاصية. حاول مرة أخرى."
+      }
     },
-
-    "messages": {
-      "created": "تم إنشاء الخاصية بنجاح.",
-      "createFailed": "فشل إنشاء الخاصية. حاول مرة أخرى.",
-      "updated": "تم تحديث الخاصية بنجاح.",
-      "updateFailed": "فشل تحديث الخاصية. حاول مرة أخرى."
+    "table": {
+      "id": "المعرّف",
+      "key": "مفتاح الخاصية",
+      "nameArabic": "الاسم بالعربية",
+      "nameEnglish": "الاسم بالإنجليزية",
+      "unit": "وحدة القياس",
+      "sortOrder": "الترتيب",
+      "status": "الحالة",
+      "active": "نشطة",
+      "inactive": "غير نشطة",
+      "noUnit": "بدون وحدة",
+      "loadFailed": "تعذر تحميل الخصائص.",
+      "tryAgain": "حاول مرة أخرى",
+      "emptyTitle": "لا توجد خصائص حتى الآن",
+      "emptyDescription": "أضف خاصية جديدة لعرضها هنا.",
+      "editSpecification": "تعديل الخاصية",
+      "deleteSpecification": "حذف الخاصية",
+      "actions": "الإجراءات",
+      "messages": {
+        "deleted": "تم حذف الخاصية بنجاح.",
+        "deleteFailed": "فشل حذف الخاصية. حاول مرة أخرى."
+      },
+      "deleteDialog": {
+        "title": "حذف الخاصية؟",
+        "description": "هل أنت متأكد أنك تريد حذف {name}؟ قد يؤدي ذلك إلى حذف قيمها المرتبطة بالمنتجات.",
+        "cancel": "إلغاء",
+        "deleting": "جاري الحذف...",
+        "confirm": "حذف الخاصية"
+      }
     }
   },
-
-  "table": {
-    "id": "المعرّف",
-    "key": "مفتاح الخاصية",
-    "nameArabic": "الاسم بالعربية",
-    "nameEnglish": "الاسم بالإنجليزية",
-    "unit": "وحدة القياس",
-    "sortOrder": "الترتيب",
-    "status": "الحالة",
-    "active": "نشطة",
-    "inactive": "غير نشطة",
-    "noUnit": "بدون وحدة",
-    "loadFailed": "تعذر تحميل الخصائص.",
-    "tryAgain": "حاول مرة أخرى",
-    "emptyTitle": "لا توجد خصائص حتى الآن",
-    "emptyDescription": "أضف خاصية جديدة لعرضها هنا.",
-    "editSpecification": "تعديل الخاصية",
-    "deleteSpecification": "حذف الخاصية",
-    "actions": "الإجراءات",
-
-    "messages": {
-      "deleted": "تم حذف الخاصية بنجاح.",
-      "deleteFailed": "فشل حذف الخاصية. حاول مرة أخرى."
-    },
-
-    "deleteDialog": {
-      "title": "حذف الخاصية؟",
-      "description": "هل أنت متأكد أنك تريد حذف {name}؟ قد يؤدي ذلك إلى حذف قيمها المرتبطة بالمنتجات.",
+  "products": {
+    "title": "المنتجات",
+    "description": "إدارة المنتجات والأسعار والصور والمواصفات الفنية.",
+    "add": "إضافة منتج",
+    "dialog": {
+      "addTitle": "إضافة منتج جديد",
+      "editTitle": "تعديل المنتج",
+      "description": "أدخل بيانات المنتج ومواصفاته الفنية.",
+      "productDetails": "بيانات المنتج",
+      "category": "الصنف",
+      "chooseCategory": "اختر الصنف",
+      "nameAr": "اسم المنتج بالعربية",
+      "nameEn": "اسم المنتج بالإنجليزية",
+      "slug": "الرابط المختصر (Slug)",
+      "sku": "كود المنتج (SKU)",
+      "descriptionAr": "الوصف بالعربية",
+      "descriptionEn": "الوصف بالإنجليزية",
+      "price": "السعر",
+      "salePrice": "سعر الخصم",
+      "sortOrder": "ترتيب العرض",
+      "status": "الحالة",
+      "active": "نشط",
+      "inactive": "غير نشط",
+      "featured": "منتج مميز",
+      "specifications": "المواصفات الفنية",
+      "chooseSpecification": "اختر خاصية لإضافتها",
+      "addSpecification": "إضافة الخاصية",
+      "valueAr": "القيمة بالعربية",
+      "valueEn": "القيمة بالإنجليزية",
+      "remove": "إزالة",
+      "noSpecifications": "لم تتم إضافة مواصفات لهذا المنتج.",
+      "specificationsUnavailable": "تعذر تحميل المواصفات الحالية من الخادم. لن يتم إرسالها أثناء التعديل لتجنب فقدان القيم المحفوظة.",
+      "images": "صور المنتج",
+      "chooseImages": "اختيار صور من الجهاز",
+      "selectedImages": "الصور المختارة للرفع",
+      "existingImages": "الصور الحالية",
+      "noImages": "لم تتم إضافة صور لهذا المنتج.",
+      "imageAlt": "صورة المنتج",
       "cancel": "إلغاء",
-      "deleting": "جاري الحذف...",
-      "confirm": "حذف الخاصية"
+      "create": "إضافة المنتج",
+      "save": "حفظ التعديلات",
+      "saving": "جاري الحفظ...",
+      "loadingDetails": "جاري تحميل بيانات المنتج...",
+      "loadingCategories": "جاري تحميل الأصناف...",
+      "loadingSpecifications": "جاري تحميل الخصائص...",
+      "validation": {
+        "slugFormat": "اكتب الرابط بحروف إنجليزية صغيرة وأرقام وشرطات فقط.",
+        "invalidPrice": "سعر الخصم لا يمكن أن يكون أكبر من السعر الأصلي."
+      },
+      "messages": {
+        "created": "تمت إضافة المنتج بنجاح.",
+        "updated": "تم تحديث المنتج بنجاح.",
+        "saveFailed": "تعذر حفظ المنتج.",
+        "imageUploadFailed": "تم حفظ بيانات المنتج، لكن تعذر رفع الصور. يمكنك إعادة المحاولة من شاشة التعديل."
+      }
+    },
+    "table": {
+      "id": "المعرف",
+      "product": "المنتج",
+      "category": "الصنف",
+      "sku": "كود المنتج",
+      "price": "السعر",
+      "images": "الصور",
+      "status": "الحالة",
+      "active": "نشط",
+      "inactive": "غير نشط",
+      "featured": "منتج مميز",
+      "yes": "نعم",
+      "no": "لا",
+      "actions": "الإجراءات",
+      "edit": "تعديل المنتج",
+      "delete": "حذف المنتج",
+      "loadFailed": "تعذر تحميل المنتجات.",
+      "tryAgain": "إعادة المحاولة",
+      "emptyTitle": "لا توجد منتجات",
+      "emptyDescription": "أضف منتجًا جديدًا ليظهر هنا.",
+      "previous": "السابق",
+      "next": "التالي",
+      "page": "صفحة {current} من {last}",
+      "pagination": "عرض {from} إلى {to} من أصل {total} منتج",
+      "messages": {
+        "deleted": "تم حذف المنتج بنجاح.",
+        "deleteFailed": "فشل حذف المنتج. حاول مرة أخرى."
+      },
+      "deleteDialog": {
+        "title": "تأكيد حذف المنتج",
+        "description": "هل أنت متأكد من حذف المنتج {name}؟",
+        "cancel": "إلغاء",
+        "deleting": "جاري الحذف...",
+        "confirm": "حذف المنتج"
+      }
+    },
+    "form": {
+      "addTitle": "إضافة منتج جديد",
+      "editTitle": "تعديل المنتج",
+      "description": "أدخل بيانات المنتج ومواصفاته الفنية.",
+      "category": "الصنف",
+      "chooseCategory": "اختر الصنف",
+      "nameAr": "اسم المنتج بالعربية",
+      "nameEn": "اسم المنتج بالإنجليزية",
+      "descAr": "الوصف بالعربية",
+      "descEn": "الوصف بالإنجليزية",
+      "price": "السعر",
+      "salePrice": "سعر الخصم",
+      "sortOrder": "ترتيب العرض",
+      "status": "الحالة",
+      "active": "نشط",
+      "inactive": "غير نشط",
+      "featured": "منتج مميز",
+      "specifications": "المواصفات الفنية",
+      "chooseSpecification": "اختر خاصية لإضافتها",
+      "addSpecification": "إضافة الخاصية",
+      "valueAr": "القيمة بالعربية",
+      "valueEn": "القيمة بالإنجليزية",
+      "remove": "إزالة",
+      "noSpecifications": "لم تتم إضافة مواصفات لهذا المنتج.",
+      "specificationsUnavailable": "المواصفات الحالية غير متاحة من الباك إند؛ لن نرسلها أثناء التعديل حتى لا نفقد قيمًا محفوظة.",
+      "images": "صور المنتج",
+      "chooseImages": "اختيار صور من الجهاز",
+      "selectedImages": "الصور المختارة للرفع",
+      "imagePickerHint": "يمكنك اختيار أكثر من صورة من جهازك",
+      "imagePickerFormats": "JPG أو PNG أو WebP",
+      "existingImages": "الصور الحالية",
+      "noImages": "لم تتم إضافة صور لهذا المنتج.",
+      "cancel": "إلغاء",
+      "create": "إضافة المنتج",
+      "save": "حفظ التعديلات",
+      "saving": "جاري الحفظ...",
+      "created": "تمت إضافة المنتج بنجاح.",
+      "updated": "تم تحديث المنتج بنجاح.",
+      "saveFailed": "تعذر حفظ المنتج.",
+      "colorsUpdateFailed": "تم حفظ بيانات المنتج، لكن تعذر حفظ الألوان. يمكنك إعادة المحاولة من شاشة التعديل.",
+      "imageUploadFailed": "تم حفظ بيانات المنتج، لكن تعذر رفع الصور. يمكنك إعادة المحاولة من التعديل.",
+      "invalidPrice": "سعر الخصم لا يمكن أن يكون أكبر من السعر الأصلي.",
+      "loadingDetails": "جاري تحميل بيانات المنتج...",
+      "detailsLoadFailed": "تعذر تحميل بيانات المنتج. حاول مرة أخرى.",
+      "retryDetails": "إعادة المحاولة",
+      "loadingCategories": "جاري تحميل الأصناف...",
+      "loadingSpecifications": "جاري تحميل الخصائص...",
+      "imageAlt": "صورة المنتج",
+      "confirmDeleteImage": "هل أنت متأكد من حذف هذه الصورة فقط؟",
+      "imageDeleted": "تم حذف الصورة بنجاح.",
+      "deleteImageFailed": "تعذر حذف الصورة. حاول مرة أخرى.",
+      "invalidSlugSource": "اكتب اسم المنتج بالإنجليزية بحروف وأرقام لتوليد الرابط تلقائيًا.",
+      "deleteImage": "حذف الصورة"
+    }
+  },
+  "colors": {
+    "title": "الألوان",
+    "description": "إدارة الألوان المتاحة لربطها بالمنتجات.",
+    "add": "إضافة لون",
+    "table": {
+      "id": "المعرّف",
+      "color": "اللون",
+      "name": "الاسم",
+      "hex": "الكود",
+      "status": "الحالة",
+      "actions": "إجراءات",
+      "active": "نشط",
+      "inactive": "غير نشط",
+      "editColor": "تعديل اللون",
+      "deleteColor": "حذف اللون",
+      "loadFailed": "تعذّر تحميل الألوان.",
+      "tryAgain": "إعادة المحاولة",
+      "emptyTitle": "لا توجد ألوان بعد",
+      "emptyDescription": "ابدأ بإضافة أول لون لمنتجاتك.",
+      "messages": {
+        "deleted": "تم حذف اللون بنجاح.",
+        "deleteFailed": "تعذّر حذف اللون، حاول مرة أخرى."
+      },
+      "deleteDialog": {
+        "title": "تأكيد حذف اللون",
+        "description": "سيتم حذف اللون \"{name}\" نهائياً. هل أنت متأكد؟",
+        "cancel": "إلغاء",
+        "confirm": "حذف",
+        "deleting": "جارٍ الحذف..."
+      }
+    },
+    "dialog": {
+      "title": "إضافة لون جديد",
+      "description": "أدخل بيانات اللون الذي تريد إضافته للمنتجات.",
+      "editTitle": "تعديل اللون",
+      "editDescription": "تعديل بيانات اللون \"{name}\".",
+      "nameArabic": "الاسم بالعربية",
+      "nameEnglish": "الاسم بالإنجليزية",
+      "hex": "كود اللون",
+      "sortOrder": "ترتيب العرض",
+      "status": "الحالة",
+      "active": "نشط",
+      "inactive": "غير نشط",
+      "cancel": "إلغاء",
+      "create": "إضافة",
+      "creating": "جارٍ الإضافة...",
+      "saveChanges": "حفظ التغييرات",
+      "saving": "جارٍ الحفظ...",
+      "validation": {
+        "nameArabicRequired": "الاسم بالعربية مطلوب",
+        "nameEnglishRequired": "الاسم بالإنجليزية مطلوب",
+        "nameMax": "يجب ألا يتجاوز الاسم 255 حرفاً",
+        "hexRequired": "كود اللون مطلوب",
+        "hexMax": "يجب ألا يتجاوز كود اللون 7 أحرف",
+        "hexFormat": "صيغة كود اللون غير صحيحة (مثال: #C6A04A أو #FFF)"
+      },
+      "messages": {
+        "created": "تمت إضافة اللون بنجاح.",
+        "createFailed": "تعذّرت إضافة اللون، حاول مرة أخرى.",
+        "updated": "تم تحديث اللون بنجاح.",
+        "updateFailed": "تعذّر تحديث اللون، حاول مرة أخرى."
+      }
     }
   }
-}
-
 }
