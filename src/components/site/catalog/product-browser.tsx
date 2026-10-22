@@ -24,11 +24,13 @@ export function ProductBrowser({
   categories,
   initialQuery = "",
   initialCategory = "all",
+  isArabic,
 }: {
   products: Product[];
   categories: Category[];
   initialQuery?: string;
   initialCategory?: string;
+  isArabic: boolean;
 }) {
   const [query, setQuery] = useState(initialQuery);
   const [category, setCategory] = useState(initialCategory);
@@ -125,6 +127,7 @@ export function ProductBrowser({
               product={product}
               categories={categories}
               motionIndex={index}
+              isArabic={isArabic}
             />
           ))}
         </div>

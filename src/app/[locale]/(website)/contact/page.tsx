@@ -64,10 +64,6 @@ export default async function ContactPage({ params }: ContactPageProps) {
 				<div aria-hidden="true" className="pointer-events-none absolute -end-24 -top-24 size-80 rounded-full border border-white/10 sm:size-[28rem]" />
 				<div aria-hidden="true" className="pointer-events-none absolute -end-12 -top-12 size-56 rounded-full border border-white/10 sm:size-80" />
 				<div className="relative mx-auto max-w-7xl px-4 py-20 sm:px-6 sm:py-28 lg:px-8">
-					<p className="flex items-center gap-3 text-xs font-medium uppercase tracking-[0.22em] text-white/70">
-						<Logo aria-hidden="true" className="size-5 text-primary" />
-						{isArabic ? `تواصل مع ${siteName}` : `Contact ${siteName}`}
-					</p>
 					<h1 className="mt-6 max-w-3xl text-4xl font-semibold leading-tight tracking-tight text-balance sm:text-6xl lg:text-7xl">
 						{isArabic ? "يسعدنا تواصلك معنا" : "Get in touch"}<span className="text-primary">.</span>
 					</h1>

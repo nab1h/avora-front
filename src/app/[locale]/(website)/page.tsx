@@ -10,6 +10,7 @@ import { getAllProducts, getCategories } from "@/lib/catalog/data";
 import { getPublicContents } from "@/lib/services/public-contents";
 import CategoriesPage from "./categories/page";
 import { getPublicAssetUrl } from "@/lib/services/public-assets";
+import ContactPage from "./contact/page";
 
 type PageProps = {
 	params: Promise<{ locale: "ar" | "en" }>;
@@ -69,7 +70,7 @@ export default async function HomePage({ params }: PageProps) {
 		<>
 			<Hero title={pageTitle} subtitle={pageSubtitle} proButton={proButton} cateButton={cateButton} image={imageUrl ?? undefined}/>
 			<CategoriesPage params={params} />
-			<FeaturedProducts products={products} categories={categories} title={featuredTitle?.value ?? undefined} description={featuredDescription?.value ?? undefined} eyebrow={featuredEyebrow?.value ?? undefined} />
+			<FeaturedProducts products={products} categories={categories} title={featuredTitle?.value ?? undefined} description={featuredDescription?.value ?? undefined} eyebrow={featuredEyebrow?.value ?? undefined} isArabic={locale === "ar"} />
 			<Values params={params} />
 			<EditorialBanner params={params} />
 			<Faq params={params} />

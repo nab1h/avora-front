@@ -2,6 +2,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { ArrowUpRight } from "lucide-react";
 
+import { Badge } from "@/components/ui/badge";
 import { Skeleton } from "@/components/ui/skeleton";
 import { formatPrice, getCategoryName } from "@/lib/catalog/data";
 import type { Category, Product } from "@/lib/catalog/types";
@@ -13,12 +14,19 @@ export function ProductCard({
   categories,
   className,
   motionIndex = 0,
+  isArabic,
 }: {
   product: Product;
   categories: Category[];
   className?: string;
   motionIndex?: number;
+  isArabic: boolean;
 }) {
+  const isOnSale =
+    product.price !== undefined &&
+    product.originalPrice !== undefined &&
+    product.originalPrice > product.price;
+
   return (
     <Reveal variant="fade-up" duration={650} delay={(motionIndex % 4) * 65} className="min-w-0">
     <Link
@@ -33,9 +41,21 @@ export function ProductCard({
           sizes="(min-width: 1280px) 25vw, (min-width: 1024px) 33vw, (min-width: 640px) 50vw, 50vw"
           className="product-image object-cover"
         />
+        <div className="absolute end-3 top-3 flex flex-col items-end gap-2">
+          {isOnSale && (
+            <Badge>
+              {isArabic ? "خصم" : "Sale"}
+            </Badge>
+          )}
+          {product.isNew && (
+            <Badge variant="secondary">
+              {isArabic ? "جديد" : "New"}
+            </Badge>
+          )}
+        </div>
         {product.inStock === false && (
-          <span className="absolute left-3 top-3 rounded-sm bg-background/90 px-2 py-1 text-[11px] font-medium text-foreground">
-            Out of stock
+          <span className="absolute start-3 top-3 rounded-sm bg-background/90 px-2 py-1 text-[11px] font-medium text-foreground">
+            {isArabic ? "غير متوفر" : "Out of stock"}
           </span>
         )}
       </div>

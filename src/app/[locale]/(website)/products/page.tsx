@@ -79,6 +79,7 @@ export default async function ProductsPage({
           categories={categories}
           initialQuery={q ?? ""}
           initialCategory={category ?? "all"}
+          isArabic={isArabic}
         />
       </div>
     </main>

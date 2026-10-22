@@ -42,6 +42,7 @@ type PublicProduct = {
     sort_order: number;
   }[] | null;
   specifications?: {
+    specification_id?: number;
     value_ar: string | null;
     value_en: string | null;
     sort_order: number;
@@ -49,7 +50,16 @@ type PublicProduct = {
       spec_key: string;
       name_ar: string;
       name_en: string;
+      unit?: string | null;
     } | null;
+  }[] | null;
+  colors?: {
+    id: number;
+    name_ar: string;
+    name_en: string;
+    hex: string | null;
+    sort_order: number;
+    status: "active" | "inactive";
   }[] | null;
 };
 
@@ -133,10 +143,11 @@ export async function getAllProducts(locale: string): Promise<Product[]> {
     categories.map((category) => [category.id, category]),
   );
 
-  return products
+  const activeProducts = products
     .filter((product) => product.status === "active")
-    .sort((first, second) => first.sort_order - second.sort_order)
-    .map((product, index) => {
+    .sort((first, second) => first.sort_order - second.sort_order);
+
+  return activeProducts.map((product, index) => {
       const category =
         product.category ?? categoriesById.get(String(product.category_id));
       const images = (product.images ?? [])
@@ -148,18 +159,36 @@ export async function getAllProducts(locale: string): Promise<Product[]> {
       const specs = (product.specifications ?? [])
         .slice()
         .sort((first, second) => first.sort_order - second.sort_order)
-        .flatMap((specification) => {
-          const label = locale.startsWith("ar")
-            ? specification.specification?.name_ar
-            : specification.specification?.name_en;
+        .flatMap((specification, specIndex) => {
+          const definition = specification.specification;
+          const label = (locale.startsWith("ar")
+            ? definition?.name_ar || definition?.name_en
+            : definition?.name_en || definition?.name_ar)
+            || `${locale.startsWith("ar") ? "خاصية" : "Specification"} #${specification.specification_id ?? specIndex + 1}`;
           const value = locale.startsWith("ar")
-            ? specification.value_ar
-            : specification.value_en;
+            ? specification.value_ar || specification.value_en
+            : specification.value_en || specification.value_ar;
 
-          return label && value ? [{ label, value }] : [];
+          return value ? [{ label, value: [value, definition?.unit].filter(Boolean).join(" ") }] : [];
         });
 
-      const price = Number(product.sale_price ?? product.price);
+      const parsePrice = (value: string | null | undefined) => {
+        if (value == null || value.trim() === "") return undefined;
+        const number = Number(value);
+        return Number.isFinite(number) && number >= 0 ? number : undefined;
+      };
+      const regularPrice = parsePrice(product.price);
+      const salePrice = parsePrice(product.sale_price);
+      const hasSale = salePrice !== undefined && regularPrice !== undefined && salePrice < regularPrice;
+      const price = hasSale ? salePrice : regularPrice;
+      const colors = (product.colors ?? [])
+        .filter((color) => color.status === "active")
+        .sort((a, b) => a.sort_order - b.sort_order)
+        .map((color) => ({
+          id: String(color.id),
+          name: locale.startsWith("ar") ? color.name_ar || color.name_en : color.name_en || color.name_ar,
+          hex: color.hex && /^#[\da-f]{6}$/i.test(color.hex) ? color.hex : null,
+        }));
 
       return {
         id: String(product.id),
@@ -171,7 +200,10 @@ export async function getAllProducts(locale: string): Promise<Product[]> {
             ? product.description_ar
             : product.description_en) ?? "",
         images: images.length > 0 ? images : [productImage(index)],
-        ...(Number.isFinite(price) ? { price } : {}),
+        ...(price !== undefined ? { price } : {}),
+        ...(hasSale ? { originalPrice: regularPrice } : {}),
+        isNew: index >= Math.max(activeProducts.length - 3, 0),
+        colors,
         ...(product.sku ? { sku: product.sku } : {}),
         ...(specs.length > 0 ? { specs } : {}),
       };

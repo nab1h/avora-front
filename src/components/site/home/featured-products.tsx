@@ -15,12 +15,14 @@ export function FeaturedProducts({
   title = "Selected products",
   description = "A cross-section of the catalog — fixtures, outdoor solutions, and electrical essentials.",
   eyebrow = "Featured",
+  isArabic,
 }: {
   products: Product[];
   categories: Category[];
   title?: string;
   description?: string;
   eyebrow?: string;
+  isArabic: boolean;
 }) {
   return (
     <section className="border-t bg-muted/40">
@@ -57,7 +59,7 @@ export function FeaturedProducts({
           </TabsList>
 
           <TabsContent value="all" className="mt-10 animate-in fade-in-0 slide-in-from-bottom-1 duration-300">
-            <Grid products={products} categories={categories} />
+            <Grid products={products} categories={categories} isArabic={isArabic} />
           </TabsContent>
 
           {categories.map((category) => (
@@ -69,6 +71,7 @@ export function FeaturedProducts({
               <Grid
                 products={products.filter((p) => p.categorySlug === category.slug)}
                 categories={categories}
+                isArabic={isArabic}
               />
             </TabsContent>
           ))}
@@ -81,14 +84,22 @@ export function FeaturedProducts({
 function Grid({
   products,
   categories,
+  isArabic,
 }: {
   products: Product[];
   categories: Category[];
+  isArabic: boolean;
 }) {
   return (
     <div className="grid grid-cols-2 gap-x-4 gap-y-10 lg:grid-cols-3 xl:grid-cols-4">
       {products.map((product, index) => (
-        <ProductCard key={product.id} product={product} categories={categories} motionIndex={index} />
+        <ProductCard
+          key={product.id}
+          product={product}
+          categories={categories}
+          motionIndex={index}
+          isArabic={isArabic}
+        />
       ))}
     </div>
   );

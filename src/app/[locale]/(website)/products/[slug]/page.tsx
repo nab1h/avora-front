@@ -12,10 +12,10 @@ import {
   BreadcrumbPage,
   BreadcrumbSeparator,
 } from "@/components/ui/breadcrumb";
-import { buttonVariants } from "@/components/ui/button";
 import { SectionHeading } from "@/components/shared/section-heading";
 import { ProductCard } from "@/components/site/catalog/product-card";
 import { ProductGallery } from "@/components/site/catalog/product-gallery";
+import { ProductInquiry } from "@/components/site/catalog/product-inquiry";
 import {
   formatPrice,
   getCategoryName,
@@ -63,11 +63,12 @@ export default async function ProductPage({
   const relatedEyebrow = getContent("related-products", "eyebrow", isArabic ? "منتجات ذات صلة" : "Related");
   const relatedTitle = getContent("related-products", "title", isArabic ? "قد تحتاج أيضًا" : "You may also need");
   const relatedDescription = getContent("related-products", "desc", "");
-  const contactEmail = siteConfig?.data.contact?.contact_email;
+  const whatsapp = siteConfig?.data.contact?.contact_whatsapp;
   const [categories, related] = await Promise.all([
     getCategories(locale),
     getRelatedProducts(product, locale),
   ]);
+  const categoryName = getCategoryName(product.categorySlug, categories);
 
   return (
     <main className="mx-auto max-w-7xl px-4 py-24 sm:px-6 sm:py-28 lg:px-8">
@@ -98,18 +99,28 @@ export default async function ProductPage({
 
         <div>
           <p className="text-[11px] font-medium uppercase tracking-[0.22em] text-muted-foreground">
-            {getCategoryName(product.categorySlug, categories)}
+            {categoryName}
           </p>
           <h1 className="mt-3 text-3xl font-semibold tracking-tight sm:text-4xl">
             {product.name}
           </h1>
 
           {(product.price !== undefined || product.inStock !== undefined) && (
-            <div className="mt-5 flex items-center gap-4">
+            <div className="mt-5 flex flex-wrap items-center gap-4">
               {product.price !== undefined && (
                 <span className="text-2xl font-semibold tabular-nums">
                   {formatPrice(product.price)}
                 </span>
+              )}
+              {product.originalPrice !== undefined && (
+                <del className="text-lg tabular-nums text-muted-foreground">
+                  {formatPrice(product.originalPrice)}
+                </del>
+              )}
+              {product.originalPrice !== undefined && product.price !== undefined && product.originalPrice > 0 && (
+                <Badge variant="secondary">
+                  {isArabic ? "خصم" : "Save"} {Math.round((1 - product.price / product.originalPrice) * 100)}%
+                </Badge>
               )}
               {product.inStock !== undefined && (
                 <Badge variant={product.inStock ? "secondary" : "outline"}>
@@ -123,19 +134,22 @@ export default async function ProductPage({
 
           <Separator className="my-7" />
 
-          <p className="text-sm leading-relaxed text-muted-foreground sm:text-base">
+          {product.description && <p className="whitespace-pre-line text-sm leading-relaxed text-muted-foreground sm:text-base">
             {product.description}
-          </p>
+          </p>}
 
           {product.specs && product.specs.length > 0 && (
-            <dl className="mt-8 divide-y divide-border border-y border-border">
-              {product.specs.map((spec) => (
-                <div key={spec.label} className="flex items-baseline justify-between py-3 text-sm">
+            <section className="mt-8" aria-labelledby="product-specifications">
+              <h2 id="product-specifications" className="mb-4 text-base font-semibold">{isArabic ? "المواصفات الفنية" : "Technical specifications"}</h2>
+            <dl className="divide-y divide-border border-y border-border">
+              {product.specs.map((spec, index) => (
+                <div key={`${spec.label}-${index}`} className="grid grid-cols-2 items-baseline gap-4 py-3 text-sm">
                   <dt className="text-muted-foreground">{spec.label}</dt>
-                  <dd className="font-medium tabular-nums">{spec.value}</dd>
+                  <dd className="whitespace-pre-line break-words text-end font-medium tabular-nums">{spec.value}</dd>
                 </div>
               ))}
             </dl>
+            </section>
           )}
 
           {product.sku && (
@@ -144,16 +158,7 @@ export default async function ProductPage({
             </p>
           )}
 
-          <div className="mt-9 flex flex-wrap gap-3">
-            <a
-              href={contactEmail
-                ? `mailto:${contactEmail}?subject=${encodeURIComponent(`${inquirySubject} — ${product.name}`)}`
-                : `/${locale}/contact`}
-              className={buttonVariants({ size: "lg" })}
-            >
-              {inquiryLabel}
-            </a>
-          </div>
+          <ProductInquiry product={product} categoryName={categoryName} locale={locale} whatsapp={whatsapp} label={inquiryLabel} subject={inquirySubject} />
           <p className="mt-3 text-xs text-muted-foreground">
             {pricingNote}
           </p>
@@ -165,7 +170,7 @@ export default async function ProductPage({
           <SectionHeading eyebrow={relatedEyebrow} title={relatedTitle} description={relatedDescription || undefined} />
           <div className="grid grid-cols-2 gap-x-4 gap-y-10 lg:grid-cols-4">
             {related.map((item, index) => (
-              <ProductCard key={item.id} product={item} categories={categories} motionIndex={index} />
+              <ProductCard key={item.id} product={item} categories={categories} motionIndex={index} isArabic={isArabic} />
             ))}
           </div>
         </section>

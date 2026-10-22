@@ -20,6 +20,9 @@ export interface Product {
   images: string[];
   /** Rendered only when present — mirrors "price only if the API provides it". */
   price?: number;
+  originalPrice?: number;
+  isNew?: boolean;
+  colors?: { id: string; name: string; hex: string | null }[];
   sku?: string;
   inStock?: boolean;
   specs?: ProductSpec[];
