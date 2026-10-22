@@ -2,7 +2,6 @@ import Link from "next/link";
 import Logo from "@/assets/svg/logo";
 import SocialPlatformIcon from "@/components/social-platform-icon";
 import { getCategories } from "@/lib/catalog/data";
-import FooterServices from "./footer-services";
 import type {
 	PublicSettingsData,
 	PublicSocialLink,
@@ -38,7 +37,7 @@ export default async function Footer({
 	return (
 		<footer className="bg-brand-charcoal text-brand-white">
 			<div className="mx-auto w-full max-w-7xl px-5 py-16 sm:px-8 lg:py-24">
-				<div className="grid gap-x-8 gap-y-10 sm:grid-cols-2 lg:grid-cols-[1.2fr_0.65fr_0.85fr_0.85fr_1.2fr]">
+				<div className="grid gap-x-8 gap-y-10 sm:grid-cols-2 lg:grid-cols-[1.2fr_0.65fr_0.85fr_1.5fr]">
 					{/* Brand */}
 					<div className="max-w-xs sm:col-span-2 lg:col-span-1">
 						<Link
@@ -100,11 +99,6 @@ export default async function Footer({
 						</div>
 					</div>
 
-					{/* Services */}
-					<div className="min-w-0">
-						<h2 className="font-semibold">{isArabic ? "الخدمات" : "Services"}</h2>
-						<FooterServices locale={locale} />
-					</div>
 
 					{/* Categories */}
 					<div className="min-w-0">

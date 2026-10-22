@@ -52,10 +52,6 @@ export default function Header({
 			href: `/${locale}/categories`,
 		},
 		{
-			label: isArabic ? "خدماتنا" : "Services",
-			href: `/${locale}/services`,
-		},
-		{
 			label: isArabic ? "المنتجات" : "products",
 			href: `/${locale}/products`,
 		},

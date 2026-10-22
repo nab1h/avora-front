@@ -21,7 +21,7 @@ export async function Hero({image,title, subtitle,proButton,cateButton}: {image?
     <section className="hero-motion relative min-h-[92svh] overflow-hidden bg-[hsl(var(--dark))] text-white">
       {image && (
         <Image
-          src={image}
+          src={siteImages.hero}
           alt=""
           fill
           priority
