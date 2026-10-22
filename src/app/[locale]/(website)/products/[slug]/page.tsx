@@ -33,8 +33,8 @@ type ProductPageProps = {
 export async function generateMetadata({
   params,
 }: ProductPageProps): Promise<Metadata> {
-  const { slug } = await params;
-  const product = getProductBySlug(slug);
+  const { slug, locale } = await params;
+  const product = await getProductBySlug(slug, locale);
   return { title: product ? product.name : "Product not found" };
 }
 
@@ -42,7 +42,7 @@ export default async function ProductPage({
   params,
 }: ProductPageProps) {
   const { slug, locale } = await params;
-  const product = getProductBySlug(slug);
+  const product = await getProductBySlug(slug, locale);
   if (!product) notFound();
 
   const [siteConfig, { data: contents }] = await Promise.all([
@@ -64,8 +64,10 @@ export default async function ProductPage({
   const relatedTitle = getContent("related-products", "title", isArabic ? "قد تحتاج أيضًا" : "You may also need");
   const relatedDescription = getContent("related-products", "desc", "");
   const contactEmail = siteConfig?.data.contact?.contact_email;
-  const categories = getCategories();
-  const related = getRelatedProducts(product);
+  const [categories, related] = await Promise.all([
+    getCategories(locale),
+    getRelatedProducts(product, locale),
+  ]);
 
   return (
     <main className="mx-auto max-w-7xl px-4 py-24 sm:px-6 sm:py-28 lg:px-8">

@@ -34,7 +34,7 @@ export function CategoryShowcase({ categories ,categoryShowcaseTitleValue, categ
             >
               <Image
                 src={category.image}
-                alt={`${category.name} — placeholder category image`}
+                alt={category.name}
                 fill
                 sizes="(min-width: 768px) 58vw, 100vw"
                 className="object-cover transition-transform duration-700 ease-out group-hover:scale-105"
@@ -63,4 +63,3 @@ export function CategoryShowcase({ categories ,categoryShowcaseTitleValue, categ
     </section>
   );
 }
-

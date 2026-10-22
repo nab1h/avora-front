@@ -21,10 +21,12 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
 
 
 export default async function CategoriesPage({ params }: PageProps) {
-    const { data } = await getPublicContents("categories");
+    const [{ data }, { locale }] = await Promise.all([
+        getPublicContents("categories"),
+        params,
+    ]);
     const contents = data ?? [];
-    const categories = getCategories();
-    const { locale } = await params;
+    const categories = await getCategories(locale);
 
 
     const getContent = (section: string, key: string) => {

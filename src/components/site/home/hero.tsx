@@ -11,21 +11,24 @@ const enter = (delay: number) => ({
   style: { animationDelay: `${delay}ms` },
 });
 
-export async function Hero({title, subtitle,proButton,cateButton}: {title?: string, subtitle?: string, proButton?: string, cateButton?: string}) {
-  const categories = getCategories();
+export async function Hero({image,title, subtitle,proButton,cateButton}: {image?: string ,title?: string, subtitle?: string, proButton?: string, cateButton?: string}) {
   const [locale, t] = await Promise.all([getLocale(), getTranslations("heroMotion")]);
+  const categories = await getCategories(locale);
   const phrases = [t("phrase1"), t("phrase2"), t("phrase3"), t("phrase4")];
+  
 
   return (
     <section className="hero-motion relative min-h-[92svh] overflow-hidden bg-[hsl(var(--dark))] text-white">
-      <Image
-        src={siteImages.hero}
-        alt=""
-        fill
-        priority
-        sizes="100vw"
-        className="hero-image object-cover"
-      />
+      {image && (
+        <Image
+          src={image}
+          alt=""
+          fill
+          priority
+          sizes="100vw"
+          className="hero-image object-cover"
+        />
+      )}
       <div className="absolute inset-0 bg-gradient-to-r from-[hsl(var(--dark))]/95 via-[hsl(var(--dark))]/55 to-transparent" />
       <div className="absolute inset-x-0 bottom-0 h-48 bg-gradient-to-t from-[hsl(var(--dark))] to-transparent" />
 

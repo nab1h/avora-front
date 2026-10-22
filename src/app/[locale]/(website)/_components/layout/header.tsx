@@ -64,6 +64,10 @@ export default function Header({
 			href: `/${locale}/about`,
 		},
 		{
+			label: isArabic ? "الأسئلة الشائعة" : "FAQ",
+			href: `/${locale}/faq`,
+		},
+		{
 			label: isArabic ? "تواصل معنا" : "Contact",
 			href: `/${locale}/contact`,
 		},

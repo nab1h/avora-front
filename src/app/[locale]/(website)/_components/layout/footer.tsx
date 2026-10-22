@@ -15,14 +15,14 @@ type FooterProps = {
 	socialLinks: PublicSocialLink[];
 };
 
-export default function Footer({
+export default async function Footer({
 	settings,
 	siteLogo,
 	socialLinks,
 	locale,
 }: FooterProps) {
 	const isArabic = locale === "ar";
-	const categories = getCategories();
+	const categories = await getCategories(locale);
 
 	const mapEmbedUrl = settings?.maps?.google_maps_embed_url;
 	const siteName = settings?.general?.site_name || "AVORA";

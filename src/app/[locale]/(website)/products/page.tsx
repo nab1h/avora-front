@@ -43,7 +43,10 @@ export default async function ProductsPage({
     ?? (isArabic
       ? "تصفح الكتالوج الكامل حسب التصنيف، وابحث بالاسم أو رتّب المنتجات بما يناسب مشروعك."
       : "The complete catalog — browse by category, search by name, or sort by what matters to your project.");
-  const categories = getCategories();
+  const [categories, products] = await Promise.all([
+    getCategories(locale),
+    getAllProducts(locale),
+  ]);
 
   return (
     <main className="mx-auto max-w-7xl px-4 py-24 sm:px-6 sm:py-28 lg:px-8">
@@ -72,7 +75,7 @@ export default async function ProductsPage({
 
       <div className="mt-12">
         <ProductBrowser
-          products={getAllProducts()}
+          products={products}
           categories={categories}
           initialQuery={q ?? ""}
           initialCategory={category ?? "all"}

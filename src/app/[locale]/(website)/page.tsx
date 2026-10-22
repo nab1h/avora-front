@@ -5,9 +5,11 @@ import { FeaturedProducts } from "@/components/site/home/featured-products";
 import { EditorialBanner } from "@/components/site/home/editorial-banner";
 import { Values } from "@/components/site/home/values";
 import { FinalCta } from "@/components/site/home/final-cta";
+import { Faq } from "@/components/site/home/faq";
 import { getAllProducts, getCategories } from "@/lib/catalog/data";
 import { getPublicContents } from "@/lib/services/public-contents";
 import CategoriesPage from "./categories/page";
+import { getPublicAssetUrl } from "@/lib/services/public-assets";
 
 type PageProps = {
 	params: Promise<{ locale: "ar" | "en" }>;
@@ -22,10 +24,12 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
 }
 
 export default async function HomePage({ params }: PageProps) {
-	const categories = getCategories();
-	const products = getAllProducts();
 	const { locale } = await params;
-	const { data } = await getPublicContents("home");
+	const [categories, products, { data }] = await Promise.all([
+		getCategories(locale),
+		getAllProducts(locale),
+		getPublicContents("home"),
+	]);
 	const contents = data ?? [];
 
 
@@ -37,6 +41,8 @@ export default async function HomePage({ params }: PageProps) {
 		);
 	};
 
+	const image = getContent("hero", "image");
+	const imageUrl = getPublicAssetUrl(image?.gallery?.image || image?.value);
 	const title = getContent("hero", "title");
 	const subtitle = getContent("hero", "subtitle");
 	const title_ar = getContent("hero", "title_ar");
@@ -61,12 +67,13 @@ export default async function HomePage({ params }: PageProps) {
 
 	return (
 		<>
-			<Hero title={pageTitle} subtitle={pageSubtitle} proButton={proButton} cateButton={cateButton} />
+			<Hero title={pageTitle} subtitle={pageSubtitle} proButton={proButton} cateButton={cateButton} image={imageUrl ?? undefined}/>
 			<CategoriesPage params={params} />
 			<FeaturedProducts products={products} categories={categories} title={featuredTitle?.value ?? undefined} description={featuredDescription?.value ?? undefined} eyebrow={featuredEyebrow?.value ?? undefined} />
-			<EditorialBanner params={params}/>
 			<Values params={params} />
-			<FinalCta params={params}/>
-			</>
+			<EditorialBanner params={params} />
+			<Faq params={params} />
+			<FinalCta params={params} />
+		</>
 	);
 }
