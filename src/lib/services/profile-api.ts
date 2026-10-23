@@ -57,6 +57,7 @@ export const profileApi = api.injectEndpoints({
         method: "POST",
         body: data,
       }),
+      invalidatesTags: ["User"],
     }),
   }),
 });

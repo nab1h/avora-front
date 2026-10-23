@@ -22,9 +22,11 @@ import { useTranslations } from "next-intl";
 
 
 export default function UserActions({
-    user
+    user,
+    currentUserId
 }: {
-    user: User
+    user: User;
+    currentUserId?: number | null;
 }) {
 
     const [editOpen, setEditOpen] = useState(false);
@@ -86,6 +88,7 @@ export default function UserActions({
                 user={user}
                 open={deleteOpen}
                 setOpen={setDeleteOpen}
+                disabled={user.id === currentUserId}
             />
         </>
 

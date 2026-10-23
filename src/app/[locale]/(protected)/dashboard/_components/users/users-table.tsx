@@ -230,7 +230,7 @@ export default function UsersTable({
                                             className={user.is_active
                                                 ? "border-red-500 text-red-600 hover:bg-red-50 hover:text-red-700"
                                                 : "border-green-500 text-green-600 hover:bg-green-50 hover:text-green-700"}
-                                            disabled={updatingUserId !== null}
+                                            disabled={user.id === currentUserId || updatingUserId !== null}
                                             onClick={() => handleStatusChange(user.id, user.is_active)}
                                         >
                                             {updatingUserId === user.id && <Loader2 className="animate-spin" />}
@@ -239,7 +239,7 @@ export default function UsersTable({
                                     </TableCell>
 
                                     <TableCell className="text-right">
-                                        <UserActions user={user} />
+                                        <UserActions user={user} currentUserId={currentUserId} />
                                     </TableCell>
                                 </TableRow>
                             ))

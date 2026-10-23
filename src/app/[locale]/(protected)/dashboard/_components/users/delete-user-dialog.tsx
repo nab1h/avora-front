@@ -24,7 +24,7 @@ interface Props {
   };
 
   open: boolean;
-
+  disabled?: boolean;
   setOpen: (value: boolean) => void;
 }
 
@@ -32,6 +32,7 @@ export default function DeleteUserDialog({
   user,
   open,
   setOpen,
+  disabled = false,
 }: Props) {
   const t = useTranslations("users");
 
@@ -87,7 +88,7 @@ export default function DeleteUserDialog({
 
           <AlertDialogAction
             onClick={handleDelete}
-            disabled={isLoading}
+            disabled={disabled || isLoading}
           >
             {isLoading ? (
               <>
