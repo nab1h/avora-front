@@ -162,10 +162,15 @@ export default async function Footer({
 								</a>
 							)}
 
-							{settings?.contact?.contact_address && (
-								<p>{settings.contact.contact_address}</p>
-							)}
-
+							{(locale === "ar"
+								? settings?.contact?.contact_address_ar
+								: settings?.contact?.contact_address) && (
+									<p>
+										{locale === "ar"
+											? settings?.contact?.contact_address_ar
+											: settings?.contact?.contact_address}
+									</p>
+								)}
 							{socialLinks.length > 0 && (
 								<div className="flex flex-wrap gap-2 pt-2">
 									{socialLinks.map((socialLink) => (
