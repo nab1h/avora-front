@@ -1,5 +1,6 @@
 import type { MetadataRoute } from 'next';
 import { getPublicAssetUrl, getPublicSettings } from '@/lib/services/public-settings';
+export const dynamic = "force-static";
 
 export default async function manifest(): Promise<MetadataRoute.Manifest> {
   const settings = await getPublicSettings();

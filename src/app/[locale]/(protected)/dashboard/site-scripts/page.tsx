@@ -3,10 +3,9 @@
 import { useState } from "react";
 import { Plus } from "lucide-react";
 import { useTranslations } from "next-intl";
-
-import SiteScriptDialog from "@/app/(protected)/dashboard/_components/site-scripts/site-script-dialog";
-import SiteScriptsTable from "@/app/(protected)/dashboard/_components/site-scripts/site-scripts-table";
 import { Button } from "@/components/ui/button";
+import SiteScriptDialog from "../_components/site-scripts/site-script-dialog";
+import SiteScriptsTable from "../_components/site-scripts/site-scripts-table";
 
 export default function SiteScriptsPage() {
   const [isCreateDialogOpen, setIsCreateDialogOpen] = useState(false);
