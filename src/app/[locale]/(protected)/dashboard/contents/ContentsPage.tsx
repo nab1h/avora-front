@@ -518,7 +518,7 @@ export default function ContentsPage({ page }: Props) {
                 <h3 className='truncate text-sm font-semibold'>{sectionName}</h3>
                 <span className='shrink-0 text-xs text-muted-foreground'>{items.length} {t('fields')}</span>
               </div>
-              <Button
+              {/* <Button
                 type='button'
                 variant='ghost'
                 size='sm'
@@ -527,7 +527,7 @@ export default function ContentsPage({ page }: Props) {
               >
                 <Trash2 className='size-4 sm:mr-2' />
                 <span className='hidden sm:inline'>{t('deleteSection')}</span>
-              </Button>
+              </Button> */}
             </div>
 
             <div className='grid gap-4 md:grid-cols-2'>
