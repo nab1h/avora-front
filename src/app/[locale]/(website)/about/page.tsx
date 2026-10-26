@@ -51,10 +51,6 @@ export default async function AboutPage({
 		<main className="mx-auto w-full max-w-7xl px-5 py-20 sm:px-8 sm:py-28">
 			<section className="grid items-center gap-14 md:grid-cols-[1fr_0.8fr]">
 				<div className="max-w-2xl">
-					<Badge variant="secondary" className="mb-5 gap-2 px-3 py-1">
-						<Logo aria-hidden="true" className="size-4" />
-						About {siteName}
-					</Badge>
 					<h1 className="text-5xl font-semibold leading-[1.02] tracking-tight sm:text-7xl">
 						{pageTitle ?? "fix"}
 					</h1>
@@ -63,14 +59,18 @@ export default async function AboutPage({
 					</p>
 				</div>
 				<div className="mx-auto flex min-h-[360px] w-full items-center justify-center rounded-none border bg-muted/50 sm:min-h-[480px]">
-					<div className="relative mx-auto flex size-40 items-center justify-center overflow-hidden rounded-none border bg-muted/50 sm:min-h-[480px]">
+
+					<div className="relative min-h-[460px] w-full overflow-hidden bg-transparent sm:min-h-[580px] lg:min-h-[640px]">
 						<Image
-							src={getPublicAssetUrl(image?.value) ?? "/images/illustrations/undraw_rocket.svg"}
+							src={
+								getPublicAssetUrl(image?.value) ??
+								"/images/illustrations/undraw_rocket.svg"
+							}
 							alt="Illustration"
 							fill
-							sizes="(max-width: 640px) 50vw, (max-width: 1024px) 33vw, 25vw"
+							sizes="(max-width: 768px) 100vw, 40vw"
 							unoptimized
-							className="object-cover"
+							className="object-cover object-center"
 						/>
 					</div>
 				</div>
