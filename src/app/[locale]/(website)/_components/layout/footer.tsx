@@ -2,6 +2,7 @@ import Link from "next/link";
 import Logo from "@/assets/svg/logo";
 import SocialPlatformIcon from "@/components/social-platform-icon";
 import { getCategories } from "@/lib/catalog/data";
+import { getPolicy, policies } from "@/lib/policies";
 import type {
 	PublicSettingsData,
 	PublicSocialLink,
@@ -220,7 +221,14 @@ export default async function Footer({
 					</div>
 				</div>
 
-				<div className="mt-14 flex flex-col gap-3 border-t border-brand-white/15 pt-6 text-xs text-brand-white/50 sm:flex-row sm:items-center sm:justify-between">
+				<nav aria-label={isArabic ? "السياسات والأحكام" : "Policies and terms"} className="mt-14 flex flex-wrap gap-x-8 gap-y-4 border-t border-brand-white/15 pt-6 text-sm text-brand-white/65">
+					{Object.keys(policies).map((slug) => (
+						<Link key={slug} href={`/${locale}/${slug}`} className="py-1 transition-colors hover:text-brand-white">
+							{getPolicy(slug, locale).title}
+						</Link>
+					))}
+				</nav>
+				<div className="mt-6 flex flex-col gap-3 border-t border-brand-white/15 pt-6 text-xs text-brand-white/50 sm:flex-row sm:items-center sm:justify-between">
 					<span>
 						© {new Date().getFullYear()} {siteName}
 					</span>
